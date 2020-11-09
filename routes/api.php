@@ -20,6 +20,3 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/login', 'Api\\AuthController@login');
 Route::post('/register', 'Api\\AuthController@register');
-
-
-Route::get('/coba', 'CobaController@index')->middleware('jwt.verify');
