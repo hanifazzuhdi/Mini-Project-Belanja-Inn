@@ -25,5 +25,5 @@ php artisan db:seed
 
 ```bash
 Diagram Database Link:
-<a> https://drawsql.app/pondok-it/diagrams/mini-project </a>
+https://drawsql.app/pondok-it/diagrams/mini-project
 ```
