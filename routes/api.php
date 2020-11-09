@@ -19,3 +19,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/create_shop', 'Api\\SellerController@createShop');
     Route::post('/store_product', 'Api\SellerController@store');
 });
+
+Route::get('home', 'Api\\HomeController@index');
+Route::get('home/{id}', 'Api\\HomeController@show');
