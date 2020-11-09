@@ -22,3 +22,8 @@ php artisan db:seed
      terakhir factory(App\Product::class, 15)->create()
    ```
 (Perintah ini dilakukan untuk membuat data dummy pada project).
+
+```bash
+Diagram Database Link:
+https://drawsql.app/pondok-it/diagrams/mini-project
+```
