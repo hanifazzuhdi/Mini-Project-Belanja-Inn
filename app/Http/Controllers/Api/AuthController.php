@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use App\User;
+use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Http\Controllers\Controller;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
@@ -35,17 +34,14 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'email|required|unique:users',
             'password' => 'required|min:6',
-            // 'avatar' => 'image|file'
+            'phone_number' => 'required|min:9'
         ]);
-
-        // $image = 'User-' . time() . Str::random(3) . $request->avatar->getClientOriginalExtension();
-        // $request->avatar->move(public_path('image', $image));
 
         $data = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            // 'avatar' => $image
+            'phone_number' => $request->phone_number
         ]);
 
         $token = JWTAuth::fromUser($data);

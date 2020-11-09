@@ -18,5 +18,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Route Auth
 Route::post('/login', 'Api\\AuthController@login');
 Route::post('/register', 'Api\\AuthController@register');
+
+
+Route::group(['middleware' => ['jwt.verify']], function () {
+    // Route Seller
+    Route::get('/shop', 'Api\\SellerController@shop');
+    Route::post('/create_shop', 'Api\\SellerController@createShop');
+    Route::post('/store_product', 'Api\SellerController@store');
+});
