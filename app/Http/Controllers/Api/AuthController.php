@@ -33,15 +33,13 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'email|required|unique:users',
-            'password' => 'required|min:6',
-            'phone_number' => 'required|min:9'
+            'password' => 'required|min:6'
         ]);
 
         $data = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'phone_number' => $request->phone_number
         ]);
 
         $token = JWTAuth::fromUser($data);
