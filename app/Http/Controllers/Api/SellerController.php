@@ -25,8 +25,8 @@ class SellerController extends Controller
         ]);
 
         // Validate Image
-        // $image = Auth::user()->name . time() . $request->avatar->getClientOriginalExtension();
-        // $request->avatar->move(public_path('image', $image));
+        $image = Auth::user()->name . time() . $request->avatar->getClientOriginalExtension();
+        $request->avatar->move(public_path('image', $image));
 
         Shop::create([
             'shop_id' => Auth::id(),
