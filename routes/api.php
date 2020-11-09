@@ -12,10 +12,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/login', 'Api\\AuthController@login');
 Route::post('/register', 'Api\\AuthController@register');
 
+Route::get('/shop', 'Api\\SellerController@shop');
 
 Route::group(['middleware' => ['jwt.verify']], function () {
     // Route Seller
-    Route::get('/shop', 'Api\\SellerController@shop');
     Route::post('/create_shop', 'Api\\SellerController@createShop');
     Route::post('/store_product', 'Api\SellerController@store');
 });
