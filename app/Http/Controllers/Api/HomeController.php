@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Category;
+// use App\Category;
 use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -35,12 +35,11 @@ class HomeController extends Controller
     public function showCategory(Product $product, $category_id)
     {
         $products = ProductResource::collection($product->where('category_id', $category_id)->get());
+        // var_dump($products);
+        if(count($products) != 0) {
+            return $this->SendResponse('succes', 'Data success to loaded', $products, 200);  
+        } else return $this->SendResponse('failed', 'Data failed to loaded', null, 500);
 
-        try {
-            return $this->SendResponse('succes', 'Data success to loaded', $products, 200);
-        } catch (\Throwable $th) {
-            return $this->SendResponse('failed', 'Data success to loaded', null, 500);
-        }
     }
 
     public function search(Request $request)
