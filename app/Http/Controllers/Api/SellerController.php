@@ -81,4 +81,8 @@ class SellerController extends Controller
 
         return response([]);
     }
+
+    public function update()
+    {
+    }
 }
