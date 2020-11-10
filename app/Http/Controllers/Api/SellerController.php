@@ -21,8 +21,8 @@ class SellerController extends Controller
             'category_id'  => 'required'
         ]);
 
-        $image =  Shop::find(Auth::id())->shop_name . '-' . time() . '.' . $request->avatar->getClientOriginalExtension();
-        $request->avatar->storeAs('public', $image);
+        $image =  Auth::user()->username . '-' . time() . '.' . $request->image->getClientOriginalExtension();
+        $request->image->storeAs('public/products', $image);
 
         $product = Product::create([
             'product_name' => $request->product_name,

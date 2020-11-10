@@ -20,10 +20,11 @@ class ShopController extends Controller
         ]);
 
         // Validate Image
-        $image = Auth::user()->name . '-' . time() . '.' . $request->avatar->getClientOriginalExtension();
-        $request->avatar->storeAs('public', $image);
+        $image = Auth::user()->username . '-' . time() . '.' . $request->avatar->getClientOriginalExtension();
+        $request->avatar->storeAs('public/shops', $image);
 
         $data = Shop::create([
+            'id' =>  Auth::id(),
             'shop_id' => Auth::id(),
             'shop_name' => $request->shop_name,
             'avatar' =>  $image,

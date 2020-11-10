@@ -7,9 +7,13 @@ use App\Product;
 
 class Shop extends Model
 {
-    protected $fillable = ['shop_id', 'shop_name', 'avatar', 'address', 'description'];
+    protected $fillable = ['id', 'shop_id', 'shop_name', 'avatar', 'address', 'description'];
 
     protected $hidden = ['updated_at', 'id'];
+
+    protected $primaryKey = 'id';
+
+    public $incrementing = false;
 
     public function user()
     {
