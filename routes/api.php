@@ -24,9 +24,10 @@ Route::group(['prefix' => 'home'], function () {
 
 // middleware jwt
 Route::group(['middleware' => ['jwt.verify']], function () {
-    // Route Seller
     Route::get('/get_shop/{id}', 'Api\\SellerController@shop')->name('get_shop');
     Route::post('/create_shop', 'Api\\SellerController@createShop')->name('create_shop');
-    Route::post('/store_product', 'Api\SellerController@store')->name('store_product');
-    // Route::update('/update_product', 'Api\\SellerController@update')->name('update_product');
+
+    // Route crud Seller
+    Route::post('/store_product', 'Api\SellerController@storeProduct')->name('store_product');
+    Route::post('/update_product/{id}', 'Api\SellerController@updateProduct')->name('update_product');
 });
