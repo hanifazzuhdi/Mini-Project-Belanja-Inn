@@ -21,7 +21,6 @@ Route::group(['prefix' => 'public'], function () {
     Route::post('/search', 'Api\\PublicController@search');
 });
 
-
 // middleware jwt
 Route::group(['middleware' => ['jwt.verify']], function () {
     // Route Shop
@@ -29,6 +28,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/store_shop', 'Api\\ShopController@storeShop')->name('store_shop');
 
     // Route crud Seller
-    Route::post('/store_product', 'Api\SellerController@storeProduct')->name('store_product');
-    Route::put('/update_product/{id}', 'Api\SellerController@updateProduct')->name('update_product');
+    Route::post('/store_product', 'Api\\SellerController@storeProduct')->name('store_product');
+    Route::put('/update_product/{id}', 'Api\\SellerController@updateProduct')->name('update_product');
 });

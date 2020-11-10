@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-// use App\Category;
+use App\User;
+use App\Category;
 use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -57,9 +58,5 @@ class PublicController extends Controller
             'sub_image2'   => 'file|image',
             'category_id'  => 'required'
         ]);
-
-        
-
     }
-
 }

@@ -13,7 +13,6 @@ class ShopController extends Controller
     public function storeShop(Request $request)
     {
         $request->validate([
-            'shop_id' => 'unique:shops',
             'shop_name' => 'required|min:6|unique:shops',
             'avatar' => 'required|image|file',
             'address' => 'required',
@@ -22,7 +21,7 @@ class ShopController extends Controller
 
         // Validate Image
         $image = Auth::user()->name . '-' . time() . '.' . $request->avatar->getClientOriginalExtension();
-        $request->avatar->storeAs('public/shops', $image);
+        $request->avatar->storeAs('public', $image);
 
         $data = Shop::create([
             'shop_id' => Auth::id(),
