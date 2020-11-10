@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 
-class HomeController extends Controller
+class PublicController extends Controller
 {
     public function index()
     {

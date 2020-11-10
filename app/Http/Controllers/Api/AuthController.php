@@ -23,7 +23,7 @@ class AuthController extends Controller
         }
 
         return response([
-            'status' => 'Success',
+            'status' => 'success',
             'token' => $token
         ], 200);
     }
@@ -47,7 +47,7 @@ class AuthController extends Controller
         $token = JWTAuth::fromUser($data);
 
         return response([
-            'status' => 'Success',
+            'status' => 'success',
             'data' => $data,
             'token' => $token
         ], 201);

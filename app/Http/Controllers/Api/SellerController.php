@@ -7,7 +7,7 @@ use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Str;
 
 class SellerController extends Controller
 {
@@ -15,10 +15,10 @@ class SellerController extends Controller
     {
     }
 
-    public function createShop(Request $request)
+    public function storeShop(Request $request)
     {
         $request->validate([
-            'shop_id' => 'required|unique:shops',
+            'shop_id' => 'unique:shops',
             'shop_name' => 'required|min:6|unique:shops',
             'avatar' => 'required|image|file',
             'address' => 'required',
@@ -26,25 +26,21 @@ class SellerController extends Controller
         ]);
 
         // Validate Image
-        $image = Auth::user()->name . time() . $request->avatar->getClientOriginalExtension();
-        $request->avatar->move(public_path('image', $image));
+        $image = Auth::user()->name . '-' . time() . '.' . $request->avatar->getClientOriginalExtension();
+        $request->avatar->storeAs('public/shops', $image);
 
         $data = Shop::create([
             'shop_id' => Auth::id(),
             'shop_name' => $request->shop_name,
-            'avatar' => $request->avatar,
+            'avatar' =>  $image,
             'address' => $request->address,
             'description' => $request->description
         ]);
 
-        return response([
-            'status' => 'success',
-            'data' => $data,
-            'message' => 'Toko Berhasil Dibuat'
-        ], 201);
+        return $this->SendResponse('success', 'Toko berhasil dibuat', $data, 201);
     }
 
-    public function store(Request $request)
+    public function storeProduct(Request $request)
     {
         $request->validate([
             'product_name' => 'required|min:10|max:60',
@@ -66,23 +62,48 @@ class SellerController extends Controller
         $sub_image2 = 'sub1-' . Shop::find(Auth::id())->shop_name . time() . $request->avatar->getClientOriginalExtension();
         $request->avatar->move(public_path('image', $image));
 
-        Product::create([
+        $product = Product::create([
             'product_name' => $request->product_name,
             'price' => $request->price,
             'quantity' => $request->quantity,
             'description' => $request->description,
             'image' => $image,
-            'sub' => $request->product_name,
             'sub_image1' => $sub_image1,
             'sub_image2' => $sub_image2,
             'category_id' => $request->category_id,
             'shop_id' => Auth::id(),
         ]);
 
-        return response([]);
+        return $this->SendResponse('success', 'Produk berhasil ditambahkan', $product, 201);
     }
 
-    // public function update()
-    // {
-    // }
+    public function updateProduct(Request $request, $id)
+    {
+        $product = Product::find($id);
+
+        if ($product == false) {
+            return $this->SendResponse('failed', 'Produk tidak ditemukan', null, 400);
+        }
+
+        // validate image and subimage
+        if ($request->avatar) {
+            unlink(public_path('image', $request->avatar));
+
+            $image =  Shop::find(Auth::id())->shop_name . time() . $request->avatar->getClientOriginalExtension();
+            $request->avatar->move(public_path('image', $image));
+        }
+
+        $data = $product->update([
+            'product_name' => $request->product_name,
+            'price' => $request->price,
+            'quantity' => $request->quantity,
+            'description' => $request->description,
+            'image' => $image,
+            // 'sub_image1' => $sub_image1,
+            // 'sub_image2' => $sub_image2,
+            'category_id' => $request->category_id,
+        ]);
+
+        return $this->SendResponse('success', 'Produk berhasil ditambahkan', $data, 201);
+    }
 }
