@@ -21,6 +21,7 @@ Route::group(['prefix' => 'home'], function () {
     Route::get('/category/{category_id}', 'Api\\HomeController@showCategory');
 });
 
+
 // middleware jwt
 Route::group(['middleware' => ['jwt.verify']], function () {
     // Route Seller
