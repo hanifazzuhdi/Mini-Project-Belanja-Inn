@@ -4,9 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 // Route Auth
 Route::post('/login', 'Api\\AuthController@login');
@@ -29,5 +29,5 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Route crud Seller
     Route::post('/store_product', 'Api\SellerController@storeProduct')->name('store_product');
-    Route::post('/update_product/{id}', 'Api\SellerController@updateProduct')->name('update_product');
+    Route::put('/update_product/{id}', 'Api\SellerController@updateProduct')->name('update_product');
 });
