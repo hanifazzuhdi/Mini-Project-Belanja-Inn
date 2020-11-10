@@ -28,5 +28,5 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/get_shop/{id}', 'Api\\SellerController@shop')->name('get_shop');
     Route::post('/create_shop', 'Api\\SellerController@createShop')->name('create_shop');
     Route::post('/store_product', 'Api\SellerController@store')->name('store_product');
-    Route::update('/update_product', 'Api\\SellerController@update')->name('update_product');
+    // Route::update('/update_product', 'Api\\SellerController@update')->name('update_product');
 });
