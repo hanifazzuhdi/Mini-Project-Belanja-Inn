@@ -7,7 +7,7 @@ use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Str;
 
 class SellerController extends Controller
 {
@@ -15,7 +15,7 @@ class SellerController extends Controller
     {
     }
 
-    public function createShop(Request $request)
+    public function storeShop(Request $request)
     {
         $request->validate([
             'shop_id' => 'unique:shops',
@@ -26,13 +26,13 @@ class SellerController extends Controller
         ]);
 
         // Validate Image
-        $image = Auth::user()->name . time() . $request->avatar->getClientOriginalExtension();
-        $request->avatar->move(public_path('image', $image));
+        $image = Auth::user()->name . '-' . time() . '.' . $request->avatar->getClientOriginalExtension();
+        $request->avatar->storeAs('public/shops', $image);
 
         $data = Shop::create([
             'shop_id' => Auth::id(),
             'shop_name' => $request->shop_name,
-            'avatar' => $request->avatar,
+            'avatar' =>  $image,
             'address' => $request->address,
             'description' => $request->description
         ]);
