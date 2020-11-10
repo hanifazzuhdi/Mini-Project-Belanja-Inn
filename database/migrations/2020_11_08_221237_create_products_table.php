@@ -20,9 +20,9 @@ class CreateProductsTable extends Migration
             $table->integer('quantity');
             $table->text('description');
             $table->string('image');
-            $table->string('sub_image1')->nullable();
-            $table->string('sub_image2')->nullable();
-            $table->bigInteger('sold');
+            $table->string('sub_image1')->nullable()->default('not exist');
+            $table->string('sub_image2')->nullable()->default('not exist');
+            $table->bigInteger('sold')->nullable()->default(0);
             $table->unsignedBigInteger('shop_id');
             $table->timestamps();
 
