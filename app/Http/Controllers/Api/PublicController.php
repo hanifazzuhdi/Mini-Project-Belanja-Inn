@@ -44,4 +44,22 @@ class PublicController extends Controller
     public function search(Request $request)
     {
     }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'product_name' => 'required|min:10|max:60',
+            'price'        => 'required',
+            'quantity'     => 'required|integer',
+            'description'  => 'required|min:20|max:2000',
+            'image'        => 'required|file|image',
+            'sub_image1'   => 'file|image',
+            'sub_image2'   => 'file|image',
+            'category_id'  => 'required'
+        ]);
+
+        
+
+    }
+
 }
