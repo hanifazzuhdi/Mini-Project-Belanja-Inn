@@ -26,7 +26,7 @@ Route::group(['prefix' => 'home'], function () {
 // middleware jwt
 Route::group(['middleware' => ['jwt.verify']], function () {
     // Route Seller
-    Route::get('/shop', 'Api\\SellerController@shop');
     Route::post('/create_shop', 'Api\\SellerController@createShop');
+    Route::get('/shop', 'Api\\SellerController@shop');
     Route::post('/store_product', 'Api\SellerController@store');
 });

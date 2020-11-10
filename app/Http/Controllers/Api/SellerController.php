@@ -18,8 +18,9 @@ class SellerController extends Controller
     public function createShop(Request $request)
     {
         $request->validate([
-            'shop_name' => 'required|min:6',
-            // 'avatar' => 'required|image|file',
+            'shop_id' => 'required|unique:shops',
+            'shop_name' => 'required|min:6|unique:shops',
+            'avatar' => 'required|image|file',
             'address' => 'required',
             'description' => 'required'
         ]);
@@ -28,7 +29,7 @@ class SellerController extends Controller
         $image = Auth::user()->name . time() . $request->avatar->getClientOriginalExtension();
         $request->avatar->move(public_path('image', $image));
 
-        Shop::create([
+        $data = Shop::create([
             'shop_id' => Auth::id(),
             'shop_name' => $request->shop_name,
             'avatar' => $request->avatar,
@@ -38,6 +39,7 @@ class SellerController extends Controller
 
         return response([
             'status' => 'success',
+            'data' => $data,
             'message' => 'Toko Berhasil Dibuat'
         ], 201);
     }
