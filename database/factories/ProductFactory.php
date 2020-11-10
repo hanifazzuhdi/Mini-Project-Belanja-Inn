@@ -14,6 +14,7 @@ $factory->define(Product::class, function (Faker $faker) {
         'image' => 'https://via.placeholder.com/150',
         'sub_image1' => 'https://via.placeholder.com/150',
         'sub_image2' => 'https://via.placeholder.com/150',
+        'sold' => $faker->numberBetween(1, 50),
         'category_id' => $faker->numberBetween(1, 4),
         'shop_id' => $faker->numberBetween(1, 3)
     ];

@@ -23,6 +23,7 @@ class ProductResource extends JsonResource
             'image' => $this->image,
             'sub_image1' => $this->sub_image1,
             'sub_image2' => $this->sub_image2,
+            'sold' => $this->sold,
             'created_at' => $this->created_at->format('d F Y'),
             'shop_id' => $this->shop_id,
             'category_id' => $this->category_id,
