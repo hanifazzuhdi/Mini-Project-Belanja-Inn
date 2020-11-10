@@ -11,23 +11,13 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
-        $products = ProductResource::collection($products);
+        $products = ProductResource::collection(Product::all());
+
         try {
-            return $this->SendResponse('succes', 'Data berhasil di dapat', $products, 200);
+            return $this->SendResponse('succes', 'Data success to loaded', $products, 200);
         } catch (\Throwable $th) {
-            return $this->SendResponse('gagal', 'Data gagal di dapat', null, 500);
+            return $this->SendResponse('failed', 'Data failed to loaded', null, 500);
         }
-    }
-
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
     }
 
     public function show(Product $products, $id)
@@ -35,24 +25,24 @@ class HomeController extends Controller
         $products = new ProductResource($products->find(($id)));
 
         try {
-            return $this->SendResponse('succes', 'Data berhasil di dapat', $products, 200);
+            return $this->SendResponse('succes', 'Data success to loaded', $products, 200);
         } catch (\Throwable $th) {
-            return $this->SendResponse('gagal', 'Data gagal di dapat', null, 500);
+            return $this->SendResponse('failed', 'Data failed to loaded', null, 500);
         }
     }
 
-    public function edit($id)
+    public function showCategory(Product $product, $category_id)
     {
-        //
+        $products = ProductResource::collection($product->where('category_id', $category_id)->get());
+
+        try {
+            return $this->SendResponse('succes', 'Data success to loaded', $products, 200);
+        } catch (\Throwable $th) {
+            return $this->SendResponse('failed', 'Data success to loaded', null, 500);
+        }
     }
 
-    public function update(Request $request, $id)
+    public function search(Request $request)
     {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }
