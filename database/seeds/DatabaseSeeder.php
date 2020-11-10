@@ -27,6 +27,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Category::create([
+            'category_name' => 'Pakaian'
+        ]);
+
+        Category::create([
             'category_name' => 'Perlengkapan Rumah'
         ]);
 

@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->string('image');
             $table->string('sub_image1')->nullable();
             $table->string('sub_image2')->nullable();
+            $table->bigInteger('sold');
             $table->unsignedBigInteger('shop_id');
             $table->timestamps();
 
