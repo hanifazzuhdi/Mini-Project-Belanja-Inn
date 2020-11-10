@@ -12,7 +12,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/login', 'Api\\AuthController@login');
 Route::post('/register', 'Api\\AuthController@register');
 
-
 Route::post('/search', 'HomeController@search');
 
 // Route Home
@@ -22,11 +21,11 @@ Route::group(['prefix' => 'home'], function () {
     Route::get('/category/{category_id}', 'Api\\HomeController@showCategory');
 });
 
-
 // middleware jwt
 Route::group(['middleware' => ['jwt.verify']], function () {
     // Route Seller
-    Route::get('/shop', 'Api\\SellerController@shop');
-    Route::post('/create_shop', 'Api\\SellerController@createShop');
-    Route::post('/store_product', 'Api\SellerController@store');
+    Route::get('/get_shop/{id}', 'Api\\SellerController@shop')->name('get_shop');
+    Route::post('/create_shop', 'Api\\SellerController@createShop')->name('create_shop');
+    Route::post('/store_product', 'Api\SellerController@store')->name('store_product');
+    Route::update('/update_product', 'Api\\SellerController@update')->name('update_product');
 });
