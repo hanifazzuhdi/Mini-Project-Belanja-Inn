@@ -18,3 +18,7 @@ Route::get('/', function () {
 });
 
 Route::post('/store', 'SellerController@storeProduct');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
