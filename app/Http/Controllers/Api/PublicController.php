@@ -14,9 +14,15 @@ class PublicController extends Controller
     public function index()
     {
         $products = ProductResource::collection(Product::all());
+        $categories = Category::all('id', 'category_name');
+
+        $data = [
+            'products' => $products,
+            'categories' => $categories
+        ];
 
         try {
-            return $this->SendResponse('succes', 'Data success to loaded', $products, 200);
+            return $this->SendResponse('succes', 'Data success to loaded', $data, 200);
         } catch (\Throwable $th) {
             return $this->SendResponse('failed', 'Data failed to loaded', null, 500);
         }
@@ -46,17 +52,4 @@ class PublicController extends Controller
     {
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'product_name' => 'required|min:10|max:60',
-            'price'        => 'required',
-            'quantity'     => 'required|integer',
-            'description'  => 'required|min:20|max:2000',
-            'image'        => 'required|file|image',
-            'sub_image1'   => 'file|image',
-            'sub_image2'   => 'file|image',
-            'category_id'  => 'required'
-        ]);
-    }
 }
