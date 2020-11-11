@@ -48,11 +48,11 @@ class SellerController extends Controller
 
         // dd($product->id);
         $request->validate([
-            'product_name' => 'required|min:10|max:60',
-            'price'        => 'required',
-            'quantity'     => 'required|integer',
-            'description'  => 'required|min:20|max:2000',
-            'image'        => 'required|file|image',
+            'product_name' => 'min:10|max:60',
+            // 'price'        => ',
+            'quantity'     => 'integer',
+            'description'  => 'min:20|max:2000',
+            'image'        => 'file|image',
         ]);
 
         // validate image and delete old image
