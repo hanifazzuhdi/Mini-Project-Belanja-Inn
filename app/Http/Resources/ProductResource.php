@@ -14,7 +14,6 @@ class ProductResource extends JsonResource
      */
     public function toArray($request)
     {
-
         $imageURL = url('storage/products/' . $this->image);
 
         return [

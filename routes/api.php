@@ -4,6 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
 // Route Auth
 Route::post('/login', 'Api\\AuthController@login');
 Route::post('/register', 'Api\\AuthController@register');
@@ -19,9 +23,6 @@ Route::group(['prefix' => 'public'], function () {
 
 // middleware jwt
 Route::group(['middleware' => ['jwt.verify']], function () {
-    // Route User
-    // Route::get('')
-
     // Route Shop
     Route::get('/get_shop/{id}', 'Api\\ShopController@shop')->name('get_shop');
     Route::post('/store_shop', 'Api\\ShopController@storeShop')->name('store_shop');

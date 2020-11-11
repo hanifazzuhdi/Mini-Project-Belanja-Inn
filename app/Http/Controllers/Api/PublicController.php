@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\User;
 use App\Category;
 use App\Product;
 use Illuminate\Http\Request;
@@ -38,19 +39,16 @@ class PublicController extends Controller
         }
     }
 
-    public function showCategory(Category $category, $category_id)
+    public function showCategory(Product $product, $category_id)
     {
-        $category = ProductResource::collection($category->where('category_id', $category_id)->get());
+        $products = ProductResource::collection($product->where('category_id', $category_id)->get());
 
-        if (count($category) != 0) {
-            return $this->SendResponse('succes', 'Data success to loaded', $category, 200);
+        if (count($products) != 0) {
+            return $this->SendResponse('succes', 'Data success to loaded', $products, 200);
         } else return $this->SendResponse('failed', 'Data failed to loaded', null, 500);
     }
 
-    public function search(Request $request, Product $product)
+    public function search(Request $request)
     {
-        // $search = ProductResource::collection($product->where('product_name', 'like', $request->key));
-
-
     }
 }
