@@ -61,7 +61,7 @@ class SellerController extends Controller
         $image =  Auth::user()->username . '-' . time() . '.' . $request->image->getClientOriginalName();
         $request->image->move(public_path('image/products'), $image);
 
-        $product->update([
+        $data = $product->update([
             'product_name' => $request->product_name,
             'price' => $request->price,
             'quantity' => $request->quantity,
@@ -69,6 +69,6 @@ class SellerController extends Controller
             'image' => $image,
         ]);
 
-        return $this->SendResponse('success', 'Produk berhasil diubah', $request, 201);
+        return $this->SendResponse('success', 'Produk berhasil diubah', $data, 201);
     }
 }
