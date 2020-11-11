@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
 
-    <form action="update_product/5" method="post" enctype="multipart/form-data">
+    <form action="update_product/1" method="post" enctype="multipart/form-data">
         @csrf
         @method('put')
         <input type="text" name="product_name" placeholder="product_name">
