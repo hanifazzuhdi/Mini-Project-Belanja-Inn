@@ -42,10 +42,11 @@ class SellerController extends Controller
     {
         $product = Product::find($id);
 
-        if ($product == false) {
+        if ($product === false) {
             return $this->SendResponse('failed', 'Produk tidak ditemukan', null, 400);
         }
 
+        // dd($product->id);
         $request->validate([
             'product_name' => 'required|min:10|max:60',
             'price'        => 'required',
@@ -55,8 +56,9 @@ class SellerController extends Controller
         ]);
 
         // validate image and delete old image
+        Storage::delete('public/products/' . $product->image);
 
-        Storage::delete('products/' . $product->image);
+        // unlink('storage/products/' . $product->image);
 
         $image =  Auth::user()->username . '-' . time() . '.' . $request->image->getClientOriginalExtension();
         $request->image->storeAs('public/products', $image);
@@ -69,6 +71,6 @@ class SellerController extends Controller
             'image' => $image,
         ]);
 
-        return $this->SendResponse('success', 'Produk berhasil ditambahkan', $data, 201);
+        return $this->SendResponse('success', 'Produk berhasil diubah', $request, 201);
     }
 }

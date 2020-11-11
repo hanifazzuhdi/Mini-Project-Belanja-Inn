@@ -39,17 +39,16 @@ class PublicController extends Controller
         }
     }
 
-    public function showCategory(Product $product, $category_id)
+    public function showCategory(Category $category, $category_id)
     {
-        $products = ProductResource::collection($product->where('category_id', $category_id)->get());
+        $category = ProductResource::collection($category->where('category_id', $category_id)->get());
 
-        if (count($products) != 0) {
-            return $this->SendResponse('succes', 'Data success to loaded', $products, 200);
+        if (count($category) != 0) {
+            return $this->SendResponse('succes', 'Data success to loaded', $category, 200);
         } else return $this->SendResponse('failed', 'Data failed to loaded', null, 500);
     }
 
     public function search(Request $request)
     {
     }
-
 }
