@@ -7,6 +7,7 @@ use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class SellerController extends Controller
 {
@@ -45,12 +46,20 @@ class SellerController extends Controller
             return $this->SendResponse('failed', 'Produk tidak ditemukan', null, 400);
         }
 
-        // validate image and subimage
-        unlink('/storage/products/' . $product->image);
+        $request->validate([
+            'product_name' => 'required|min:10|max:60',
+            'price'        => 'required',
+            'quantity'     => 'required|integer',
+            'description'  => 'required|min:20|max:2000',
+            'image'        => 'required|file|image',
+        ]);
+
+        // validate image and delete old image
+
+        Storage::delete('products/' . $product->image);
 
         $image =  Auth::user()->username . '-' . time() . '.' . $request->image->getClientOriginalExtension();
         $request->image->storeAs('public/products', $image);
-
 
         $data = $product->update([
             'product_name' => $request->product_name,
@@ -58,7 +67,6 @@ class SellerController extends Controller
             'quantity' => $request->quantity,
             'description' => $request->description,
             'image' => $image,
-            'category_id' => $request->category_id,
         ]);
 
         return $this->SendResponse('success', 'Produk berhasil ditambahkan', $data, 201);
