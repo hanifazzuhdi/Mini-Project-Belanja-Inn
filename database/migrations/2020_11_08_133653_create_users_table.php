@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('phone_number')->default('phone number not exist');
+            $table->string('avatar')->default(null);
             $table->string('address')->default('addres not exist');
             $table->unsignedBigInteger('role_id')->default(1);
             $table->rememberToken();
