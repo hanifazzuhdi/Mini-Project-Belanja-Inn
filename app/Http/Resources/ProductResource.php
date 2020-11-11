@@ -26,9 +26,9 @@ class ProductResource extends JsonResource
             'image' => $imageURL,
             'created_at' => $this->created_at->format('d F Y'),
             'shop_id' => $this->shop_id,
-            'shop' => $this->shop,
             'category_id' => $this->category_id,
             'category' => $this->category->category_name,
+            'shop' => $this->shop,
         ];
     }
 }
