@@ -18,7 +18,7 @@ class PublicController extends Controller
 
         $data = [
             'products' => $products,
-            'categories' => $categories
+            // 'categories' => $categories
         ];
 
         try {
@@ -39,9 +39,9 @@ class PublicController extends Controller
         }
     }
 
-    public function showCategory(Category $category, $category_id)
+    public function showCategory(Product $product, $category_id)
     {
-        $products = ProductResource::collection($category->where('id', $category_id)->get());
+        $products = ProductResource::collection($product->where('category_id', $category_id)->get());
 
         if (count($products) != 0) {
             return $this->SendResponse('succes', 'Data success to loaded', $products, 200);
