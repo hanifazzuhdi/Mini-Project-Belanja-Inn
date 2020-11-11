@@ -42,17 +42,15 @@ class SellerController extends Controller
         $product = Product::find($id);
 
         if ($product == false) {
-            return "id tidak ada";
-            // return $this->SendResponse('failed', 'Produk tidak ditemukan', null, 400);
+            return $this->SendResponse('failed', 'Produk tidak ditemukan', null, 400);
         }
 
         // validate image and subimage
-        if ($request->avatar) {
-            unlink(public_path('image', $request->avatar));
+        unlink('/storage/products/' . $product->image);
 
-            $image =  Shop::find(Auth::id())->shop_name . '-' . time() . '.' . $request->avatar->getClientOriginalExtension();
-            $request->avatar->storeAs('public', $image);
-        }
+        $image =  Auth::user()->username . '-' . time() . '.' . $request->image->getClientOriginalExtension();
+        $request->image->storeAs('public/products', $image);
+
 
         $data = $product->update([
             'product_name' => $request->product_name,
@@ -60,8 +58,6 @@ class SellerController extends Controller
             'quantity' => $request->quantity,
             'description' => $request->description,
             'image' => $image,
-            // 'sub_image1' => $sub_image1,
-            // 'sub_image2' => $sub_image2,
             'category_id' => $request->category_id,
         ]);
 
