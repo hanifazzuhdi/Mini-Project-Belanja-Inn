@@ -15,8 +15,6 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        // dd($request->email);
-
         $data = DB::select("SELECT * FROM users WHERE email = '$request->email'");
 
         try {
@@ -38,14 +36,12 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'username' => 'required|unique:users',
             'email' => 'email|required|unique:users',
             'password' => 'required|min:6'
         ]);
 
         $data = User::create([
             'name' => $request->name,
-            'username' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
