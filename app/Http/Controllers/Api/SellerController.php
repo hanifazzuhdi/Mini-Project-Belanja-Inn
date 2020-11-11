@@ -7,7 +7,7 @@ use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class SellerController extends Controller
 {
@@ -22,8 +22,8 @@ class SellerController extends Controller
             'category_id'  => 'required'
         ]);
 
-        $image =  Auth::user()->username . '-' . time() . '.' . $request->image->getClientOriginalExtension();
-        $request->image->storeAs('public/products', $image);
+        $image =  Auth::user()->username . '-' . time() . '.' . $request->image->getClientOriginalName();
+        $request->image->move(public_path('image/products'), $image);
 
         $product = Product::create([
             'product_name' => $request->product_name,
@@ -56,14 +56,12 @@ class SellerController extends Controller
         ]);
 
         // validate image and delete old image
-        Storage::delete('public/products/' . $product->image);
+        File::delete(public_path('image/products/') . $product->image);
 
-        // unlink('storage/products/' . $product->image);
+        $image =  Auth::user()->username . '-' . time() . '.' . $request->image->getClientOriginalName();
+        $request->image->move(public_path('image/products'), $image);
 
-        $image =  Auth::user()->username . '-' . time() . '.' . $request->image->getClientOriginalExtension();
-        $request->image->storeAs('public/products', $image);
-
-        $data = $product->update([
+        $product->update([
             'product_name' => $request->product_name,
             'price' => $request->price,
             'quantity' => $request->quantity,

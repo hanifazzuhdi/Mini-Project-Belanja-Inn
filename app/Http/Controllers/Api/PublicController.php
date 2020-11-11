@@ -14,7 +14,7 @@ class PublicController extends Controller
     public function index()
     {
         $products = ProductResource::collection(Product::all());
-        $categories = Category::all('id', 'category_name');
+        // $categories = Category::all('id', 'category_name');
 
         $data = [
             'products' => $products,
