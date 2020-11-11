@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\User;
 use App\Category;
 use App\Product;
 use Illuminate\Http\Request;
@@ -48,7 +47,10 @@ class PublicController extends Controller
         } else return $this->SendResponse('failed', 'Data failed to loaded', null, 500);
     }
 
-    public function search(Request $request)
+    public function search(Request $request, Product $product)
     {
+        // $search = ProductResource::collection($product->where('product_name', 'like', $request->key));
+
+
     }
 }

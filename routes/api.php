@@ -19,6 +19,9 @@ Route::group(['prefix' => 'public'], function () {
 
 // middleware jwt
 Route::group(['middleware' => ['jwt.verify']], function () {
+    // Route User
+    Route::get('')
+
     // Route Shop
     Route::get('/get_shop/{id}', 'Api\\ShopController@shop')->name('get_shop');
     Route::post('/store_shop', 'Api\\ShopController@storeShop')->name('store_shop');
