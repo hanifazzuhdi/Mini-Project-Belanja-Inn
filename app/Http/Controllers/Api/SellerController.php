@@ -22,7 +22,7 @@ class SellerController extends Controller
         ]);
 
         $image =  Auth::user()->username . '-' . time() . '.' . $request->image->getClientOriginalName();
-        $request->image->move(public_path('image/products'), $image);
+        $request->image->move(public_path('image/products'), base64_encode($image));
 
         $product = Product::create([
             'product_name' => $request->product_name,
