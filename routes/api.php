@@ -21,7 +21,7 @@ Route::group(['prefix' => 'public'], function () {
     Route::post('/search', 'Api\\PublicController@search');
 });
 
-Route::get('/get_shop/{id}', 'Api\\ShopController@shop')->name('get_shop');
+Route::get('/get_shop', 'Api\\ShopController@shop')->name('get_shop');
 
 // Middleware Jwt
 Route::group(['middleware' => ['jwt.verify']], function () {

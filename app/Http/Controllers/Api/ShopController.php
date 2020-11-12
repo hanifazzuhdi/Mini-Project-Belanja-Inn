@@ -12,7 +12,11 @@ class ShopController extends Controller
 {
     public function shop()
     {
-        dd(public_path());
+        dump(public_path());
+
+        dump(url());
+
+        dd(asset('public'));
     }
 
     public function storeShop(Request $request)
