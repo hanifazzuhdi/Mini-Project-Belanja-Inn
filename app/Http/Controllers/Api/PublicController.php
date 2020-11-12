@@ -12,9 +12,9 @@ class PublicController extends Controller
     public function index()
     {
         $products = ProductResource::collection(Product::all());
-        $srtproducts = $products->sortByDesc('product_name');
+        $srtproducts = $products->sortByDesc('created_at');
         $products = $srtproducts->values()->all();
-
+        
         try {
             return $this->SendResponse('succes', 'Data success to loaded', $products, 200);
         } catch (\Throwable $th) {
