@@ -15,8 +15,6 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        $data = DB::select("SELECT * FROM users WHERE email = '$request->email'");
-
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json(['error' => 'invalid_credentials'], 400);
@@ -27,7 +25,6 @@ class AuthController extends Controller
 
         return response([
             'status' => 'success',
-            'data' => $data,
             'token' => $token
         ], 200);
     }
@@ -50,5 +47,15 @@ class AuthController extends Controller
             'status' => 'success',
             'data' => $data,
         ], 201);
+    }
+
+    public function logout(Request $request)
+    {
+        JWTAuth::invalidate($request->input('token'));
+
+        return response([
+            'status' => 'success',
+            'message' => 'token berhasil dihapus'
+        ], 200);
     }
 }
