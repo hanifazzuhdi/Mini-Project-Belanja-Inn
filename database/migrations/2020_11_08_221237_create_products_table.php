@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->integer('quantity');
             $table->text('description');
             $table->string('image');
+            $table->string('weight');
             $table->bigInteger('sold')->nullable()->default(0);
             $table->unsignedBigInteger('shop_id');
             $table->timestamps();
