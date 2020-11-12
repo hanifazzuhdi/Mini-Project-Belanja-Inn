@@ -6,6 +6,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class UserController extends Controller
 {
@@ -31,5 +32,24 @@ class UserController extends Controller
             'address' => 'required',
             'avatar' => 'required'
         ]);
+
+        File::delete(public_path('image/products/') . $product->image);
+
+        $image =  Auth::user()->username . '-' . time() . '.' . $request->image->getClientOriginalName();
+        $request->image->move(public_path('image/users'), $image);
+
+        $data->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'phone_number' => $request->phone_number,
+            'address' => $request->address,
+            'avatar' => $image,
+        ]);
+
+        return response([
+            'status' => 'success',
+            'message' => 'Profile berhasil diubah'
+        ], 202);
     }
 }
