@@ -23,7 +23,7 @@ class SellerController extends Controller
         ]);
 
         $image =  Auth::user()->username . '-' . time() . '.' . $request->image->getClientOriginalName();
-        $request->image->move(public_path('image/products'), $image);
+        $request->image->move('image/products', $image);
 
         $product = Product::create([
             'product_name' => $request->product_name,
@@ -46,8 +46,6 @@ class SellerController extends Controller
         if ($product === false) {
             return $this->SendResponse('failed', 'Produk tidak ditemukan', null, 400);
         }
-
-        // dd($request);
 
         $request->validate([
             'product_name' => 'required|min:10|max:60',
