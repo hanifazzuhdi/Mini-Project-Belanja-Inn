@@ -10,6 +10,11 @@ use App\Http\Controllers\Controller;
 
 class ShopController extends Controller
 {
+    public function shop()
+    {
+        dd(public_path());
+    }
+
     public function storeShop(Request $request)
     {
         $request->validate([
