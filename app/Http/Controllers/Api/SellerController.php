@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\File;
 
 class SellerController extends Controller
 {
-    public function storeProduct(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'product_name' => 'required|min:10|max:60',
@@ -18,7 +18,6 @@ class SellerController extends Controller
             'quantity'     => 'required|integer',
             'description'  => 'required|min:20|max:2000',
             'image'        => 'required|file|image',
-            'weight'       => 'required',
             'category_id'  => 'required'
         ]);
 
@@ -39,7 +38,7 @@ class SellerController extends Controller
         return $this->SendResponse('success', 'Produk berhasil ditambahkan', $product, 201);
     }
 
-    public function updateProduct(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $product = Product::find($id);
 
@@ -53,7 +52,6 @@ class SellerController extends Controller
             'quantity'     => 'required|integer',
             'description'  => 'required|min:10|max:2000',
             'image'        => 'file|image',
-            'weight'       => 'required'
         ]);
 
         // validate image and delete old image
