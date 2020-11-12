@@ -12,7 +12,7 @@ class ShopController extends Controller
 {
     public function shop()
     {
-        dump(public_path());
+        dump(public_path('image'));
 
         dump(url());
 
