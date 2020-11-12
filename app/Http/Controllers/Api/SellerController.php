@@ -18,7 +18,7 @@ class SellerController extends Controller
             'quantity'     => 'required|integer',
             'description'  => 'required|min:20|max:2000',
             'image'        => 'required|file|image',
-            'weight'       => 'required|integer',
+            'weight'       => 'required',
             'category_id'  => 'required'
         ]);
 
