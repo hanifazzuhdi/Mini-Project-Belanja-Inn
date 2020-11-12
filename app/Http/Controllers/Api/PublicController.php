@@ -12,6 +12,8 @@ class PublicController extends Controller
     public function index()
     {
         $products = ProductResource::collection(Product::all());
+        $srtproducts = $products->sortByDesc('product_name');
+        $products = $srtproducts->values()->all();
 
         try {
             return $this->SendResponse('succes', 'Data success to loaded', $products, 200);
@@ -42,5 +44,11 @@ class PublicController extends Controller
 
     public function search(Request $request)
     {
+        $products = Product::when($request->keyword, function ($query) use ($request) { 
+            $query->where('product_name', 'like', "%{$request->keyword}%"); })->get();
+
+        if (count($products) != 0) {
+            return $this->SendResponse('succes', 'Data success to loaded', $products, 200);
+        } else return $this->SendResponse('failed', 'Data failed to loaded', null, 500);
     }
 }
