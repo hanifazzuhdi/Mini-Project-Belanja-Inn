@@ -44,8 +44,9 @@ class PublicController extends Controller
 
     public function search(Request $request)
     {
-        $products = Product::when($request->keyword, function ($query) use ($request) { 
-            $query->where('product_name', 'like', "%{$request->keyword}%"); })->get();
+        $products = Product::when($request->keyword, function ($query) use ($request) {
+            $query->where('product_name', 'like', "%{$request->keyword}%");
+        })->get();
 
         if (count($products) != 0) {
             return $this->SendResponse('succes', 'Data success to loaded', $products, 200);

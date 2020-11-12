@@ -33,7 +33,7 @@ class UserController extends Controller
             'avatar' => 'required'
         ]);
 
-        File::delete(public_path('image/products/') . $product->image);
+        File::delete(public_path('image/products/') . $data->image);
 
         $image =  Auth::user()->username . '-' . time() . '.' . $request->image->getClientOriginalName();
         $request->image->move(public_path('image/users'), $image);
