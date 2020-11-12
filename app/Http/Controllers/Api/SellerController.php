@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Shop;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,12 +45,11 @@ class SellerController extends Controller
             return $this->SendResponse('failed', 'Produk tidak ditemukan', null, 400);
         }
 
-        // dd($product->id);
         $request->validate([
-            'product_name' => 'min:10|max:60',
-            // 'price'        => ',
-            'quantity'     => 'integer',
-            'description'  => 'min:20|max:2000',
+            'product_name' => 'required|min:10|max:60',
+            'price'        => 'required',
+            'quantity'     => 'required|integer',
+            'description'  => 'required|min:20|max:2000',
             'image'        => 'file|image',
         ]);
 
@@ -70,5 +68,17 @@ class SellerController extends Controller
         ]);
 
         return $this->SendResponse('success', 'Produk berhasil diubah', $data, 201);
+    }
+
+    public function destroy($id)
+    {
+        $data = Product::destroy($id);
+
+        if ($data) {
+            return response([
+                'status' => 'success',
+                'message' => 'Data berhasil dihapus'
+            ], 200);
+        } else return $this->SendResponse('failed', 'Produk gagal dihapus', null, 404);
     }
 }
