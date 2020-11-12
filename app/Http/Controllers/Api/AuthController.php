@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
@@ -33,13 +32,13 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'username' => 'require|unique:users',
-            'email' => 'email|required|unique:users',
+            'username' => 'required|unique:users',
+            'email' => 'required|email|unique:users',
             'password' => 'required|min:6'
         ]);
 
         $data = User::create([
-            'username' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
