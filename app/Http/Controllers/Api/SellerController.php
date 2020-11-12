@@ -18,6 +18,7 @@ class SellerController extends Controller
             'quantity'     => 'required|integer',
             'description'  => 'required|min:20|max:2000',
             'image'        => 'required|file|image',
+            'weight'       => 'required|integer',
             'category_id'  => 'required'
         ]);
 
@@ -30,6 +31,7 @@ class SellerController extends Controller
             'quantity' => $request->quantity,
             'description' => $request->description,
             'image' => $image,
+            'weight' => $request->weight,
             'shop_id' => Auth::id(),
             'category_id' => $request->category_id,
         ]);
