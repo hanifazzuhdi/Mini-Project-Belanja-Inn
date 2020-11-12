@@ -21,12 +21,16 @@ Route::group(['prefix' => 'public'], function () {
     Route::post('/search', 'Api\\PublicController@search');
 });
 
+Route::get('/get_shop/{id}', 'Api\\ShopController@shop')->name('get_shop');
+
 // Middleware Jwt
 Route::group(['middleware' => ['jwt.verify']], function () {
     // Route User
+    Route::get('/get_user', 'Api\\UserController@getUserAuth')->name('get_user');
+    Route::post('/update_user/{id}', 'Api\\UserController@updateUser');
+    Route::post('/logout', 'Api\AuthController@logout');
 
     // Route Shop
-    Route::get('/get_shop/{id}', 'Api\\ShopController@shop')->name('get_shop');
     Route::post('/store_shop', 'Api\\ShopController@storeShop')->name('store_shop');
 
     // Route crud Seller

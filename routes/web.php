@@ -15,3 +15,9 @@ Route::put('/update_product/{id}', 'Api\\SellerController@updateProduct')->name(
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Docs Api
+Route::get('/docs_api', function () {
+
+    return view('docs_api');
+});
