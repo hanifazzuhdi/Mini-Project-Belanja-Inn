@@ -47,12 +47,15 @@ class SellerController extends Controller
             return $this->SendResponse('failed', 'Produk tidak ditemukan', null, 400);
         }
 
+        // dd($request);
+
         $request->validate([
             'product_name' => 'required|min:10|max:60',
             'price'        => 'required',
             'quantity'     => 'required|integer',
-            'description'  => 'required|min:20|max:2000',
+            'description'  => 'required|min:10|max:2000',
             'image'        => 'file|image',
+            'weight'       => 'required'
         ]);
 
         // validate image and delete old image
@@ -67,6 +70,7 @@ class SellerController extends Controller
             'quantity' => $request->quantity,
             'description' => $request->description,
             'image' => $image,
+            'weight' => $request->weight
         ]);
 
         return $this->SendResponse('success', 'Produk berhasil diubah', $data, 201);
