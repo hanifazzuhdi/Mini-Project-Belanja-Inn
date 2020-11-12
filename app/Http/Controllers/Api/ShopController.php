@@ -10,13 +10,15 @@ use App\Http\Controllers\Controller;
 
 class ShopController extends Controller
 {
-    public function shop()
+    public function shop($id)
     {
-        dump(public_path('image/products'));
+        $data = Shop::find($id);
 
-        dump(url());
+        if ($data == false) {
+            return $this->SendResponse('failed', 'Data not found', null, 500);
+        }
 
-        dd(asset('public'));
+        return $this->SendResponse('success', 'Data loaded successfully', $data, 200);
     }
 
     public function storeShop(Request $request)
@@ -41,6 +43,6 @@ class ShopController extends Controller
             'description' => $request->description
         ]);
 
-        return $this->SendResponse('success', 'Toko berhasil dibuat', $data, 201);
+        return $this->SendResponse('success', 'Data created successfully', $data, 201);
     }
 }

@@ -17,7 +17,7 @@ class AuthController extends Controller
 
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 400);
+                return response()->json(['error' => 'Username atau Password Salah !'], 400);
             }
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
@@ -55,7 +55,7 @@ class AuthController extends Controller
 
         return response([
             'status' => 'success',
-            'message' => 'token berhasil dihapus'
+            'message' => 'Token deleted successfully'
         ], 200);
     }
 }

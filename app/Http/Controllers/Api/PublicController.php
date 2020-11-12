@@ -16,9 +16,9 @@ class PublicController extends Controller
         $products = $srtproducts->values()->all();
 
         try {
-            return $this->SendResponse('succes', 'Data success to loaded', $products, 200);
+            return $this->SendResponse('succes', 'Data loaded successfully', $products, 200);
         } catch (\Throwable $th) {
-            return $this->SendResponse('failed', 'Data failed to loaded', null, 500);
+            return $this->SendResponse('failed', 'Data failed to load', null, 500);
         }
     }
 
@@ -27,9 +27,9 @@ class PublicController extends Controller
         $product = new ProductResource($products->find(($id)));
 
         try {
-            return $this->SendResponse('succes', 'Data success to loaded', $product, 200);
+            return $this->SendResponse('succes', 'Data loaded successfully', $product, 200);
         } catch (\Throwable $th) {
-            return $this->SendResponse('failed', 'Data failed to loaded', null, 500);
+            return $this->SendResponse('failed', 'Data failed to load', null, 500);
         }
     }
 
@@ -38,8 +38,8 @@ class PublicController extends Controller
         $products = ProductResource::collection($product->where('category_id', $category_id)->get());
 
         if (count($products) != 0) {
-            return $this->SendResponse('succes', 'Data success to loaded', $products, 200);
-        } else return $this->SendResponse('failed', 'Data failed to loaded', null, 500);
+            return $this->SendResponse('succes', 'Data loaded successfully', $products, 200);
+        } else return $this->SendResponse('failed', 'Data failed to load', null, 500);
     }
 
     public function search(Request $request)
@@ -49,7 +49,7 @@ class PublicController extends Controller
         })->get();
 
         if (count($products) != 0) {
-            return $this->SendResponse('succes', 'Data success to loaded', $products, 200);
-        } else return $this->SendResponse('failed', 'Data failed to loaded', null, 500);
+            return $this->SendResponse('succes', 'Data loaded successfully', $products, 200);
+        } else return $this->SendResponse('failed', 'Data failed to load', null, 500);
     }
 }
