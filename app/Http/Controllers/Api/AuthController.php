@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
@@ -49,9 +50,9 @@ class AuthController extends Controller
         ], 201);
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
-        JWTAuth::invalidate($request->input('token'));
+        JWTAuth::invalidate(Auth::id());
 
         return response([
             'status' => 'success',

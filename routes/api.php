@@ -27,7 +27,7 @@ Route::get('/get_shop/{id}', 'Api\\ShopController@shop')->name('get_shop');
 Route::group(['middleware' => ['jwt.verify']], function () {
     // Route User
     Route::get('/get_user', 'Api\\UserController@getUserAuth')->name('get_user');
-    Route::post('/update_user/{id}', 'Api\\UserController@updateUser');
+    Route::post('/update_user', 'Api\\UserController@updateUser');
     Route::post('/logout', 'Api\AuthController@logout');
 
     // Route Shop

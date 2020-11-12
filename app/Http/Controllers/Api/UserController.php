@@ -23,6 +23,13 @@ class UserController extends Controller
     {
         $data = User::find(Auth::id());
 
-        dd($data);
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|unique:users',
+            'password' => 'required',
+            'phone_number' => 'required',
+            'address' => 'required',
+            'avatar' => 'required'
+        ]);
     }
 }
