@@ -9,7 +9,7 @@ Route::get('/', function () {
 
 Route::post('/store', 'Api\\ShopController@storeShop')->name('store');
 Route::post('/store_product', 'Api\\SellerController@storeProduct')->name('store_product');
-Route::put('/update_product/{id}', 'Api\\SellerController@updateProduct')->name('update_product');
+Route::put('/update/product/{id}', 'Api\\SellerController@updateProduct')->name('update_product');
 
 
 Auth::routes();

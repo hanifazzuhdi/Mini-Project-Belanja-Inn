@@ -14,7 +14,7 @@ class ProductResource extends JsonResource
      */
     public function toArray($request)
     {
-        $imageURL = url('image/products/' . $this->image);
+        $imageURL = url('image/products/' . base64_decode($this->image));
 
         return [
             'id' => $this->id,
@@ -23,6 +23,7 @@ class ProductResource extends JsonResource
             'quantity' => $this->quantity,
             'description' => $this->description,
             'sold' => $this->sold,
+            'weight' => $this->weight,
             'image' => $imageURL,
             'created_at' => $this->created_at->translatedFormat('l, d F Y h:i:s'),
             'updated_at' => $this->updated_at->diffForhumans(),

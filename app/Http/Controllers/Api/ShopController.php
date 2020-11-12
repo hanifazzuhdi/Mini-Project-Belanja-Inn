@@ -10,7 +10,18 @@ use App\Http\Controllers\Controller;
 
 class ShopController extends Controller
 {
-    public function storeShop(Request $request)
+    public function index($id)
+    {
+        $data = Shop::find($id);
+
+        if ($data == false) {
+            return $this->SendResponse('failed', 'Data not found', null, 500);
+        }
+
+        return $this->SendResponse('success', 'Data loaded successfully', $data, 200);
+    }
+
+    public function store(Request $request)
     {
         $request->validate([
             'shop_name' => 'required|min:6|unique:shops',
@@ -32,6 +43,10 @@ class ShopController extends Controller
             'description' => $request->description
         ]);
 
-        return $this->SendResponse('success', 'Toko berhasil dibuat', $data, 201);
+        return $this->SendResponse('success', 'Data created successfully', $data, 201);
+    }
+
+    public function update(Request $request, $id)
+    {
     }
 }

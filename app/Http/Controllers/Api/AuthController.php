@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
@@ -18,7 +17,7 @@ class AuthController extends Controller
 
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 400);
+                return response()->json(['error' => 'Username atau Password Salah !'], 400);
             }
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
@@ -33,13 +32,13 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => 'email|required|unique:users',
+            'username' => 'required|unique:users',
+            'email' => 'required|email|unique:users',
             'password' => 'required|min:6'
         ]);
 
         $data = User::create([
-            'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
@@ -56,7 +55,7 @@ class AuthController extends Controller
 
         return response([
             'status' => 'success',
-            'message' => 'token berhasil dihapus'
+            'message' => 'Token deleted successfully'
         ], 200);
     }
 }

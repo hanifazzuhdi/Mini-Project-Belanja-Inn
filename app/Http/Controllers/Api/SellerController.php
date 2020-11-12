@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\File;
 
 class SellerController extends Controller
 {
-    public function storeProduct(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'product_name' => 'required|min:10|max:60',
@@ -22,7 +22,7 @@ class SellerController extends Controller
         ]);
 
         $image =  Auth::user()->username . '-' . time() . '.' . $request->image->getClientOriginalName();
-        $request->image->move(public_path('image/products'), $image);
+        $request->image->move(public_path('image/products'), base64_encode($image));
 
         $product = Product::create([
             'product_name' => $request->product_name,
@@ -30,6 +30,7 @@ class SellerController extends Controller
             'quantity' => $request->quantity,
             'description' => $request->description,
             'image' => $image,
+            'weight' => $request->weight,
             'shop_id' => Auth::id(),
             'category_id' => $request->category_id,
         ]);
@@ -37,7 +38,7 @@ class SellerController extends Controller
         return $this->SendResponse('success', 'Produk berhasil ditambahkan', $product, 201);
     }
 
-    public function updateProduct(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $product = Product::find($id);
 
@@ -49,7 +50,7 @@ class SellerController extends Controller
             'product_name' => 'required|min:10|max:60',
             'price'        => 'required',
             'quantity'     => 'required|integer',
-            'description'  => 'required|min:20|max:2000',
+            'description'  => 'required|min:10|max:2000',
             'image'        => 'file|image',
         ]);
 
@@ -65,6 +66,7 @@ class SellerController extends Controller
             'quantity' => $request->quantity,
             'description' => $request->description,
             'image' => $image,
+            'weight' => $request->weight
         ]);
 
         return $this->SendResponse('success', 'Produk berhasil diubah', $data, 201);

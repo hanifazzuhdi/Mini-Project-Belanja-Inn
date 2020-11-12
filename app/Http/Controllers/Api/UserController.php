@@ -20,7 +20,7 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function updateUser(Request $request)
+    public function update(Request $request)
     {
         $data = User::find(Auth::id());
 
@@ -33,7 +33,7 @@ class UserController extends Controller
             'avatar' => 'required'
         ]);
 
-        File::delete(public_path('image/products/') . $request->image);
+        File::delete(public_path('image/products/') . $data->image);
 
         $image =  Auth::user()->username . '-' . time() . '.' . $request->image->getClientOriginalName();
         $request->image->move(public_path('image/users'), $image);
