@@ -26,14 +26,14 @@ class Shop extends Model
         return $this->hasMany(Product::class);
     }
 
-    // public function getCreatedAtAttribute()
-    // {
-    //     return Carbon::parse($this->attributes['created_at'])->format('l, d F Y H:i');
-    // }
+    public function getCreatedAtAttribute()
+    {
+        return Carbon::parse($this->attributes['created_at'])->translatedFormat('l, d F Y H:i');
+    }
     
-    // public function getUpdatedAtAttribute()
-    // {
-    //     return Carbon::parse($this->attributes['updated_at'])->diffForHumans();
-    // }
+    public function getUpdatedAtAttribute()
+    {
+        return Carbon::parse($this->attributes['updated_at'])->diffForHumans();
+    }
 
 }
