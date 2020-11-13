@@ -2,14 +2,15 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Product;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 
 class Shop extends Model
 {
     protected $fillable = ['id', 'shop_id', 'shop_name', 'avatar', 'address', 'description'];
 
-    protected $hidden = ['updated_at', 'id'];
+    // protected $hidden = ['updated_at', 'id'];
 
     protected $primaryKey = 'id';
 
@@ -24,4 +25,15 @@ class Shop extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    public function getCreatedAtAttribute()
+    {
+        return Carbon::parse($this->attributes['created_at'])->translatedFormat('l, d F Y H:i');
+    }
+    
+    public function getUpdatedAtAttribute()
+    {
+        return Carbon::parse($this->attributes['updated_at'])->diffForHumans();
+    }
+
 }
