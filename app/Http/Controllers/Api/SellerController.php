@@ -7,10 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
+use GuzzleHttp\Client;
 
 class SellerController extends Controller
 {
-    public function store(Request $request, Product $product)
+    public function store(Request $request, Client $client)
     {
         $request->validate([
             'product_name' => 'required|min:10|max:60',
@@ -23,12 +24,25 @@ class SellerController extends Controller
 
         $image = base64_encode(file_get_contents($request->image));
 
+        $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+            'form_params' => [
+                'key' => '6d207e02198a847aa98d0a2a901485a5',
+                'action' => 'upload',
+                'source' => $image,
+                'format' => 'json'
+            ]
+        ]);
+
+        $get = $res->getBody()->getContents();
+
+        $hasil = json_decode($get);
+
         $product = Product::create([
             'product_name' => $request->product_name,
             'price' => $request->price,
             'quantity' => $request->quantity,
             'description' => $request->description,
-            'image' => $image,
+            'image' => $hasil->image->display_url,
             'weight' => $request->weight,
             'shop_id' => Auth::id(),
             'category_id' => $request->category_id,
@@ -37,7 +51,7 @@ class SellerController extends Controller
         return $this->SendResponse('success', 'Produk berhasil ditambahkan', $product, 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Client $client, $id)
     {
         $product = Product::find($id);
 
@@ -53,20 +67,27 @@ class SellerController extends Controller
             'image'        => 'file|image',
         ]);
 
-        // validate image and delete old image
-
-        // File::delete(public_path('image/products/') . $product->image);
-        // $image =  Auth::user()->username . '-' . time() . '.' . $request->image->getClientOriginalName();
-        // $request->image->move(public_path('image/products'), $image);
-
         $image = base64_encode(file_get_contents($request->image));
+
+        $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+            'form_params' => [
+                'key' => '6d207e02198a847aa98d0a2a901485a5',
+                'action' => 'upload',
+                'source' => $image,
+                'format' => 'json'
+            ]
+        ]);
+
+        $get = $res->getBody()->getContents();
+
+        $hasil = json_decode($get);
 
         $data = $product->update([
             'product_name' => $request->product_name,
             'price' => $request->price,
             'quantity' => $request->quantity,
             'description' => $request->description,
-            'image' => $image,
+            'image' => $hasil->image->display_url,
             'weight' => $request->weight
         ]);
 
