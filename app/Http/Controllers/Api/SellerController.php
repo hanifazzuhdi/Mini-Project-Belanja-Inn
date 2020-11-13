@@ -6,7 +6,6 @@ use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\File;
 use GuzzleHttp\Client;
 
 class SellerController extends Controller
@@ -34,8 +33,6 @@ class SellerController extends Controller
         ]);
 
         $get = $res->getBody()->getContents();
-
-        dd($get);
 
         $hasil = json_decode($get);
 

@@ -14,7 +14,7 @@ class PublicController extends Controller
         $products = ProductResource::collection(Product::all());
         $srtproducts = $products->sortByDesc('created_at');
         $products = $srtproducts->values()->all();
-        
+
         try {
             return $this->SendResponse('succes', 'Data loaded successfully', $products, 200);
         } catch (\Throwable $th) {

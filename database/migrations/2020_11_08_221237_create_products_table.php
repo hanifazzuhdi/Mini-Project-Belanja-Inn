@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('price');
             $table->integer('quantity');
             $table->text('description');
-            $table->longText('image');
+            $table->string('image');
             $table->string('weight')->nullable()->default(0);
             $table->bigInteger('sold')->nullable()->default(0);
             $table->unsignedBigInteger('shop_id');
