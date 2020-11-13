@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\File;
 
 class SellerController extends Controller
 {
-    public function store(Request $request)
+    public function store(Request $request, Product $product)
     {
         $request->validate([
             'product_name' => 'required|min:10|max:60',
@@ -21,8 +21,7 @@ class SellerController extends Controller
             'category_id'  => 'required'
         ]);
 
-        $image =  Auth::user()->username . '-' . time() . '.' . $request->image->getClientOriginalName();
-        $request->image->move(public_path('image/products'), base64_encode($image));
+        $image = base64_encode(file_get_contents($request->image));
 
         $product = Product::create([
             'product_name' => $request->product_name,
@@ -55,10 +54,12 @@ class SellerController extends Controller
         ]);
 
         // validate image and delete old image
-        File::delete(public_path('image/products/') . $product->image);
 
-        $image =  Auth::user()->username . '-' . time() . '.' . $request->image->getClientOriginalName();
-        $request->image->move(public_path('image/products'), $image);
+        // File::delete(public_path('image/products/') . $product->image);
+        // $image =  Auth::user()->username . '-' . time() . '.' . $request->image->getClientOriginalName();
+        // $request->image->move(public_path('image/products'), $image);
+
+        $image = base64_encode(file_get_contents($request->image));
 
         $data = $product->update([
             'product_name' => $request->product_name,
