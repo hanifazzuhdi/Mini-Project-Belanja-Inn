@@ -35,6 +35,8 @@ class SellerController extends Controller
 
         $get = $res->getBody()->getContents();
 
+        dd($get);
+
         $hasil = json_decode($get);
 
         $product = Product::create([
