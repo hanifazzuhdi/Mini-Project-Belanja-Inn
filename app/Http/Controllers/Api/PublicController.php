@@ -27,7 +27,7 @@ class PublicController extends Controller
         $product = new ProductResource($products->find(($id)));
 
         try {
-            return $this->SendResponse('succes', 'Data loaded successfully', $product, 200);
+            return $this->SendResponse('succes', 'Data loaded successfully', [$product], 200);
         } catch (\Throwable $th) {
             return $this->SendResponse('failed', 'Data failed to load', null, 500);
         }
