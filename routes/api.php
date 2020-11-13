@@ -29,10 +29,10 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Route Shop
     Route::post('/store_shop', 'Api\\ShopController@store')->name('store_shop');
-    Route::post('/update_shop/{id}', 'Api\ShopController@update')->name('update_shop');
+    Route::put('/update_shop/{id}', 'Api\ShopController@update')->name('update_shop');
 
     // Route crud Seller
-    Route::post('/store/product', 'Api\\SellerController@store')->name('store_product');
-    Route::put('/update/product/{id}', 'Api\\SellerController@update')->name('update_product');
-    Route::delete('/destroy/product/{id}', 'Api\SellerController@destroy')->name('destroy');
+    Route::post('/store_product', 'Api\\SellerController@store')->name('store_product');
+    Route::put('/update_product/{id}', 'Api\\SellerController@update')->name('update_product');
+    Route::delete('/destroy_product/{id}', 'Api\SellerController@destroy')->name('destroy');
 });

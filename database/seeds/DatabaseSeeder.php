@@ -61,7 +61,7 @@ class DatabaseSeeder extends Seeder
             'id' => 1,
             'shop_id' => 1,
             'shop_name' => 'mujahid shop',
-            'avatar' => 'sample.png',
+            'avatar' => 'https://iili.io/FqzDMX.md.png',
             'address' => 'jakarta indonesia',
             'description' => 'ini adalah toko milik mujahid'
         ]);
@@ -70,7 +70,7 @@ class DatabaseSeeder extends Seeder
             'id' => 2,
             'shop_id' => 2,
             'shop_name' => 'fauzil shop',
-            'avatar' => 'sample.png',
+            'avatar' => 'https://iili.io/FqzDMX.md.png',
             'address' => 'palembang indonesia',
             'description' => 'ini adalah toko milik fauzil'
         ]);

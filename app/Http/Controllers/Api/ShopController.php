@@ -26,12 +26,12 @@ class ShopController extends Controller
     {
         $request->validate([
             'shop_name' => 'required|min:6|unique:shops',
-            'avatar' => 'required|image|file',
+            'avatar' => 'required|image|file|max:2000',
             'address' => 'required',
             'description' => 'required'
         ]);
 
-        $image = base64_encode(file_get_contents($request->image));
+        $image = base64_encode(file_get_contents($request->avatar));
 
         $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
             'form_params' => [
@@ -58,7 +58,40 @@ class ShopController extends Controller
         return $this->SendResponse('success', 'Data created successfully', $data, 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Client $client, $id)
     {
+        $shop = Shop::find($id);
+
+        if ($shop === false) {
+            return $this->SendResponse('failed', 'Data not found', null, 400);
+        }
+
+        $request->validate([
+            'avatar'  => 'max:2000',
+            'description' => 'required'
+        ]);
+
+        $image = base64_encode(file_get_contents($request->avatar));
+
+        $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+            'form_params' => [
+                'key' => '6d207e02198a847aa98d0a2a901485a5',
+                'action' => 'upload',
+                'source' => $image,
+                'format' => 'json'
+            ]
+        ]);
+
+        $get = $res->getBody()->getContents();
+
+        $hasil = json_decode($get);
+
+        $data = $shop->update([
+            'image' => $hasil->image->display_url,
+            'address' => $request->quantity,
+            'description' => $request->description,
+        ]);
+
+        return $this->SendResponse('success', 'Data berhasil diubah', $data, 201);
     }
 }
