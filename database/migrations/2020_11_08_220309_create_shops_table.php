@@ -17,7 +17,7 @@ class CreateShopsTable extends Migration
             $table->unsignedBigInteger('id')->primary();
             $table->unsignedBigInteger('shop_id');
             $table->string('shop_name')->unique();
-            $table->string('avatar');
+            $table->string('avatar')->default('https://iili.io/FqzDMX.md.png');
             $table->string('address');
             $table->text('description');
             $table->timestamps();

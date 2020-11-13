@@ -21,8 +21,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('phone_number')->nullable()->default('Not Exist');
-            $table->string('address')->nullable()->default('Not exist');
-            $table->string('avatar')->nullable()->default('sample.png');
+            $table->string('address')->nullable()->default('Not Exist');
+            $table->string('avatar')->nullable()->default('https://iili.io/FqzDMX.md.png');
             $table->unsignedBigInteger('role_id')->default(1);
             $table->rememberToken();
             $table->timestamps();
