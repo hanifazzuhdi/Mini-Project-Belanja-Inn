@@ -16,7 +16,7 @@ class UserController extends Controller
 
         return response([
             'status' => 'success',
-            'data' => $data
+            'data' => [$data]
         ], 200);
     }
 
