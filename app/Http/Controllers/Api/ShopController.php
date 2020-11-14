@@ -6,6 +6,9 @@ use App\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Product;
+use App\User;
+use Illuminate\Support\Facades\DB;
 
 use GuzzleHttp\Client;
 
@@ -24,6 +27,16 @@ class ShopController extends Controller
 
     public function store(Request $request, Client $client)
     {
+        // Cek tidak boleh memiliki toko ganda
+        $cek = Shop::where('id', Auth::id())->get()->toArray();
+
+        if (count($cek) == 1) {
+            return response([
+                'status' => 'failed',
+                'message' => 'Anda Sudah memiliki toko diakun ini'
+            ], 404);
+        }
+
         $request->validate([
             'shop_name' => 'required|min:6|unique:shops',
             'avatar' => 'required|image|file|max:2000',
@@ -53,6 +66,13 @@ class ShopController extends Controller
             'avatar' =>  $hasil->image->display_url,
             'address' => $request->address,
             'description' => $request->description
+        ]);
+
+        // update role user
+        $user = User::find(Auth::id());
+
+        $user->update([
+            'role_id' => 2
         ]);
 
         return $this->SendResponse('success', 'Data created successfully', $data, 201);
