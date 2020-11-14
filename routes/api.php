@@ -1,12 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Route Auth
 Route::post('/login', 'Api\\AuthController@login');
 Route::post('/register', 'Api\\AuthController@register');
-
 
 // Route Public
 Route::group(['prefix' => 'public'], function () {

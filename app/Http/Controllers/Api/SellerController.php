@@ -37,7 +37,11 @@ class SellerController extends Controller
         $hasil = json_decode($get);
 
         // Format Harga
-        $price = number_format($request->price, 2, ',', '.');
+        $format = number_format($request->price, 2, ',', '.');
+
+        $explode = explode(",", $format);
+        $price = $explode[0];
+
 
         $product = Product::create([
             'product_name' => $request->product_name,
@@ -85,8 +89,10 @@ class SellerController extends Controller
         $hasil = json_decode($get);
 
         // Format harga
-        $price = number_format($request->price, 2, ',', '.');
+        $format = number_format($request->price, 2, ',', '.');
 
+        $explode = explode(",", $format);
+        $price = $explode[0];
 
         $data = $product->update([
             'product_name' => $request->product_name,
