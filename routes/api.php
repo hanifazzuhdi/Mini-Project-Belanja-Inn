@@ -23,7 +23,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Route User
     Route::get('/get_user', 'Api\\UserController@getUserAuth')->name('get_user');
-    Route::post('/update_user', 'Api\\UserController@update')->name('update_user');
+    Route::put('/update_user', 'Api\\UserController@update')->name('update_user');
 
     // Route Shop
     Route::post('/store_shop', 'Api\\ShopController@store')->name('store_shop');
@@ -33,4 +33,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/store_product', 'Api\\SellerController@store')->name('store_product');
     Route::put('/update_product/{id}', 'Api\\SellerController@update')->name('update_product');
     Route::delete('/destroy_product/{id}', 'Api\SellerController@destroy')->name('destroy');
+
+    // Route transaksi
+
 });
