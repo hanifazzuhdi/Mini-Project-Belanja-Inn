@@ -21,8 +21,8 @@ class SellerController extends Controller
             'category_id'  => 'required'
         ]);
 
+        // Validasi image
         $image = base64_encode(file_get_contents($request->image));
-
         $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
             'form_params' => [
                 'key' => '6d207e02198a847aa98d0a2a901485a5',
@@ -36,9 +36,12 @@ class SellerController extends Controller
 
         $hasil = json_decode($get);
 
+        // Format Harga
+        $price = number_format($request->price, 2, ',', '.');
+
         $product = Product::create([
             'product_name' => $request->product_name,
-            'price' => $request->price,
+            'price' => $price,
             'quantity' => $request->quantity,
             'description' => $request->description,
             'image' => $hasil->image->display_url,
@@ -66,8 +69,8 @@ class SellerController extends Controller
             'image'        => 'file|image',
         ]);
 
+        // Validasi image
         $image = base64_encode(file_get_contents($request->image));
-
         $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
             'form_params' => [
                 'key' => '6d207e02198a847aa98d0a2a901485a5',
@@ -81,9 +84,13 @@ class SellerController extends Controller
 
         $hasil = json_decode($get);
 
+        // Format harga
+        $price = number_format($request->price, 2, ',', '.');
+
+
         $data = $product->update([
             'product_name' => $request->product_name,
-            'price' => $request->price,
+            'price' => $price,
             'quantity' => $request->quantity,
             'description' => $request->description,
             'image' => $hasil->image->display_url,
