@@ -43,7 +43,7 @@ class UserController extends Controller
 
         $get = $res->getBody()->getContents();
 
-        // $hasil = json_decode($get);
+        $hasil = json_decode($get);
 
         $data->update([
             'name' => $request->name,
