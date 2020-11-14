@@ -61,6 +61,12 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            .content .d {
+                text-decoration: none;
+                color: #636b6f;
+                cursor:initial;
+            }
         </style>
     </head>
     <body>
@@ -88,7 +94,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Mini Project - D
+                    Mini Project - <a class="d" href="{{route('login')}}"> D </a>
                 </div>
 
                 <div class="links">
