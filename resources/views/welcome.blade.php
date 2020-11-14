@@ -69,9 +69,8 @@
                 <div class="top-right links">
                     @auth
 
-                    @if (auth()->user()->role_id == 3){
+                    @if (auth()->user()->role_id == 3)
                         <a href="{{ url('/home') }}">Home</a>
-                    }
                     @endif
 
                     <a href="{{ route('logout') }}"
