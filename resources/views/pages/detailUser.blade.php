@@ -77,35 +77,41 @@ alert()->html('<i>HTML</i> <u>example</u>',"
                     <div class="danger">
                         <p class="text-left" >Danger Zone</p>
 
-                        <form class="mt-3 text-right" action="{{'/delete/' . $data['id']}}" method="post">
-                            @csrf
-                            @method('delete')
-                            <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#delete">
+                        <form class="text-right">
+                            <div class="btn btn-warning" type="button" data-toggle="modal" data-target="#delete">
+                                <i class="fas fa-edit  text-black-300"></i>
+                            </div>
+
+                            <div class="btn btn-danger" type="button" data-toggle="modal" data-target="#delete">
                                 <i class="fas fa-trash  text-black-300"></i>
-                            </button>
-
-                            {{--Confirm--}}
-                            <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
-
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="delete">Confirmation</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body text-left">
-                                            Are you sure <strong> delete </strong> this account ? this will <strong> destroy all data </strong> from this account
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </form>
+                    </div>
+
+
+                    {{--Confirm Delete--}}
+                    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete"aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="delete">Confirmation</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body text-left">
+                                    Are you sure <strong> delete </strong> this account ? this will <strong> destroy all data </strong> from this account
+                                </div>
+                                <div class="modal-footer">
+                                    <form action="{{'/delete/' . $data['id']}}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>

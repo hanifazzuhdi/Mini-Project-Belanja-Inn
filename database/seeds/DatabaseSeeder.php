@@ -50,6 +50,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::create([
+            'name' => 'mujahid',
             'username' => 'mujahid01',
             'email' => 'mujahid@gmail.com',
             'password' => Hash::make('password'),
@@ -57,6 +58,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::create([
+            'name' => 'fauzil',
             'username' => 'fauzil01',
             'email' => 'fauzil@gmail.com',
             'password' => Hash::make('password'),
@@ -64,6 +66,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::create([
+            'name' => 'hanif',
             'username' => 'hanif',
             'email' => 'hanif@gmail.com',
             'password' => Hash::make('password'),

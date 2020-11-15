@@ -10,7 +10,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => 'CekAdmin', 'auth'], function () {
-
     // main
     Route::get('/dashboard', 'HomeController@index')->name('home');
     Route::get('/getUser', 'HomeController@getUser')->name('getUser');
