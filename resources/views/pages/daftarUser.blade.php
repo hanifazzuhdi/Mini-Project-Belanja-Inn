@@ -3,6 +3,17 @@
 @section('activeUser', 'active')
 @section('content')
 
+<div class="container">
+    @if (session('status') )
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success !</strong> {{session('status')}} .
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+    @endif
+</div>
+
  <!-- Begin Page Content -->
  <div class="container-fluid">
     <!-- DataTales Example -->
@@ -21,6 +32,7 @@
                             <th>Phone Number</th>
                             <th>Role</th>
                             <th>Created At</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -31,6 +43,7 @@
                             <th>Phone Number</th>
                             <th>Role</th>
                             <th>Created At</th>
+                            <th></th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -50,6 +63,11 @@
                             @endif
 
                             <td>{{$data['created_at']}}</td>
+                            <td class="text-center">
+                                <a href="{{'detailUser/' . $data['id'] }}">
+                                    <i class="fas fa-user text-black-300"></i>
+                                </a>
+                            </td>
                         </tr>
 
                         @endforeach

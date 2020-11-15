@@ -1,0 +1,41 @@
+/* page detail user */
+
+.card-detail-user {
+    color: black;
+    width: 1000px;
+    margin: auto;
+}
+
+.detail-user h4 {
+    color: black;
+    font-weight: 800;
+    border-bottom: 2px solid rgba(65, 61, 61, 0.5);
+    padding-bottom: 20px;
+}
+
+.detail-user img {
+    border-radius: 100%;
+}
+
+.detail-user .kiri {
+    border-right: 1px solid rgba(65, 61, 61, 0.5);
+}
+
+.detail-user .kanan {
+    padding-left: 30px;
+}
+
+.detail-user .danger {
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.detail-user p {
+    color: red;
+    font-weight: 800;
+    font-size: 16px;
+    padding-bottom: 25px;
+}

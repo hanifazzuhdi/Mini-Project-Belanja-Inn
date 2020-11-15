@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
+use App\Shop;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,5 +28,23 @@ class HomeController extends Controller
         $datas = User::where('role_id', '!=', 3)->orderBy('id')->get()->toArray();
 
         return view('pages.daftarUser', compact('datas'));
+    }
+
+    public function getDetail($id)
+    {
+        $data = User::find($id)->toArray();
+
+        return view('pages.detailUser', compact('data'));
+    }
+
+    public function destroy($id)
+    {
+        Product::where('shop_id', $id)->delete();
+
+        Shop::destroy($id);
+
+        User::destroy($id);
+
+        return redirect(route('getUser'))->with('status', 'Data Deleted Successfully');
     }
 }

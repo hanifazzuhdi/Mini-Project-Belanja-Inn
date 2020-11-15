@@ -22,7 +22,7 @@ class CreateShopsTable extends Migration
             $table->text('description');
             $table->timestamps();
 
-            $table->foreign('shop_id')->references('id')->on('users');
+            $table->foreign('shop_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

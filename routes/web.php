@@ -14,6 +14,8 @@ Route::group(['middleware' => 'CekAdmin', 'auth'], function () {
     // main
     Route::get('/dashboard', 'HomeController@index')->name('home');
     Route::get('/getUser', 'HomeController@getUser')->name('getUser');
+    Route::get('/detailUser/{id}', 'HomeController@getDetail')->name('detailUser');
+    Route::delete('/delete/{id}', 'HomeController@destroy');
 
     Route::get('/settings/category', 'HomeController@category')->name('category');
 });
