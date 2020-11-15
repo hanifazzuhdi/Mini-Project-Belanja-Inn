@@ -70,6 +70,9 @@
         </style>
     </head>
     <body>
+
+        {{dd(url('Admin/vendor/fontawesome-free/css/all.min.css'))}}
+
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
