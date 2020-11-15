@@ -23,7 +23,7 @@ class HomeController extends Controller
 
     public function getUser()
     {
-        $datas = User::where('role_id', '!=', 3)->get()->toArray();
+        $datas = User::where('role_id', '!=', 3)->orderBy('id')->get()->toArray();
 
         return view('pages.daftarUser', compact('datas'));
     }

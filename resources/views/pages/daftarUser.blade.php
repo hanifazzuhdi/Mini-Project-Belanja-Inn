@@ -20,7 +20,7 @@
                             <th>Username</th>
                             <th>Phone Number</th>
                             <th>Role</th>
-                            <th>Created </th>
+                            <th>Created At</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -30,7 +30,7 @@
                             <th>Username</th>
                             <th>Phone Number</th>
                             <th>Role</th>
-                            <th>Created</th>
+                            <th>Created At</th>
                         </tr>
                     </tfoot>
                     <tbody>
