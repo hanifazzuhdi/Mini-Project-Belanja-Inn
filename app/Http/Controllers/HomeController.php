@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use GuzzleHttp\Client;
 
 class HomeController extends Controller
 {
@@ -44,13 +45,42 @@ class HomeController extends Controller
 
         $user->update([
             'name' => $request->name,
+            'password' => $request->password ? $request->password : $user->password,
             'address' => $request->address,
             'phone_number' => $request->phone_number
         ]);
 
         Alert::success('Success', 'Data berhasil diubah');
 
-        return redirect("detailUser/$id");
+        return redirect("detailUser/$id")->with('status', 'Data Updated Successfully');
+    }
+
+    public function updateAvatar($id, Request $request, Client $client)
+    {
+        $request->validate([
+            'avatar' => 'required|file|image|max:2000'
+        ]);
+
+        $avatar = base64_encode(file_get_contents($request->avatar));
+
+        $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+            'form_params' => [
+                'key' => '6d207e02198a847aa98d0a2a901485a5',
+                'action' => 'upload',
+                'source' => $avatar,
+                'format' => 'json'
+            ]
+        ]);
+
+        $get = $res->getBody()->getContents();
+
+        $hasil = json_decode($get);
+
+        $newAvatar = $hasil->image->display_url;
+
+        DB::update("UPDATE users SET avatar = '$newAvatar' WHERE id = $id");
+
+        return redirect("detailUser/$id")->with('status', 'Avatar has been changed');
     }
 
     public function destroy($id)

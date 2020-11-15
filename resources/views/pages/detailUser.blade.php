@@ -3,16 +3,16 @@
 @section('activeUser', 'active')
 @section('content')
 
-<script>
-
-alert()->html('<i>HTML</i> <u>example</u>',"
-  You can use <b>bold text</b>,
-  <a href='//github.com'>links</a>
-  and other HTML tags
-",'success');
-
-</script>
-
+<div class="container">
+    @if (session('status') )
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success !</strong> {{session('status')}} .
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+    @endif
+</div>
 
 <div class="container detail-user my-4">
     <div class="card card-detail-user p-4">
@@ -26,7 +26,9 @@ alert()->html('<i>HTML</i> <u>example</u>',"
                         <div class="image">
                             <img class="img " width="200px" height="200px" src="{{$data['avatar']}}" alt="Avatar">
                             <span class="upload">
-                                <i class="fas fa-camera text-black-300"></i>
+                                <div type="button" data-toggle="modal" data-target="#avatar">
+                                    <i class="fas fa-camera text-black-300"></i>
+                                </div>
                             </span>
                         </div>
                         <fieldset disabled>
@@ -103,6 +105,35 @@ alert()->html('<i>HTML</i> <u>example</u>',"
                     </div>
 
 
+                    {{-- update avatar --}}
+                    <div class="modal fade" id="avatar" tabindex="-1" role="dialog" aria-labelledby="avatar" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="avatar">Update data user</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/updateAvatar/{{$data['id']}}" enctype="multipart/form-data" method="post">
+                                        @csrf
+                                        @method('put')
+                                        <div class="form-group">
+                                            <label>Avatar : </label>
+                                            <br>
+                                            <input type="file" name="avatar">
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Upload</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     {{--Update--}}
                     <div class="modal fade" id="update" tabindex="-1" role="dialog" aria-labelledby="update" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -121,6 +152,12 @@ alert()->html('<i>HTML</i> <u>example</u>',"
                                         <div class="form-group">
                                             <label>Name : </label>
                                             <input class="form-control" type="text" name="name" value="{{$data['name']}}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Password : </label>
+                                            <input class="form-control" type="password" name="password" placeholder="*********">
+                                            <small id="password" class="form-text text-muted">You can't see this password</small>
                                         </div>
 
                                         <div class="form-group">
