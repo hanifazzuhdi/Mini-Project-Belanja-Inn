@@ -8,7 +8,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Daftar User</h6>
+            <h6 class="m-0 font-weight-bold text-primary">List User</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -20,7 +20,7 @@
                             <th>Username</th>
                             <th>Phone Number</th>
                             <th>Role</th>
-                            <th>Created</th>
+                            <th>Created </th>
                         </tr>
                     </thead>
                     <tfoot>
