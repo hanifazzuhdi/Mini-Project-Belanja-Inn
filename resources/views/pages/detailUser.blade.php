@@ -23,14 +23,14 @@
             <div class="row">
                 <div class="kiri col-md-5">
                     <div class="card-body text-center">
+
                         <div class="image">
                             <img class="img " width="200px" height="200px" src="{{$data['avatar']}}" alt="Avatar">
-                            <span class="upload">
-                                <div type="button" data-toggle="modal" data-target="#avatar">
+                                <div class="upload" type="button" data-toggle="modal" data-target="#avatar">
                                     <i class="fas fa-camera text-black-300"></i>
                                 </div>
-                            </span>
                         </div>
+
                         <fieldset disabled>
                             <div class=" mt-5 form-group" >
                                 <span>Email : </span>
