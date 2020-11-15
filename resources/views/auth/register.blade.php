@@ -7,7 +7,9 @@
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
 
-                <div class="card-body">
+                <h2 class="text-center p-5">Anda tidak diperbolehkan register disini</h2>
+
+                {{-- <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
@@ -68,7 +70,8 @@
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </form> --}}
+
                 </div>
             </div>
         </div>

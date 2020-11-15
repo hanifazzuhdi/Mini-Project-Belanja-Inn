@@ -24,7 +24,6 @@ class UserController extends Controller
 
         $request->validate([
             'name' => 'required',
-            'email' => 'required|unique:users',
             'password' => 'required',
             'phone_number' => 'required',
             'address' => 'required',
@@ -48,8 +47,7 @@ class UserController extends Controller
 
         $data->update([
             'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
+            'password' => bcrypt($request->password),
             'phone_number' => $request->phone_number,
             'address' => $request->address,
             'avatar' => $hasil->image->display_url

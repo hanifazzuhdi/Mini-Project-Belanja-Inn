@@ -7,17 +7,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/store', 'Api\\ShopController@storeShop')->name('store');
-Route::post('/store_product', 'Api\\SellerController@storeProduct')->name('store_product');
-Route::put('/update/product/{id}', 'Api\\SellerController@updateProduct')->name('update_product');
-
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => 'CekAdmin', 'auth'], function () {
 
-// Docs Api
-Route::get('/docs_api', function () {
+    // main
+    Route::get('/dashboard', 'HomeController@index')->name('home');
+    Route::get('/getUser', 'HomeController@getUser')->name('getUser');
 
-    return view('docs_api');
+    Route::get('/settings/category', 'HomeController@category')->name('category');
 });

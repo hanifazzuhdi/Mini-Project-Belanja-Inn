@@ -67,6 +67,13 @@ class DatabaseSeeder extends Seeder
             'role_id' => 3
         ]);
 
+        User::create([
+            'username' => 'hanif',
+            'email' => 'hanif@gmail.com',
+            'password' => Hash::make('password'),
+            'role_id' => 3
+        ]);
+
         Shop::create([
             'id' => 1,
             // 'user_id' => 1,
