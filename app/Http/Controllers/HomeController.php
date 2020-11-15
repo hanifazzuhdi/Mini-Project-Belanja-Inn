@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -18,5 +19,12 @@ class HomeController extends Controller
         $shop = DB::select("SELECT COUNT(id) as shop FROM users WHERE role_id = 2 ");
 
         return view('pages.dashboard', compact('active', 'shop'));
+    }
+
+    public function getUser()
+    {
+        $datas = User::where('role_id', '!=', 3)->get()->toArray();
+
+        return view('pages.daftarUser', compact('datas'));
     }
 }
