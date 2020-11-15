@@ -14,6 +14,9 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('pages.dashboard');
+        $active = DB::select("SELECT COUNT(id) as active FROM users WHERE role_id != 3");
+        $shop = DB::select("SELECT COUNT(id) as shop FROM users WHERE role_id = 2 ");
+
+        return view('pages.dashboard', compact('active', 'shop'));
     }
 }
