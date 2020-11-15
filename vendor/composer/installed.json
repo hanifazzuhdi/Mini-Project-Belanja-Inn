@@ -1902,7 +1902,7 @@
                 "dev-master": "3.1-dev"
             }
         },
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
                 "Lcobucci\\JWT\\": "src"
@@ -2495,7 +2495,7 @@
         },
         "time": "2016-12-05T07:27:31+00:00",
         "type": "library",
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
                 "Namshi\\JOSE\\": "src/Namshi/JOSE/"
@@ -7687,7 +7687,7 @@
                 ]
             }
         },
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
                 "Tymon\\JWTAuth\\": "src/"
