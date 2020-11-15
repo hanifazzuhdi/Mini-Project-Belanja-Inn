@@ -5,6 +5,7 @@
 use App\Shop;
 use App\User;
 use Faker\Generator as Faker;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 /*
@@ -27,13 +28,17 @@ $factory->define(User::class, function (Faker $faker) {
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'phone_number' => $faker->phoneNumber,
         'address' => $faker->address,
+        'avatar' => 'https://via.placeholder.com/150',
+        'role_id' => $faker->numberBetween(1, 3),
         'remember_token' => Str::random(10),
     ];
 });
 
 $factory->define(Shop::class, function (Faker $faker) {
+    
     return [
-        'shop_id' => $faker->numberBetween(1, 5),
+        'id' => $faker->numberBetween(3, 8),
+        // 'user_id' => $user_id,
         'shop_name' => $faker->company,
         'avatar' => 'https://via.placeholder.com/150',
         'address' => $faker->address,

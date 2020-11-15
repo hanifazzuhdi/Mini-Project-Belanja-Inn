@@ -3,14 +3,27 @@
 namespace App;
 
 use App\Product;
-use Carbon\Carbon;
+use App\Traits\FormatNumber;
 use Illuminate\Database\Eloquent\Model;
 
 class Shop extends Model
 {
-    protected $fillable = ['id', 'shop_id', 'shop_name', 'avatar', 'address', 'description'];
+    use FormatNumber;
+    
+    protected $fillable = ['id', 'user_id', 'shop_name', 'avatar', 'address', 'description'];
 
     // protected $hidden = ['updated_at', 'id'];
+    
+    protected static function boot() 
+    {
+        parent::boot();
+
+        static::creating(function ($query) {
+            $query->user_id = $query->id;
+        });
+
+    }
+    
 
     protected $primaryKey = 'id';
 
@@ -24,16 +37,6 @@ class Shop extends Model
     public function products()
     {
         return $this->hasMany(Product::class);
-    }
-
-    public function getCreatedAtAttribute()
-    {
-        return Carbon::parse($this->attributes['created_at'])->translatedFormat('l, d F Y H:i');
-    }
-    
-    public function getUpdatedAtAttribute()
-    {
-        return Carbon::parse($this->attributes['updated_at'])->diffForHumans();
     }
 
 }

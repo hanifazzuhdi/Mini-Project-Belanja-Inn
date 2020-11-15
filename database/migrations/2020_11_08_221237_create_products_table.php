@@ -16,7 +16,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('product_name');
-            $table->string('price');
+            $table->decimal('price', 10, 2); // kolom bertipe data decimal nama = "price", jumlah angka = "10" di depan koma dan "2" di belakang koma
             $table->integer('quantity');
             $table->text('description');
             $table->string('image');
