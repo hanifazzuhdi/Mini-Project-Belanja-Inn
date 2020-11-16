@@ -17,32 +17,44 @@ class OrderController extends Controller
     {
         $product = Product::where('id', $id)->first();
 
+        $user = Auth::user()->id;
+
+        // Cek pembeli apakah sebagai penjual
+        if ($product->shop_id === $user) {
+            return $this->SendResponse('failed', 'You cant buy your own goods', null, 400);
+        }
+
+        // cek id produk
+        if ($product == false) {
+            return $this->SendResponse('failed', 'Product not found', null, 404);
+        }
+
         //validasi jumlah stock
-        if ($request->order_quantity > $product->quantity) {
+        if ($request->quantity > $product->quantity) {
             return $this->SendResponse('failed', 'The amount of stock is not sufficient for the demand', null, 400);
         }
 
         //cek order lama yang belum di check out
-        $old_order = Order::where('user_id', Auth::id())->where('status', 0)->first();
+        $old_order = Order::where('user_id', Auth::id())->where('status', 0)->first();   // <== cari di tabel order dimana user_id = id user yang login dan yang status nya 0
 
+        //jika tidak ada order lama maka buat order baru
         if (empty($old_order)) {
-            //jika tidak ada order lama maka buat order baru
             $order = new Order;
             $order->user_id = Auth::id();
-            $order->date = now();
+            $order->date = now();                       // <<== otomatis akan terbuat
             $order->status = 0;
             $order->total_price = 0;
             $order->save();
         }
 
-        //cek order di database yang belum di checkout (status == 0), order lama ataupun baru
+        //cek order di database yang belum di checkout (status == 0), order lama
         $saved_order = Order::where('user_id', Auth::id())->where('status', 0)->first();
 
         //cek apakah sudah ada pesanan dengan product yang sama di keranjang
         $old_carts = Cart::where('product_id', $product->id)->where('order_id', $saved_order->id)->first();
 
+        //jika tidak ada keranjang dengan order_id dan produk(yang di order sekarang), buat keranjang baru
         if (empty($old_carts)) {
-            //jika tidak ada keranjang dengan order_id dan produk(yang di order sekarang), buat keranjang baru
             $new_cart = new Cart;
             $new_cart->product_id = $product->id;
             $new_cart->order_id = $saved_order->id;
@@ -51,26 +63,33 @@ class OrderController extends Controller
             $new_cart->save();
         } else {
             //jika keranjang lama masih ada update order lama
+
             //tambahkan jumlah order
-            $old_carts->quantity =  $old_carts->quantity + (int) $request->quantity;
+            $old_carts->quantity += (int) $request->quantity;
 
             //harga sekarang
             $new_price = (int) $product->price * (int) $request->quantity;
-            $old_carts->total_price = (int) $old_carts->total_price + $new_price;
+            $old_carts->total_price += $new_price;
             $old_carts->update();
         }
 
-        $update_order = Order::where('user_id', Auth::id())->where('status', 0)->first();
-        $update_order->total_price = (int) $update_order->total_price + (int) $product->price * (int) $request->quantity;
-        $update_order->update();
+        // $update_order = Order::where('user_id', Auth::id())->where('status', 0)->first();
 
-        $data = new OrderResource($update_order);
+        $update_price = (int) $product->price * (int) $request->quantity;
+        $saved_order->total_price += $update_price;
+        $saved_order->update();
+
+        $data = new OrderResource($saved_order);
 
         try {
             return $this->SendResponse('succes', 'Data created successfully', $data, 200);
         } catch (\Throwable $th) {
             return $this->SendResponse('failed', 'Data failed to create', null, 500);
         }
+    }
+
+    public function transaction()
+    {
     }
 
     public function delete($id)

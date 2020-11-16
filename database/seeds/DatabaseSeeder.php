@@ -111,34 +111,34 @@ class DatabaseSeeder extends Seeder
             'category_id' => 4
         ]);
 
-        Order::create([
-            'user_id' => 2,
-            'date' => now(),
-            'status' => 0,
-        ]);
+        // Order::create([
+        //     'user_id' => 2,
+        //     'date' => now(),
+        //     'status' => 0,
+        // ]);
 
-        Order::create([
-            'user_id' => 1,
-            'date' => now(),
-            'status' => 0,
-        ]);
+        // Order::create([
+        //     'user_id' => 1,
+        //     'date' => now(),
+        //     'status' => 0,
+        // ]);
 
-        Cart::create([
-            'product_id' => 1,
-            'order_id' => 1,
-            'quantity' => 3,
-        ]);
+        // Cart::create([
+        //     'product_id' => 1,
+        //     'order_id' => 1,
+        //     'quantity' => 3,
+        // ]);
 
-        Cart::create([
-            'product_id' => 2,
-            'order_id' => 2,
-            'quantity' => 2,
-        ]);
+        // Cart::create([
+        //     'product_id' => 2,
+        //     'order_id' => 2,
+        //     'quantity' => 2,
+        // ]);
 
-        Cart::create([
-            'product_id' => 2,
-            'order_id' => 1,
-            'quantity' => 10,
-        ]);
+        // Cart::create([
+        //     'product_id' => 2,
+        //     'order_id' => 1,
+        //     'quantity' => 10,
+        // ]);
     }
 }

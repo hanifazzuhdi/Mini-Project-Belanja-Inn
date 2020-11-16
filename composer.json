@@ -16,9 +16,7 @@
         "laravel/framework": "^7.29",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.4",
-        "realrashid/sweet-alert": "^3.1",
-        "tymon/jwt-auth": "dev-develop",
-        "uxweb/sweet-alert": "^2.0"
+        "tymon/jwt-auth": "dev-develop"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
