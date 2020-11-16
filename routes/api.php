@@ -39,5 +39,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::delete('/delete_cart/{id}', 'Api\\OrderController@delete')->name('delete_cart');
 
     // Route transaksi
-    Route::put('/transaction/{id}', 'Api\\OrderController@transaction')->name('transaction');
+    Route::get('/getCheckout', 'Api\\OrderController@getCheckout')->name('getCheckout');
+    Route::post('/checkout', 'Api\OrderController@checkout');
 });

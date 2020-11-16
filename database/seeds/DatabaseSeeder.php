@@ -69,6 +69,13 @@ class DatabaseSeeder extends Seeder
             'role_id' => 3
         ]);
 
+        User::create([
+            'username' => 'usman',
+            'email' => 'usman@gmail.com',
+            'password' => Hash::make('password'),
+            'role_id' => 1
+        ]);
+
         Shop::create([
             'id' => 1,
             'user_id' => 1,
@@ -94,7 +101,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'ini adalah energen rasa milo',
             'image' => 'https://iili.io/FqzDMX.md.png',
             'weight' => '1kg',
-            'sold' => 10,
+            'sold' => 0,
             'shop_id' => 2,
             'category_id' => 1
         ]);
@@ -106,39 +113,21 @@ class DatabaseSeeder extends Seeder
             'description' => 'ini adalah energen rasa pisang',
             'image' => 'https://iili.io/FqzDMX.md.png',
             'weight' => '10kg',
-            'sold' => 100,
+            'sold' => 0,
             'shop_id' => 1,
             'category_id' => 4
         ]);
 
-        // Order::create([
-        //     'user_id' => 2,
-        //     'date' => now(),
-        //     'status' => 0,
-        // ]);
-
-        // Order::create([
-        //     'user_id' => 1,
-        //     'date' => now(),
-        //     'status' => 0,
-        // ]);
-
-        // Cart::create([
-        //     'product_id' => 1,
-        //     'order_id' => 1,
-        //     'quantity' => 3,
-        // ]);
-
-        // Cart::create([
-        //     'product_id' => 2,
-        //     'order_id' => 2,
-        //     'quantity' => 2,
-        // ]);
-
-        // Cart::create([
-        //     'product_id' => 2,
-        //     'order_id' => 1,
-        //     'quantity' => 10,
-        // ]);
+        Product::create([
+            'product_name' => 'Energen rasa Kopi Hitam',
+            'price' => 20000,
+            'quantity' => 10,
+            'description' => 'ini adalah energen rasa Kopi',
+            'image' => 'https://iili.io/FqzDMX.md.png',
+            'weight' => '10kg',
+            'sold' => 0,
+            'shop_id' => 1,
+            'category_id' => 4
+        ]);
     }
 }

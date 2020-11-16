@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\User;
 use App\Cart;
 use App\Order;
 use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
-use App\Http\Resources\ProductResource;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -73,11 +73,13 @@ class OrderController extends Controller
             $old_carts->update();
         }
 
-        $update_price = (int) $product->price * (int) $request->quantity;
-        $saved_order->total_price += $update_price;
-        $saved_order->update();
+        $update_order = Order::where('user_id', Auth::id())->where('status', 0)->first();
 
-        $data = new OrderResource($saved_order);
+        $update_price = (int) $product->price * (int) $request->quantity;
+        $update_order->total_price += $update_price;
+        $update_order->update();
+
+        $data = new OrderResource($update_order);
 
         try {
             return $this->SendResponse('succes', 'Data created successfully', $data, 200);
@@ -86,8 +88,61 @@ class OrderController extends Controller
         }
     }
 
-    public function transaction()
+    public function getCheckout()
     {
+        $order = Order::all()->toArray();
+
+        if (!$order) {
+            return $this->SendResponse('failed', 'not found', null, 404);
+        }
+
+        // Ambil data order + user
+        $order = Order::with('user:id,name,address,phone_number')->where('user_id', Auth::id())->first()->toArray();
+
+        // Ambil data keranjang
+        $carts = Cart::with('product:product_name,price,shop_id')->where('order_id', $order['id'])->get();
+
+        $res = [
+            $order, $carts
+        ];
+
+        return response([
+            'status' => 'success',
+            'data' => $res
+        ]);
+    }
+
+    public function checkout()
+    {
+        // ubah status menjadi 1 (1 = sudah checkout)
+        $order = Order::where('user_id', Auth::id())->where('status', 0)->first();
+
+        if (empty($order)) {
+            return $this->SendResponse('failed', 'data order not found', null, 500);
+        }
+
+        $order_id = $order->id;
+        $order->status = 1;
+        $order->update();
+
+        // kurangi stok barang + tambah terjual
+        $carts = Cart::where('order_id', $order_id)->get();
+
+        foreach ($carts as $cart) {
+            $product = Product::where('id', $cart->product_id)->first();
+
+            $product->quantity -= $cart['quantity'];
+            $product->sold += $cart['quantity'];
+            $product->update();
+
+            $res[] = $product;
+        }
+
+        return response([
+            'status' => 'success',
+            'message' => 'Ordered successfully',
+            'data' => $res
+        ]);
     }
 
     public function delete($id)
