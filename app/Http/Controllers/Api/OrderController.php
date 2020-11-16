@@ -19,14 +19,14 @@ class OrderController extends Controller
 
         $user = Auth::user()->id;
 
-        // Cek pembeli apakah sebagai penjual
-        if ($product->shop_id === $user) {
-            return $this->SendResponse('failed', 'You cant buy your own goods', null, 400);
-        }
-
         // cek id produk
         if ($product == false) {
             return $this->SendResponse('failed', 'Product not found', null, 404);
+        }
+
+        // Cek pembeli apakah sebagai penjual
+        if ($product['shop_id'] === $user) {
+            return $this->SendResponse('failed', 'You cant buy your own goods', null, 400);
         }
 
         //validasi jumlah stock
@@ -72,8 +72,6 @@ class OrderController extends Controller
             $old_carts->total_price += $new_price;
             $old_carts->update();
         }
-
-        // $update_order = Order::where('user_id', Auth::id())->where('status', 0)->first();
 
         $update_price = (int) $product->price * (int) $request->quantity;
         $saved_order->total_price += $update_price;
