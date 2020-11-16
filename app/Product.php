@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use FormatNumber;
-    
+
     protected $fillable = ['product_name', 'price', 'quantity', 'description', 'image', 'weight', 'sold', 'category_id', 'shop_id'];
 
     public function category()
