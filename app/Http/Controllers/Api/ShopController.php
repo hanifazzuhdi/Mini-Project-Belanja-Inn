@@ -61,7 +61,7 @@ class ShopController extends Controller
 
         $data = Shop::create([
             'id' =>  Auth::id(),
-            'shop_id' => Auth::id(),
+            'user_id' => Auth::id(),
             'shop_name' => $request->shop_name,
             'avatar' =>  $hasil->image->display_url,
             'address' => $request->address,

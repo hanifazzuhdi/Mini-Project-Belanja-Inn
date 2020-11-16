@@ -2,16 +2,13 @@
 
 namespace App\Http\Resources;
 
+use App\Traits\FormatNumber;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
-     */
+    use FormatNumber;
+    
     public function toArray($request)
     {
         return [
@@ -23,8 +20,8 @@ class ProductResource extends JsonResource
             'sold' => $this->sold,
             'weight' => $this->weight,
             'image' => $this->image,
-            'created_at' => $this->created_at->translatedFormat('l, d F Y h:i:s'),
-            'updated_at' => $this->updated_at->diffForhumans(),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
             'shop_id' => $this->shop_id,
             'category_id' => $this->category_id,
             'category' => $this->category->category_name,

@@ -15,14 +15,18 @@ class CreateShopsTable extends Migration
     {
         Schema::create('shops', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
-            $table->unsignedBigInteger('shop_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('shop_name')->unique();
             $table->string('avatar')->default('https://iili.io/FqzDMX.md.png');
             $table->string('address');
             $table->text('description');
             $table->timestamps();
 
+<<<<<<< HEAD
+            $table->foreign('user_id')->references('id')->on('users');
+=======
             $table->foreign('shop_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
+>>>>>>> 632dac16d813c568cd950706029262951c6d73c3
         });
     }
 
