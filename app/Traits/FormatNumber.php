@@ -20,15 +20,15 @@ trait FormatNumber
         return Carbon::parse($this->attributes['updated_at'])->diffForHumans();
     }
 
-    // Mengganti format value dari kolom price saat akan di tampilkan
-    public function getPriceAttribute()
-    {
-        return number_format($this->attributes['price'], 0, ',', '.');
-    }
+    // // Mengganti format value dari kolom price saat akan di tampilkan
+    // public function setPriceAttribute()
+    // {
+    //     return number_format($this->attributes['price'], 0, ',', '.');
+    // }
 
     // Mengganti format value dari kolom total_price saat akan di tampilkan
-    public function getTotalPriceAttribute()
-    {
-        return number_format($this->attributes['total_price'], 0, ',', '.');
-    }
+    // public function setTotalPriceAttribute()
+    // {
+    //     return number_format($this->attributes['total_price'], 0, ',', '.');
+    // }
 }

@@ -13,18 +13,6 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-
-    public function showProduct($id)
-    {
-        $product = Product::where('id', $id)->first();
-
-        try {
-            return $this->SendResponse('succes', 'Data loaded successfully', $product, 200);
-        } catch (\Throwable $th) {
-            return $this->SendResponse('failed', 'Data failed to load', null, 500);
-        }
-    }
-
     public function order(Request $request, $id)
     {
         $product = Product::where('id', $id)->first();
