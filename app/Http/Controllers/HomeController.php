@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Product;
 use App\Shop;
 use App\User;
@@ -92,5 +93,12 @@ class HomeController extends Controller
         User::destroy($id);
 
         return redirect(route('getUser'))->with('status', 'Data Deleted Successfully');
+    }
+
+    public function category()
+    {
+        $categories = Category::all()->toArray();
+
+        return view("pages.category", compact('categories'));
     }
 }
