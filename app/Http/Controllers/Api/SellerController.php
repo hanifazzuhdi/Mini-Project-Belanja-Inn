@@ -110,6 +110,8 @@ class SellerController extends Controller
     {
         $data = Product::destroy($id);
 
+        // $carts =
+
         if ($data) {
             return response([
                 'status' => 'success',

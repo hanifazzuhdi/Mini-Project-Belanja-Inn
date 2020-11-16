@@ -8,7 +8,6 @@ use App\Shop;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use RealRashid\SweetAlert\Facades\Alert;
 use GuzzleHttp\Client;
 
 class HomeController extends Controller
@@ -50,8 +49,6 @@ class HomeController extends Controller
             'address' => $request->address,
             'phone_number' => $request->phone_number
         ]);
-
-        Alert::success('Success', 'Data berhasil diubah');
 
         return redirect("detailUser/$id")->with('status', 'Data Updated Successfully');
     }
