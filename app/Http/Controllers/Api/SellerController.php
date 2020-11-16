@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Cart;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -108,9 +109,9 @@ class SellerController extends Controller
 
     public function destroy($id)
     {
-        $data = Product::destroy($id);
+        Cart::where('product_id', $id)->delete();
 
-        // $carts =
+        $data = Product::destroy($id);
 
         if ($data) {
             return response([
