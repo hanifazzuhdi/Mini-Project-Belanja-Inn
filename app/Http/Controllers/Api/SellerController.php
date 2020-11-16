@@ -37,15 +37,9 @@ class SellerController extends Controller
 
         $hasil = json_decode($get);
 
-        // // Format Harga
-        // $format = number_format($request->price, 2, ',', '.');
-
-        // $explode = explode(",", $format);
-        // $price = $explode[0];
-
         $product = Product::create([
             'product_name' => $request->product_name,
-            'price' => $this->price,
+            'price' => $request->price,
             'quantity' => $request->quantity,
             'description' => $request->description,
             'image' => $hasil->image->display_url,
@@ -89,15 +83,9 @@ class SellerController extends Controller
 
         $hasil = json_decode($get);
 
-        // // Format harga
-        // $format = number_format($request->price, 2, ',', '.');
-
-        // $explode = explode(",", $format);
-        // $price = $explode[0];
-
         $data = $product->update([
             'product_name' => $request->product_name,
-            'price' => $this->price,
+            'price' => $request->price,
             'quantity' => $request->quantity,
             'description' => $request->description,
             'image' => $hasil->image->display_url,
@@ -109,6 +97,7 @@ class SellerController extends Controller
 
     public function destroy($id)
     {
+        // hapus keranjang dengan id produk
         Cart::where('product_id', $id)->delete();
 
         $data = Product::destroy($id);
