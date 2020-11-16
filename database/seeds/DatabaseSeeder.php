@@ -133,11 +133,63 @@ class DatabaseSeeder extends Seeder
             'order_id' => 1,
             'quantity' => 3,
         ]);
+<<<<<<< HEAD
         
         Cart::create([
             'product_id' => 4,
             'order_id' => 2,
             'quantity' => 2,
+=======
+
+        Role::create([
+            'role_name' => 'penjual'
+        ]);
+
+        Role::create([
+            'role_name' => 'admin'
+        ]);
+
+        User::create([
+            'name' => 'mujahid',
+            'username' => 'mujahid01',
+            'email' => 'mujahid@gmail.com',
+            'password' => Hash::make('password'),
+            'role_id' => 2
+        ]);
+
+        User::create([
+            'name' => 'fauzil',
+            'username' => 'fauzil01',
+            'email' => 'fauzil@gmail.com',
+            'password' => Hash::make('password'),
+            'role_id' => 2
+        ]);
+
+        User::create([
+            'name' => 'hanif',
+            'username' => 'hanif',
+            'email' => 'hanif@gmail.com',
+            'password' => Hash::make('password'),
+            'role_id' => 3
+        ]);
+
+        Shop::create([
+            'id' => 1,
+            'shop_id' => 1,
+            'shop_name' => 'mujahid shop',
+            'avatar' => 'https://iili.io/FqzDMX.md.png',
+            'address' => 'jakarta indonesia',
+            'description' => 'ini adalah toko milik mujahid'
+        ]);
+
+        Shop::create([
+            'id' => 2,
+            'shop_id' => 2,
+            'shop_name' => 'fauzil shop',
+            'avatar' => 'https://iili.io/FqzDMX.md.png',
+            'address' => 'palembang indonesia',
+            'description' => 'ini adalah toko milik fauzil'
+>>>>>>> 632dac16d813c568cd950706029262951c6d73c3
         ]);
         
         Cart::create([

@@ -42,7 +42,6 @@ class SellerController extends Controller
         $explode = explode(",", $format);
         $price = $explode[0];
 
-
         $product = Product::create([
             'product_name' => $request->product_name,
             'price' => $price,

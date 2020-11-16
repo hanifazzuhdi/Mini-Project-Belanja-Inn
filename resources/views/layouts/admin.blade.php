@@ -11,13 +11,14 @@
 
     <title>Admin D-Shopee</title>
 
+    <link rel="stylesheet" href="/css/mystyle.css">
+
     <link href=" {{url('Admin/vendor/fontawesome-free/css/all.min.css')}} " rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <link href=" {{url('Admin/css/sb-admin-2.min.css')}} " rel="stylesheet">
 
     <link href=" {{url ('Admin/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
-
 
 </head>
 
@@ -34,7 +35,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">D-Shopee</div>
+                <div class="sidebar-brand-text mx-3">Welcome {{Auth::user()->name}}</div>
             </a>
 
             <!-- Divider -->
@@ -72,7 +73,7 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Make to Awesome</h6>
+                        <h6 class="collapse-header">Settings</h6>
                         <a class="collapse-item" href=" {{route ('category')}} ">Category</a>
                         <a class="collapse-item" href=" {{route ('category')}} ">Cards</a>
                     </div>
@@ -267,7 +268,7 @@
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="{{url ('Admin/img/undraw_profile_1.svg')}}"
+                                        <img class="rounded-circle" src="http://via.placeholder.com/60"
                                             alt="">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
@@ -279,7 +280,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="{{url ('Admin/img/undraw_profile_2.svg')}}"
+                                        <img class="rounded-circle" src="http://via.placeholder.com/60"
                                             alt="">
                                         <div class="status-indicator"></div>
                                     </div>
@@ -291,7 +292,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="{{url ('Admin/img/undraw_profile_3.svg')}}"
+                                        <img class="rounded-circle" src="http://via.placeholder.com/60"
                                             alt="">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
@@ -325,7 +326,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"> {{Auth::user()->name}} </span>
                                 <img class="img-profile rounded-circle"
-                                    src="{{url ('Admin/img/undraw_profile.svg')}}">
+                                    src="{{Auth::user()->avatar}}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -338,15 +339,13 @@
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Settings
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
+
+                                    <button class="dropdown-item" data-toggle="modal" data-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Logout
+                                    </button>
+                                {{-- </form> --}}
                             </div>
                         </li>
                     </ul>
@@ -393,8 +392,11 @@
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <form action="{{route('logout')}}" method="POST">
+                        @csrf
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary" type="submit">Logout</button>
+                    </form>
                 </div>
             </div>
         </div>

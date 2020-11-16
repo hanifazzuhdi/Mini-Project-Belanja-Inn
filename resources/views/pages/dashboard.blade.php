@@ -2,10 +2,10 @@
 
     @section('activeDashboard', 'active')
     @section('content')
+
+
+
     <!-- Begin Page Content -->
-
-    {{-- {{dd($active[0]->active)}}; --}}
-
     <div class="container-fluid">
 
         <!-- Page Heading -->
