@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Shop extends Model
 {
     use FormatNumber;
-    
+
     protected $fillable = ['id', 'user_id', 'shop_name', 'avatar', 'address', 'description'];
 
     // protected $hidden = ['updated_at', 'id'];

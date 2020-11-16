@@ -37,7 +37,7 @@ $factory->define(User::class, function (Faker $faker) {
 $factory->define(Shop::class, function (Faker $faker) {
     
     return [
-        'id' => $faker->numberBetween(3, 8),
+        'id' => $faker->numberBetween(1, 10),
         // 'user_id' => $user_id,
         'shop_name' => $faker->company,
         'avatar' => 'https://via.placeholder.com/150',

@@ -24,7 +24,7 @@ class PublicController extends Controller
 
     public function show(Product $products, $id)
     {
-        $product = new ProductResource($products->find(($id)));
+        $product = new ProductResource($products->find($id));
 
         try {
             return $this->SendResponse('succes', 'Data loaded successfully', [$product], 200);

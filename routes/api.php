@@ -1,5 +1,6 @@
 <?php
 
+use App\Role;
 use Illuminate\Support\Facades\Route;
 
 // Route Auth
@@ -33,6 +34,10 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/store_product', 'Api\\SellerController@store')->name('store_product');
     Route::put('/update_product/{id}', 'Api\\SellerController@update')->name('update_product');
     Route::delete('/destroy_product/{id}', 'Api\SellerController@destroy')->name('destroy');
+
+    //Route order
+    Route::post('/order_product/{id}', 'Api\\OrderController@order')->name('order_product');
+    Route::delete('/delete_cart/{id}', 'Api\\OrderController@delete')->name('delete_cart');
 
     // Route transaksi
 
