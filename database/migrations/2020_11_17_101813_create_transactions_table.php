@@ -15,8 +15,12 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-
+            $table->unsignedBigInteger('order_id');
+            $table->unsignedBigInteger('cart_id');
             $table->timestamps();
+
+            $table->foreign('order_id')->references('id')->on('orders');
+            $table->foreign('cart_id')->references('id')->on('carts');
         });
     }
 

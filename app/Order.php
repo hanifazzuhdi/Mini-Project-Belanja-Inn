@@ -19,4 +19,9 @@ class Order extends Model
     {
         return $this->hasMany(Cart::class);
     }
+
+    public function transaction()
+    {
+        return $this->belongsTo(Transaction::class);
+    }
 }
