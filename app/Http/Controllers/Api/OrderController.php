@@ -7,23 +7,12 @@ use App\Order;
 use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CartResource;
 use App\Http\Resources\OrderResource;
-use App\Http\Resources\ProductResource;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-
-    public function showProduct($id)
-    {
-        $product = Product::where('id', $id)->first();
-        
-        try {
-            return $this->SendResponse('succes', 'Data loaded successfully', $product, 200);
-        } catch (\Throwable $th) {
-            return $this->SendResponse('failed', 'Data failed to load', null, 500);
-        }
-    }
 
     public function order(Request $request, $id)
     {
@@ -73,7 +62,9 @@ class OrderController extends Controller
         }
 
         $update_order = Order::where('user_id', Auth::id())->where('status', 0)->first();
-        $update_order->total_price = (int) $update_order->total_price + (int) $product->price * (int) $request->quantity;
+
+        $update_price = (int) $product->price * (int) $request->quantity;
+        $update_order->total_price += $update_price;
         $update_order->update();
         
         $data = new OrderResource($update_order);
@@ -84,6 +75,17 @@ class OrderController extends Controller
             return $this->SendResponse('failed', 'Data failed to create', null, 500);
         }
     }
+
+    public function carts() 
+    {
+        $order = Order::where('user_id', Auth::id())->where('status', 0)->first('id');
+        $cart = Cart::where('order_id', $order->id)->get();
+        $data = CartResource::collection($cart);
+
+        return $this->SendResponse('succes', 'Data created successfully', $data, 200);
+    }
+
+
 
     public function delete($id) 
     {
@@ -103,6 +105,6 @@ class OrderController extends Controller
             return $this->SendResponse('failed', 'Data failed to delete', $cart, 500);
         }
     }
-    
+
 
 }

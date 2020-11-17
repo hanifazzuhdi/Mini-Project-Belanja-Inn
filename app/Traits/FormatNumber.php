@@ -23,13 +23,13 @@ trait FormatNumber
     // Mengganti format value dari kolom price saat akan di tampilkan
     public function getPriceAttribute()
     {
-        return number_format($this->attributes['price'], 2, ',', '.');
+        return number_format($this->attributes['price'], 0, ',', '.');
     }
     
     // Mengganti format value dari kolom total_price saat akan di tampilkan
     public function getTotalPriceAttribute()
     {
-        return number_format($this->attributes['total_price'], 2, ',', '.');
+        return number_format($this->attributes['total_price'], 0, ',', '.');
     }
 
     
