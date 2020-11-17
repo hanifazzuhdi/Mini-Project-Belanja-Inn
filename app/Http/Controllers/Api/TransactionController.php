@@ -23,13 +23,7 @@ class TransactionController extends Controller
         }
 
         // Ambil data keranjang
-        $carts = Cart::where('order_id', $order['id'])->get();
-
-        foreach ($carts as $cart) {
-            $barang = Product::with('shop:id,shop_name,avatar')->where('id', $cart->product_id)->get();
-
-            $product[] = $barang;
-        }
+        $carts = Cart::with('product:id,product_name,image')->where('order_id', $order['id'])->get();
 
         $res = [
             $order, $carts
@@ -38,7 +32,6 @@ class TransactionController extends Controller
         return response([
             'status' => 'success',
             'data' => $res,
-            'product' => $product
         ]);
     }
 
