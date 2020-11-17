@@ -12,13 +12,9 @@ use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-    ` */
     public function run()
     {
+<<<<<<< HEAD
         // Category::create([
         //     'category_name' => 'Elektronik'
         // ]);
@@ -138,13 +134,122 @@ class DatabaseSeeder extends Seeder
             'product_id' => 4,
             'order_id' => 2,
             'quantity' => 2,
-        ]);
-        
-        Cart::create([
-            'product_id' => 5,
-            'order_id' => 1,
-            'quantity' => 10,
+=======
+        Category::create([
+            'category_name' => 'Elektronik'
         ]);
 
+        Category::create([
+            'category_name' => 'Komputer dan Aksesoris'
+        ]);
+
+        Category::create([
+            'category_name' => 'Handphone dan Aksesoris'
+        ]);
+
+        Category::create([
+            'category_name' => 'Pakaian'
+        ]);
+
+        Category::create([
+            'category_name' => 'Perlengkapan Rumah'
+        ]);
+
+        Role::create([
+            'role_name' => 'user'
+        ]);
+
+        Role::create([
+            'role_name' => 'penjual'
+        ]);
+
+        Role::create([
+            'role_name' => 'admin'
+        ]);
+
+        User::create([
+            'name' => 'mujahid',
+            'username' => 'mujahid01',
+            'email' => 'mujahid@gmail.com',
+            'password' => Hash::make('password'),
+            'role_id' => 2
+        ]);
+
+        User::create([
+            'name' => 'fauzil',
+            'username' => 'fauzil01',
+            'email' => 'fauzil@gmail.com',
+            'password' => Hash::make('password'),
+            'role_id' => 2
+        ]);
+
+        User::create([
+            'username' => 'hanif',
+            'email' => 'hanif@gmail.com',
+            'password' => Hash::make('password'),
+            'role_id' => 3
+        ]);
+
+        User::create([
+            'username' => 'usman',
+            'email' => 'usman@gmail.com',
+            'password' => Hash::make('password'),
+            'role_id' => 1
+        ]);
+
+        Shop::create([
+            'id' => 1,
+            'user_id' => 1,
+            'shop_name' => 'mujahid shop',
+            'avatar' => 'https://iili.io/FqzDMX.md.png',
+            'address' => 'jakarta indonesia',
+            'description' => 'ini adalah toko milik mujahid'
+        ]);
+
+        Shop::create([
+            'id' => 2,
+            'user_id' => 2,
+            'shop_name' => 'fauzil shop',
+            'avatar' => 'https://iili.io/FqzDMX.md.png',
+            'address' => 'palembang indonesia',
+            'description' => 'ini adalah toko milik fauzil'
+>>>>>>> 986f3b19e7a78679db2f54651bf2805a781caa34
+        ]);
+
+        Product::create([
+            'product_name' => 'Energen rasa milo',
+            'price' => 150000,
+            'quantity' => 10,
+            'description' => 'ini adalah energen rasa milo',
+            'image' => 'https://iili.io/FqzDMX.md.png',
+            'weight' => '1kg',
+            'sold' => 0,
+            'shop_id' => 2,
+            'category_id' => 1
+        ]);
+
+        Product::create([
+            'product_name' => 'Energen rasa Pisang',
+            'price' => 19000,
+            'quantity' => 10,
+            'description' => 'ini adalah energen rasa pisang',
+            'image' => 'https://iili.io/FqzDMX.md.png',
+            'weight' => '10kg',
+            'sold' => 0,
+            'shop_id' => 1,
+            'category_id' => 4
+        ]);
+
+        Product::create([
+            'product_name' => 'Energen rasa Kopi Hitam',
+            'price' => 20000,
+            'quantity' => 10,
+            'description' => 'ini adalah energen rasa Kopi',
+            'image' => 'https://iili.io/FqzDMX.md.png',
+            'weight' => '10kg',
+            'sold' => 0,
+            'shop_id' => 1,
+            'category_id' => 4
+        ]);
     }
 }

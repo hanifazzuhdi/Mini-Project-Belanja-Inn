@@ -8,13 +8,13 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class ProductResource extends JsonResource
 {
     use FormatNumber;
-    
+
     public function toArray($request)
     {
         return [
             'id' => $this->id,
             'product_name' => $this->product_name,
-            'price' => $this->price,
+            'price' => number_format($this->price, 0, ',', '.'),
             'quantity' => $this->quantity,
             'description' => $this->description,
             'sold' => $this->sold,
