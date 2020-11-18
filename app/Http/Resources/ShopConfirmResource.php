@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class KonfirmasiResource extends JsonResource
+class ShopConfirmResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,11 +15,10 @@ class KonfirmasiResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
             'quantity' => $this->quantity,
             'total_price' => $this->total_price,
-            'product' => $this->product->only('id', 'product_name', 'price', 'weight'),
-            'shop' => $this->shop->only('id', 'shop_name', 'avatar')
+            'buyer' => $this->order->user->only('id', 'username', 'avatar', 'address', 'phone_number'),
+            'product' => $this->product->only('id', 'product_name', 'image')
         ];
     }
 }

@@ -63,6 +63,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::create([
+            'name' => 'Hanif',
             'username' => 'hanif',
             'email' => 'hanif@gmail.com',
             'password' => Hash::make('password'),
@@ -70,6 +71,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::create([
+            'name' => 'Usman',
             'username' => 'usman',
             'email' => 'usman@gmail.com',
             'password' => Hash::make('password'),
@@ -126,7 +128,7 @@ class DatabaseSeeder extends Seeder
             'image' => 'https://iili.io/FqzDMX.md.png',
             'weight' => '10kg',
             'sold' => 0,
-            'shop_id' => 1,
+            'shop_id' => 2,
             'category_id' => 4
         ]);
     }

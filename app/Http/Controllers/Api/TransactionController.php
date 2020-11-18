@@ -7,11 +7,9 @@ use App\Cart;
 use App\Product;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\KemasResource;
 use App\Http\Resources\KonfirmasiResource;
-use App\Http\Resources\OrderResource;
+use App\Http\Resources\ShopConfirmResource;
 use App\Http\Resources\TransactionResource;
-use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
@@ -68,16 +66,54 @@ class TransactionController extends Controller
         ]);
     }
 
+    // fungsi untuk tampilan tunggu konfirmasi pembeli
     public function konfirmasi()
     {
         //pembeli
-        $order = Order::with('cart')->where('user_id', Auth::id())->where('status', 1)->get();
+        $order = Order::where('user_id', Auth::id())->where('status', 1)->get()->toArray();
 
-        $res = KonfirmasiResource::collection($order);
+        if ($order == false) {
+            return response([
+                'status' => 'failed',
+                'message' => 'data not found',
+                'data' => null
+            ]);
+        }
 
         return response([
             'status' => 'success',
             'message' => 'pembeli',
+            'data' => $order
+        ], 200);
+    }
+
+    public function isiKonfirmasi($id)
+    {
+        $carts = Cart::where('order_id', $id)->get();
+
+        $res = KonfirmasiResource::collection($carts);
+
+        if ($carts === false) {
+            return $this->SendResponse('failed', 'data not found', null, 404);
+        }
+
+        return response([
+            'status' => 'success',
+            'message' => 'pembeli',
+            'data' => $res
+        ]);
+    }
+
+    public function shopKonfirmasi()
+    {
+        // penjual
+        $order = Cart::where('shop_id', 2)->get();
+
+        $res = ShopConfirmResource::collection($order);
+
+        return response([
+            'status' => 'success',
+            'message' => 'Data found for seller',
             'data' => $res
         ]);
     }
