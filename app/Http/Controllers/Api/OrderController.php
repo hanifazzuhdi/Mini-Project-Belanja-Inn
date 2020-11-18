@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
+
     public function order(Request $request, $id)
     {
         $product = Product::where('id', $id)->first();
@@ -70,15 +71,15 @@ class OrderController extends Controller
 
             //harga sekarang
             $new_price = (int) $product->price * (int) $request->quantity;
-            $old_carts->total_price += $new_price;
+            $old_carts->total_price = $old_carts->total_price + $new_price;
             $old_carts->update();
         }
 
         $update_order = Order::where('user_id', Auth::id())->where('status', 0)->first();
-
         $update_price = (int) $product->price * (int) $request->quantity;
         $update_order->total_price += $update_price;
         $update_order->update();
+        dd([$update_order, $saved_order]);
 
         $data = new OrderResource($update_order);
 
@@ -92,10 +93,28 @@ class OrderController extends Controller
     public function carts() 
     {
         $order = Order::where('user_id', Auth::id())->where('status', 0)->first('id');
+        
+        if(empty($order)) {
+            return $this->SendResponse('failed', 'Data not found', null, 404);    
+        }
+        
         $cart = Cart::where('order_id', $order->id)->get();
         $data = CartResource::collection($cart);
 
-        return $this->SendResponse('succes', 'Data created successfully', $data, 200);
+        return $this->SendResponse('succes', 'Data fetched successfully', $data, 200);
+    }
+
+    public function updateCart(Request $request, $cart_id)
+    {
+        // $cart = Cart::where('id', '=',  "{$cart_id}")->get();
+        if(empty($request->checklist)) {
+            return $this->SendResponse('failed', 'Product is not selected', null, 400);
+        } 
+            $cart = Cart::when($request->quantity, function ($query) use ($request, $cart_id) {
+            $query->where('id', '=',  "{$cart_id}");
+        })->get();
+
+        return $this->SendResponse('succes', 'Data fetched successfully', $cart, 200);
     }
 
     public function delete($id) 
@@ -115,5 +134,6 @@ class OrderController extends Controller
         } catch (\Throwable $th) {
             return $this->SendResponse('failed', 'Data failed to delete', $cart, 500);
         }
+
     }
 }
