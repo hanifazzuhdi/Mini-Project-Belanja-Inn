@@ -43,7 +43,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/getCheckout', 'Api\\TransactionController@getCheckout')->name('getCheckout');
     Route::post('/checkout', 'Api\TransactionController@checkout');
     Route::get('/konfirmasi', 'Api\TransactionController@konfirmasi');
-    Route::get('/isiKonfirmasi/{id}', 'Api\TransactionController@isiKonfirmasi');
+    Route::get('/getKonfirmasi/{id}', 'Api\TransactionController@getKonfirmasi');
     Route::get('/shopKonfirmasi', 'Api\TransactionController@shopKonfirmasi');
     Route::post('/orderKonfirmasi', 'Api\TransactionController@orderKonfirmasi');
 });

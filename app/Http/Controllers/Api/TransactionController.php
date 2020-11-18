@@ -11,6 +11,7 @@ use App\Http\Resources\CobaResource;
 use App\Http\Resources\KonfirmasiResource;
 use App\Http\Resources\ShopConfirmResource;
 use App\Http\Resources\TransactionResource;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
@@ -71,18 +72,9 @@ class TransactionController extends Controller
     public function konfirmasi()
     {
         //pembeli
-        $orders = Order::where('user_id', Auth::id())->where('status', 1)->get()->toArray();
+        $order = Order::where('user_id', Auth::id())->where('status', 1)->get();
 
-        // kumpulkan produk yang dikeranjang berdasarkan tokonya
-        foreach ($orders as $order) {
-            $order = Cart::where('order_id', $order['id'])->get();
-        }
-
-        $res = new CobaResource($order[1]);
-
-        return $res;
-
-        if ($orders == false) {
+        if ($order == false) {
             return response([
                 'status' => 'failed',
                 'message' => 'data not found',
@@ -93,11 +85,11 @@ class TransactionController extends Controller
         return response([
             'status' => 'success',
             'message' => 'pembeli',
-            'data' => $res
+            'data' => $order
         ], 200);
     }
 
-    public function isiKonfirmasi($id)
+    public function getKonfirmasi($id)
     {
         $carts = Cart::where('order_id', $id)->get();
 
@@ -116,15 +108,16 @@ class TransactionController extends Controller
 
     public function shopKonfirmasi()
     {
-        // penjual
-        $order = Cart::where('shop_id', 2)->get();
+            // penjual
 
-        $res = ShopConfirmResource::collection($order);
+        ;
+
+        // $res = ShopConfirmResource::collection($order);
 
         return response([
             'status' => 'success',
             'message' => 'Data found for seller',
-            'data' => $res
+            // 'data' => $res
         ]);
     }
 }
