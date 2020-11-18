@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
 
 class SellerController extends Controller
 {
@@ -83,14 +84,9 @@ class SellerController extends Controller
 
         $hasil = json_decode($get);
 
-        $data = $product->update([
-            'product_name' => $request->product_name,
-            'price' => $request->price,
-            'quantity' => $request->quantity,
-            'description' => $request->description,
-            'image' => $hasil->image->display_url,
-            'weight' => $request->weight
-        ]);
+        $newAvatar = $hasil->image->display_url;
+
+        DB::update();
 
         return $this->SendResponse('success', 'Produk berhasil diubah', $data, 201);
     }

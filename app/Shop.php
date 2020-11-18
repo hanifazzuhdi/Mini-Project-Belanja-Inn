@@ -12,26 +12,22 @@ class Shop extends Model
 
     protected $fillable = ['id', 'user_id', 'shop_name', 'avatar', 'address', 'description'];
 
-    // protected $hidden = ['updated_at', 'id'];
-    
-    protected static function boot() 
+    protected $primaryKey = 'id';
+
+    public $incrementing = false;
+
+    protected static function boot()
     {
         parent::boot();
 
         static::creating(function ($query) {
             $query->user_id = $query->id;
         });
-
     }
-    
 
-    protected $primaryKey = 'id';
-
-    public $incrementing = false;
-
-    public function user()
+    public function cart()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(Cart::class);
     }
 
     public function product()
@@ -39,5 +35,8 @@ class Shop extends Model
         return $this->hasMany(Product::class);
     }
 
-
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

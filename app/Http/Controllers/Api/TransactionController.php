@@ -7,9 +7,11 @@ use App\Cart;
 use App\Product;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\OrderResource;
-use App\Transaction;
-use Illuminate\Http\Request;
+use App\Http\Resources\CobaResource;
+use App\Http\Resources\KonfirmasiResource;
+use App\Http\Resources\ShopConfirmResource;
+use App\Http\Resources\TransactionResource;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
@@ -23,22 +25,13 @@ class TransactionController extends Controller
         }
 
         // Ambil data keranjang
-        $carts = Cart::where('order_id', $order['id'])->get();
+        $carts = Cart::where('order_id', $order->id)->get();
 
-        foreach ($carts as $cart) {
-            $barang = Product::with('shop:id,shop_name,avatar')->where('id', $cart->product_id)->get();
-
-            $product[] = $barang;
-        }
-
-        $res = [
-            $order, $carts
-        ];
+        $hasil = TransactionResource::collection($carts);
 
         return response([
             'status' => 'success',
-            'data' => $res,
-            'product' => $product
+            'data' => [$order, $hasil],
         ]);
     }
 
@@ -75,21 +68,56 @@ class TransactionController extends Controller
         ]);
     }
 
-    public function getDikemas()
+    // fungsi untuk tampilan tunggu konfirmasi pembeli
+    public function konfirmasi()
     {
-        // cek dahulu apakah ada data atau tidak
+        //pembeli
         $order = Order::where('user_id', Auth::id())->where('status', 1)->get();
 
-        dump($order);
+        if ($order == false) {
+            return response([
+                'status' => 'failed',
+                'message' => 'data not found',
+                'data' => null
+            ]);
+        }
 
-        if (count($order) == false) {
-            return $this->SendResponse('failed', 'Data not found', null, 404);
-        };
+        return response([
+            'status' => 'success',
+            'message' => 'pembeli',
+            'data' => $order
+        ], 200);
+    }
 
-        // cek apakah penjual / pembeli
-        // if ()
-        // kirim respon sesuai kondisi
+    public function getKonfirmasi($id)
+    {
+        $carts = Cart::where('order_id', $id)->get();
 
+        $res = KonfirmasiResource::collection($carts);
 
+        if ($carts === false) {
+            return $this->SendResponse('failed', 'data not found', null, 404);
+        }
+
+        return response([
+            'status' => 'success',
+            'message' => 'pembeli',
+            'data' => $res
+        ]);
+    }
+
+    public function shopKonfirmasi()
+    {
+            // penjual
+
+        ;
+
+        // $res = ShopConfirmResource::collection($order);
+
+        return response([
+            'status' => 'success',
+            'message' => 'Data found for seller',
+            // 'data' => $res
+        ]);
     }
 }

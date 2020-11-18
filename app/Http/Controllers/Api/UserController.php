@@ -8,6 +8,7 @@ use App\Http\Resources\UserResource;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -45,12 +46,10 @@ class UserController extends Controller
 
         $hasil = json_decode($get);
 
-        $data->update([
-            'name' => $request->name,
-            'password' => bcrypt($request->password),
-            'phone_number' => $request->phone_number,
-            'address' => $request->address,
-            'avatar' => $hasil->image->display_url
+        $newAvatar = $hasil->image->display_url;
+
+        DB::update('UPDATE users SET name = ?, password = ?, phone_number = ?, address = ?, avatar  = ?', [
+            $request->name, $request->password, $request->phone_number, $request->address, $newAvatar
         ]);
 
         return response([

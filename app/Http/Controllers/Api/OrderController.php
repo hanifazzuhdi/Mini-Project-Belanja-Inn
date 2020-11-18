@@ -31,6 +31,10 @@ class OrderController extends Controller
             return $this->SendResponse('failed', 'You cant buy your own goods', null, 400);
         }
 
+        if ($request->quantity == null) {
+            $request->quantity = '0';
+        }
+
         //validasi jumlah stock
         if ($request->quantity > $product->quantity) {
             return $this->SendResponse('failed', 'The amount of stock is not sufficient for the demand', null, 400);
@@ -58,6 +62,7 @@ class OrderController extends Controller
         //jika tidak ada keranjang dengan order_id dan produk(yang di order sekarang), buat keranjang baru
         if (empty($old_carts)) {
             $new_cart = new Cart;
+            $new_cart->shop_id = $product->shop_id;
             $new_cart->product_id = $product->id;
             $new_cart->order_id = $saved_order->id;
             $new_cart->quantity = $request->quantity;
@@ -90,7 +95,7 @@ class OrderController extends Controller
         }
     }
 
-    public function carts() 
+    public function carts()
     {
         $order = Order::where('user_id', Auth::id())->where('status', 0)->first('id');
         
@@ -117,7 +122,7 @@ class OrderController extends Controller
         return $this->SendResponse('succes', 'Data fetched successfully', $cart, 200);
     }
 
-    public function delete($id) 
+    public function delete($id)
     {
         $cart = Cart::where('id', $id)->first();
 
