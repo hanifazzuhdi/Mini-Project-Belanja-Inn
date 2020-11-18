@@ -7,6 +7,7 @@ use App\Cart;
 use App\Product;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CobaResource;
 use App\Http\Resources\KonfirmasiResource;
 use App\Http\Resources\ShopConfirmResource;
 use App\Http\Resources\TransactionResource;
@@ -70,9 +71,18 @@ class TransactionController extends Controller
     public function konfirmasi()
     {
         //pembeli
-        $order = Order::where('user_id', Auth::id())->where('status', 1)->get()->toArray();
+        $orders = Order::where('user_id', Auth::id())->where('status', 1)->get()->toArray();
 
-        if ($order == false) {
+        // kumpulkan produk yang dikeranjang berdasarkan tokonya
+        foreach ($orders as $order) {
+            $order = Cart::where('order_id', $order['id'])->get();
+        }
+
+        $res = new CobaResource($order[1]);
+
+        return $res;
+
+        if ($orders == false) {
             return response([
                 'status' => 'failed',
                 'message' => 'data not found',
@@ -83,7 +93,7 @@ class TransactionController extends Controller
         return response([
             'status' => 'success',
             'message' => 'pembeli',
-            'data' => $order
+            'data' => $res
         ], 200);
     }
 
