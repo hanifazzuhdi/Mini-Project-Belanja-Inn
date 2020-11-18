@@ -7,8 +7,10 @@ use App\Cart;
 use App\Product;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\KemasResource;
+use App\Http\Resources\KonfirmasiResource;
 use App\Http\Resources\OrderResource;
-use App\Transaction;
+use App\Http\Resources\TransactionResource;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -23,15 +25,13 @@ class TransactionController extends Controller
         }
 
         // Ambil data keranjang
-        $carts = Cart::with('product:id,product_name,image')->where('order_id', $order['id'])->get();
+        $carts = Cart::where('order_id', $order->id)->get();
 
-        $res = [
-            $order, $carts
-        ];
+        $hasil = TransactionResource::collection($carts);
 
         return response([
             'status' => 'success',
-            'data' => $res,
+            'data' => [$order, $hasil],
         ]);
     }
 
@@ -68,21 +68,17 @@ class TransactionController extends Controller
         ]);
     }
 
-    public function getDikemas()
+    public function konfirmasi()
     {
-        // cek dahulu apakah ada data atau tidak
-        $order = Order::where('user_id', Auth::id())->where('status', 1)->get();
+        //pembeli
+        $order = Order::with('cart')->where('user_id', Auth::id())->where('status', 1)->get();
 
-        dump($order);
+        $res = KonfirmasiResource::collection($order);
 
-        if (count($order) == false) {
-            return $this->SendResponse('failed', 'Data not found', null, 404);
-        };
-
-        // cek apakah penjual / pembeli
-        // if ()
-        // kirim respon sesuai kondisi
-
-
+        return response([
+            'status' => 'success',
+            'message' => 'pembeli',
+            'data' => $res
+        ]);
     }
 }
