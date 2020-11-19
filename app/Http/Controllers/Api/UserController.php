@@ -19,7 +19,7 @@ class UserController extends Controller
         return $this->SendResponse('success', 'Data loaded', [$data], 200);
     }
 
-    public function update_password(Request $request)
+    public function updatePassword(Request $request)
     {
         $data = User::find(Auth::id());
 
