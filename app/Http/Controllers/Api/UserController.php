@@ -19,13 +19,30 @@ class UserController extends Controller
         return $this->SendResponse('success', 'Data loaded', [$data], 200);
     }
 
+    public function update_password(Request $request)
+    {
+        $data = User::find(Auth::id());
+
+        $request->validate([
+            'password' => 'required'
+        ]);
+
+        $data->update([
+            'password' => $request->password
+        ]);
+
+        return response([
+            'status' => 'success',
+            'message' => 'Password berhasil diubah'
+        ], 200);
+    }
+
     public function update(Request $request, Client $client)
     {
         $data = User::find(Auth::id());
 
         $request->validate([
             'name' => 'required',
-            'password' => 'required',
             'phone_number' => 'required',
             'address' => 'required',
             'avatar' => 'required'
@@ -48,13 +65,13 @@ class UserController extends Controller
 
         $newAvatar = $hasil->image->display_url;
 
-        DB::update('UPDATE users SET name = ?, password = ?, phone_number = ?, address = ?, avatar  = ?', [
-            $request->name, $request->password, $request->phone_number, $request->address, $newAvatar
+        DB::update('UPDATE users SET name = ?, phone_number = ?, address = ?, avatar  = ?', [
+            $request->name, $request->phone_number, $request->address, $newAvatar
         ]);
 
         return response([
             'status' => 'success',
             'message' => 'Profile berhasil diubah'
-        ], 202);
+        ], 200);
     }
 }

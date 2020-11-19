@@ -67,7 +67,6 @@ class TransactionController extends Controller
 
     public function coba()
     {
-
         // return $res;
     }
 

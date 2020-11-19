@@ -25,7 +25,9 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var array
      */
-    protected $hidden = ['remember_token'];
+    protected $hidden = [
+        'password', 'remember_token'
+    ];
 
     public function getCreatedAtAttribute()
     {
