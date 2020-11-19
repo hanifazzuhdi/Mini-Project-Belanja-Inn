@@ -68,17 +68,16 @@ class TransactionController extends Controller
 
     public function coba()
     {
-        $orders = DB::table('carts')
-            ->select('*')
-            ->groupByRaw('shop_id')
-            ->get();
+        $data = Cart::whereHas('order', function ($query) {
+            $query->where('status', 1)->where('user_id', Auth::id());
+        })->get()->groupBy('order_id')->all();
 
-        return $orders;
+        return $data;
     }
 
     public function history()
     {
-        $order = Order::where('user_id', Auth::id())->where('status', 1)->get();
+        $order = Order::where('user_id', Auth::id())->where('status', 1)->get()->all();
 
         if ($order == false) {
             return $this->SendResponse('failed', 'data not found', null, 404);
@@ -86,13 +85,15 @@ class TransactionController extends Controller
 
         return response([
             'status' => 'sukses',
-            'hasil' => $order
+            'data' => $order
         ], 200);
     }
 
     public function getHistory($id)
     {
-        $orders = Cart::where('order_id', $id)->get();
+        $orders = Cart::where('order_id', $id)->whereHas('order', function ($query) {
+            $query->where('user_id', Auth::id())->where('status', 1);
+        })->get()->all();
 
         if ($orders == false) {
             return $this->SendResponse('failed', 'data not found', null, 404);

@@ -41,7 +41,7 @@ class UserController extends Controller
     {
         $data = User::find(Auth::id());
 
-        $auth_id = Auth::id();
+        // $auth_id = Auth::id();
 
         $request->validate([
             'name' => 'required',
@@ -67,13 +67,18 @@ class UserController extends Controller
             $hasil = json_decode($get);
 
             $newAvatar = $hasil->image->display_url;
-        } else {
-            $newAvatar = $data->avatar;
         }
 
-        DB::update('UPDATE users SET name = ?, phone_number = ?, address = ?, avatar = ? WHERE id =' . $auth_id, [
-            $request->name, $request->phone_number, $request->address, $newAvatar
+        $data->update([
+            'name' => $request->name ? $request->name : $data->name,
+            'phone_number' => $request->phone_number ? $request->phone_number : $data->phone_number,
+            'address' => $request->address ? $request->address : $data->address,
+            'avatar' => $request->avatar ? $newAvatar : $data->avatar,
         ]);
+
+        // DB::update('UPDATE users SET name = ?, phone_number = ?, address = ?, avatar = ? WHERE id =' . $auth_id, [
+        //     $request->name, $request->phone_number, $request->address, $newAvatar
+        // ]);
 
         return response([
             'status' => 'success',
