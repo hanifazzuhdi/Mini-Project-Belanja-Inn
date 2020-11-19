@@ -32,7 +32,7 @@ class TransactionController extends Controller
         return response([
             'status' => 'success',
             'data' => [$order, $hasil],
-        ]);
+        ], 200);
     }
 
     public function checkout()
@@ -65,6 +65,37 @@ class TransactionController extends Controller
             'status' => 'success',
             'message' => 'Ordered successfully',
             'data' => $res
-        ]);
+        ], 200);
+    }
+
+    public function history()
+    {
+        $order = Order::where('user_id', Auth::id())->where('status', 1)->get();
+
+        if ($order == false) {
+            return $this->SendResponse('failed', 'data not found', null, 404);
+        }
+
+        // $hasil = CobaResource::collection($order);
+
+        return response([
+            'status' => 'sukses',
+            'hasil' => $order
+        ], 200);
+    }
+
+    public function getHistory($id)
+    {
+        $orders = Cart::where('order_id', $id)->get();
+
+        if ($orders == false) {
+            return $this->SendResponse('failed', 'data not found', null, 404);
+        }
+
+        return response([
+            'status' => 'sukses',
+            'message' => "Data order id $id",
+            'data' => $orders
+        ], 200);
     }
 }

@@ -15,11 +15,11 @@ class CobaResource extends JsonResource
     public function toArray($request)
     {
         return [
-            // 'id' => $this->id,
-            // 'user_id' => $this->user_id,
-            // 'status' => $this->status,
-            // 'total_price' => $this->total_price,
-            // 'date' => $this->date,
+            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'status' => $this->status,
+            'total_price' => $this->total_price,
+            'date' => $this->date,
             'order' => $this->cart
         ];
     }

@@ -42,4 +42,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Route transaksi
     Route::get('/getCheckout', 'Api\\TransactionController@getCheckout')->name('getCheckout');
     Route::post('/checkout', 'Api\TransactionController@checkout');
+    Route::get('/history', 'Api\TransactionController@history');
+    Route::get('/getHistory/{id}', 'Api\TransactionController@getHistory');
 });
