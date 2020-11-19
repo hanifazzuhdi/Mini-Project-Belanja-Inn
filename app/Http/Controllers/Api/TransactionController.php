@@ -11,7 +11,7 @@ use App\Http\Resources\CobaResource;
 use App\Http\Resources\KonfirmasiResource;
 use App\Http\Resources\ShopConfirmResource;
 use App\Http\Resources\TransactionResource;
-use Illuminate\Support\Facades\DB;
+use App\Transaction;
 
 class TransactionController extends Controller
 {
@@ -37,7 +37,7 @@ class TransactionController extends Controller
 
     public function checkout()
     {
-        // ubah status menjadi 1 (1 = sudah checkout)
+        // ubah status menjadi 1 (1 = sudah checkout) + transaction_id
         $order = Order::where('user_id', Auth::id())->where('status', 0)->first();
 
         if (empty($order)) {
@@ -65,59 +65,6 @@ class TransactionController extends Controller
             'status' => 'success',
             'message' => 'Ordered successfully',
             'data' => $res
-        ]);
-    }
-
-    // fungsi untuk tampilan tunggu konfirmasi pembeli
-    public function konfirmasi()
-    {
-        //pembeli
-        $order = Order::where('user_id', Auth::id())->where('status', 1)->get();
-
-        if ($order == false) {
-            return response([
-                'status' => 'failed',
-                'message' => 'data not found',
-                'data' => null
-            ]);
-        }
-
-        return response([
-            'status' => 'success',
-            'message' => 'pembeli',
-            'data' => $order
-        ], 200);
-    }
-
-    public function getKonfirmasi($id)
-    {
-        $carts = Cart::where('order_id', $id)->get();
-
-        $res = KonfirmasiResource::collection($carts);
-
-        if ($carts === false) {
-            return $this->SendResponse('failed', 'data not found', null, 404);
-        }
-
-        return response([
-            'status' => 'success',
-            'message' => 'pembeli',
-            'data' => $res
-        ]);
-    }
-
-    public function shopKonfirmasi()
-    {
-            // penjual
-
-        ;
-
-        // $res = ShopConfirmResource::collection($order);
-
-        return response([
-            'status' => 'success',
-            'message' => 'Data found for seller',
-            // 'data' => $res
         ]);
     }
 }
