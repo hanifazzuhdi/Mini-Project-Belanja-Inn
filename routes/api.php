@@ -44,4 +44,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/checkout', 'Api\TransactionController@checkout');
     Route::get('/history', 'Api\TransactionController@history');
     Route::get('/getHistory/{id}', 'Api\TransactionController@getHistory');
+
+    // Route fitur
+    Route::get('/coba', 'Api\TransactionController@coba');
 });

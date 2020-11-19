@@ -7,11 +7,8 @@ use App\Cart;
 use App\Product;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CobaResource;
-use App\Http\Resources\KonfirmasiResource;
-use App\Http\Resources\ShopConfirmResource;
 use App\Http\Resources\TransactionResource;
-use App\Transaction;
+use App\Http\Resources\HistoryResource;
 
 class TransactionController extends Controller
 {
@@ -68,6 +65,12 @@ class TransactionController extends Controller
         ], 200);
     }
 
+    public function coba()
+    {
+
+        // return $res;
+    }
+
     public function history()
     {
         $order = Order::where('user_id', Auth::id())->where('status', 1)->get();
@@ -75,8 +78,6 @@ class TransactionController extends Controller
         if ($order == false) {
             return $this->SendResponse('failed', 'data not found', null, 404);
         }
-
-        // $hasil = CobaResource::collection($order);
 
         return response([
             'status' => 'sukses',
@@ -92,10 +93,12 @@ class TransactionController extends Controller
             return $this->SendResponse('failed', 'data not found', null, 404);
         }
 
+        $hasil = HistoryResource::collection($orders);
+
         return response([
             'status' => 'sukses',
             'message' => "Data order id $id",
-            'data' => $orders
+            'data' => $hasil
         ], 200);
     }
 }
