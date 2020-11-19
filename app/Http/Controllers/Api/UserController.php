@@ -40,6 +40,7 @@ class UserController extends Controller
     public function update(Request $request, Client $client)
     {
         $data = User::find(Auth::id());
+        $auth_id = Auth::id();
 
         $request->validate([
             'name' => 'required',
@@ -65,7 +66,7 @@ class UserController extends Controller
 
         $newAvatar = $hasil->image->display_url;
 
-        DB::update('UPDATE users SET name = ?, phone_number = ?, address = ?, avatar  = ?', [
+        DB::update('UPDATE users SET name = ?, phone_number = ?, address = ?, avatar = ? WHERE id =' . $auth_id, [
             $request->name, $request->phone_number, $request->address, $newAvatar
         ]);
 

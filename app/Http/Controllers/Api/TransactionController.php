@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TransactionResource;
 use App\Http\Resources\HistoryResource;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
@@ -67,7 +68,12 @@ class TransactionController extends Controller
 
     public function coba()
     {
-        // return $res;
+        $orders = DB::table('carts')
+            ->select('*')
+            ->groupByRaw('shop_id')
+            ->get();
+
+        return $orders;
     }
 
     public function history()
