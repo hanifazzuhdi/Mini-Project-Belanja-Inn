@@ -46,7 +46,6 @@ class UserController extends Controller
             'name' => 'required',
             'phone_number' => 'required',
             'address' => 'required',
-            'avatar' => 'required'
         ]);
 
         $image = base64_encode(file_get_contents($request->avatar));
