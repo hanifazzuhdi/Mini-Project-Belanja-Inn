@@ -40,6 +40,7 @@ class UserController extends Controller
     public function update(Request $request, Client $client)
     {
         $data = User::find(Auth::id());
+
         $auth_id = Auth::id();
 
         $request->validate([
@@ -48,22 +49,27 @@ class UserController extends Controller
             'address' => 'required',
         ]);
 
-        $image = base64_encode(file_get_contents($request->avatar));
+        if ($request->avatar) {
 
-        $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
-            'form_params' => [
-                'key' => '6d207e02198a847aa98d0a2a901485a5',
-                'action' => 'upload',
-                'source' => $image,
-                'format' => 'json'
-            ]
-        ]);
+            $image = base64_encode(file_get_contents($request->avatar));
 
-        $get = $res->getBody()->getContents();
+            $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+                'form_params' => [
+                    'key' => '6d207e02198a847aa98d0a2a901485a5',
+                    'action' => 'upload',
+                    'source' => $image,
+                    'format' => 'json'
+                ]
+            ]);
 
-        $hasil = json_decode($get);
+            $get = $res->getBody()->getContents();
 
-        $newAvatar = $hasil->image->display_url;
+            $hasil = json_decode($get);
+
+            $newAvatar = $hasil->image->display_url;
+        } else {
+            $newAvatar = $data->avatar;
+        }
 
         DB::update('UPDATE users SET name = ?, phone_number = ?, address = ?, avatar = ? WHERE id =' . $auth_id, [
             $request->name, $request->phone_number, $request->address, $newAvatar
