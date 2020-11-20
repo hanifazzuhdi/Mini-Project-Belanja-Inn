@@ -3,22 +3,32 @@
 namespace App\Http\Controllers\Api;
 
 use App\Cart;
+use App\User;
 use App\Product;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Client;
-use Illuminate\Support\Facades\DB;
+use App\Shop;
 
 class SellerController extends Controller
 {
     public function store(Request $request, Client $client)
     {
+        // Cek jika dia bukan pemilik toko
+        $cek = Shop::find(Auth::id());
+
+        if (empty($cek)) {
+            return $this->SendResponse('failed', "You don't have permission to create product", null, 404);
+        }
+
+        // validate
         $request->validate([
             'product_name' => 'required|min:10|max:60',
             'price'        => 'required',
             'quantity'     => 'required|integer',
-            'description'  => 'required|min:20|max:2000',
+            'description'  => 'required|min:10|max:2000',
             'image'        => 'required|file|image',
             'category_id'  => 'required'
         ]);
@@ -49,16 +59,31 @@ class SellerController extends Controller
             'category_id' => $request->category_id,
         ]);
 
-        return $this->SendResponse('success', 'Produk berhasil ditambahkan', $product, 201);
+        return $this->SendResponse('success', 'Product created successfully', $product, 201);
     }
 
     public function update(Request $request, Client $client, $id)
     {
+        // cek jika dia bukan pemilik toko
+        $cek = Shop::where('id', '!=', Auth::id());
+
         $product = Product::find($id);
 
-        if ($product === false) {
-            return $this->SendResponse('failed', 'Produk tidak ditemukan', null, 400);
+        if ($product) {
+            return $product;
         }
+
+        echo "kosong";
+
+        die;
+
+        if ($product == false) {
+            return $this->SendResponse('failed', 'Product not found', null, 404);
+        }
+
+        return $product;
+
+        die;
 
         $request->validate([
             'product_name' => 'required|min:10|max:60',
@@ -88,7 +113,7 @@ class SellerController extends Controller
 
         DB::update();
 
-        return $this->SendResponse('success', 'Produk berhasil diubah', $data, 201);
+        // return $this->SendResponse('success', 'Produk berhasil diubah', $data, 201);
     }
 
     public function destroy($id)

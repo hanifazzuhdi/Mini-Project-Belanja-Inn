@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\User;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -41,12 +40,11 @@ class UserController extends Controller
     {
         $data = User::find(Auth::id());
 
-        // $auth_id = Auth::id();
-
         $request->validate([
             'name' => 'required',
             'phone_number' => 'required',
             'address' => 'required',
+            'avatar' => 'file|image'
         ]);
 
         if ($request->avatar) {
@@ -75,10 +73,6 @@ class UserController extends Controller
             'address' => $request->address ? $request->address : $data->address,
             'avatar' => $request->avatar ? $newAvatar : $data->avatar,
         ]);
-
-        // DB::update('UPDATE users SET name = ?, phone_number = ?, address = ?, avatar = ? WHERE id =' . $auth_id, [
-        //     $request->name, $request->phone_number, $request->address, $newAvatar
-        // ]);
 
         return response([
             'status' => 'success',
