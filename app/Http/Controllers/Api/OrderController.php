@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\User;
 use App\Cart;
 use App\Order;
 use App\Product;

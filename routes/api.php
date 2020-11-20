@@ -33,7 +33,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Route Crud Seller
     Route::post('/store_product', 'Api\\SellerController@store');
     Route::put('/update_product/{id}', 'Api\\SellerController@update');
-    Route::delete('/destroy_product/{id}', 'Api\SellerController@destroy');
+    Route::delete('/destroy_product/{id}', 'Api\\SellerController@destroy');
 
     //Route order
     Route::post('/order_product/{id}', 'Api\\OrderController@order');

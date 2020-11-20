@@ -20,6 +20,16 @@ class UserController extends Controller
 
     public function updatePassword(Request $request)
     {
+        // cek apakah dia admin tidak boleh ganti dari sini
+        $cekAdmin  = Auth::user()->role_id;
+
+        if ($cekAdmin == 3) {
+            return response([
+                'status' => 'failed',
+                'message' => "You don't have permission"
+            ], 400);
+        }
+
         $data = User::find(Auth::id());
 
         $request->validate([
@@ -38,6 +48,16 @@ class UserController extends Controller
 
     public function update(Request $request, Client $client)
     {
+        // cek apakah dia admin tidak boleh ganti dari sini
+        $cekAdmin  = Auth::user()->role_id;
+
+        if ($cekAdmin == 3) {
+            return response([
+                'status' => 'failed',
+                'message' => "You don't have permission"
+            ], 400);
+        }
+
         $data = User::find(Auth::id());
 
         $request->validate([
