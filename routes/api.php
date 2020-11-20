@@ -12,6 +12,7 @@ Route::group(['prefix' => 'public'], function () {
     Route::get('/{id}', 'Api\\PublicController@show');
     Route::get('/category/{category_id}', 'Api\\PublicController@showCategory');
     Route::post('/search', 'Api\\PublicController@search');
+    Route::post('/filter_search', 'Api\\PublicController@filterSearch');
 });
 
 Route::get('/get_shop/{id}', 'Api\\ShopController@index');
@@ -38,6 +39,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //Route order
     Route::get('/carts', 'Api\\OrderController@carts');
     Route::post('/order_product/{id}', 'Api\\OrderController@order');
+    Route::put('/update_cart/{id}', 'Api\\OrderController@updateCart');
     Route::delete('/delete_cart/{id}', 'Api\\OrderController@delete');
 
     // Route transaksi

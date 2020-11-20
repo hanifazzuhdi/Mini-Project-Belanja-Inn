@@ -27,7 +27,7 @@ class ShopController extends Controller
     public function store(Request $request, Client $client)
     {
         // Cek tidak boleh memiliki toko ganda
-        $cek = Shop::where('id', Auth::id())->get();
+        $cek = Shop::where('id', Auth::id())->first();
 
         if (!empty($cek)) {
             return response([
