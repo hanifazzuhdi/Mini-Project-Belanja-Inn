@@ -7,10 +7,8 @@ use App\Cart;
 use App\Product;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CobaResource;
-use App\Http\Resources\KonfirmasiResource;
-use App\Http\Resources\ShopConfirmResource;
 use App\Http\Resources\TransactionResource;
+use App\Http\Resources\HistoryResource;
 use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
@@ -32,12 +30,12 @@ class TransactionController extends Controller
         return response([
             'status' => 'success',
             'data' => [$order, $hasil],
-        ]);
+        ], 200);
     }
 
     public function checkout()
     {
-        // ubah status menjadi 1 (1 = sudah checkout)
+        // ubah status menjadi 1 (1 = sudah checkout) + transaction_id
         $order = Order::where('user_id', Auth::id())->where('status', 0)->first();
 
         if (empty($order)) {
@@ -65,59 +63,48 @@ class TransactionController extends Controller
             'status' => 'success',
             'message' => 'Ordered successfully',
             'data' => $res
-        ]);
-    }
-
-    // fungsi untuk tampilan tunggu konfirmasi pembeli
-    public function konfirmasi()
-    {
-        //pembeli
-        $order = Order::where('user_id', Auth::id())->where('status', 1)->get();
-
-        if ($order == false) {
-            return response([
-                'status' => 'failed',
-                'message' => 'data not found',
-                'data' => null
-            ]);
-        }
-
-        return response([
-            'status' => 'success',
-            'message' => 'pembeli',
-            'data' => $order
         ], 200);
     }
 
-    public function getKonfirmasi($id)
+    public function coba()
     {
-        $carts = Cart::where('order_id', $id)->get();
+        $data = Cart::whereHas('order', function ($query) {
+            $query->where('status', 1)->where('user_id', Auth::id());
+        })->get()->groupBy('order_id')->all();
 
-        $res = KonfirmasiResource::collection($carts);
+        return $data;
+    }
 
-        if ($carts === false) {
+    public function history()
+    {
+        $order = Order::where('user_id', Auth::id())->where('status', 1)->get()->all();
+
+        if ($order == false) {
             return $this->SendResponse('failed', 'data not found', null, 404);
         }
 
         return response([
-            'status' => 'success',
-            'message' => 'pembeli',
-            'data' => $res
-        ]);
+            'status' => 'sukses',
+            'data' => $order
+        ], 200);
     }
 
-    public function shopKonfirmasi()
+    public function getHistory($id)
     {
-            // penjual
+        $orders = Cart::where('order_id', $id)->whereHas('order', function ($query) {
+            $query->where('user_id', Auth::id())->where('status', 1);
+        })->get()->all();
 
-        ;
+        if ($orders == false) {
+            return $this->SendResponse('failed', 'data not found', null, 404);
+        }
 
-        // $res = ShopConfirmResource::collection($order);
+        $hasil = HistoryResource::collection($orders);
 
         return response([
-            'status' => 'success',
-            'message' => 'Data found for seller',
-            // 'data' => $res
-        ]);
+            'status' => 'sukses',
+            'message' => "Data order id $id",
+            'data' => $hasil
+        ], 200);
     }
 }

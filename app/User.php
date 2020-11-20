@@ -17,7 +17,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password', 'phone_number', 'address', 'role_id'
+        'name', 'username', 'email', 'password', 'phone_number', 'address', 'role_id', 'password'
     ];
 
     /**
@@ -41,11 +41,6 @@ class User extends Authenticatable implements JWTSubject
             ->format('d, M Y H:i');
     }
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];

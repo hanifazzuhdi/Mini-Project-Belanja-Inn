@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CobaResource extends JsonResource
+class HistoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +16,11 @@ class CobaResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'shop_id' => $this->shop_id,
-            'product_id' => $this->product_id,
-            'order_id' => $this->order_id,
             'quantity' => $this->quantity,
-            'total_price' => $this->total_price
+            'total_price' => $this->total_price,
+            'date' => $this->created_at->translatedFormat('l, d F Y H:i'),
+            'product' => $this->product->only('product_name', 'price', 'image'),
+            'shop' => $this->shop->only('shop_name', 'avatar')
         ];
     }
 }

@@ -45,7 +45,7 @@ class HomeController extends Controller
 
         $user->update([
             'name' => $request->name,
-            'password' => $request->password ? $request->password : $user->password,
+            'password' => $request->password ? bcrypt($request->password) : $user->password,
             'address' => $request->address,
             'phone_number' => $request->phone_number
         ]);
