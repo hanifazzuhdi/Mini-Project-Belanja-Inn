@@ -24,7 +24,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Route User
     Route::get('/get_user', 'Api\\UserController@getUserAuth');
     Route::put('/update_user', 'Api\\UserController@update');
-    Route::post('/update_password', 'Api\\UserController@updatePassword');
+    Route::put('/update_password', 'Api\\UserController@updatePassword');
 
     // Route Shop
     Route::post('/store_shop', 'Api\\ShopController@store');

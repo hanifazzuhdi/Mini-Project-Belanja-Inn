@@ -27,12 +27,12 @@ class UserController extends Controller
         ]);
 
         $data->update([
-            'password' => $request->password
+            'password' => bcrypt($request->password)
         ]);
 
         return response([
             'status' => 'success',
-            'message' => 'Password berhasil diubah'
+            'message' => 'Password changed successfully'
         ], 200);
     }
 
@@ -76,7 +76,7 @@ class UserController extends Controller
 
         return response([
             'status' => 'success',
-            'message' => 'Profile berhasil diubah'
+            'message' => 'Profile changed successfully'
         ], 200);
     }
 }
