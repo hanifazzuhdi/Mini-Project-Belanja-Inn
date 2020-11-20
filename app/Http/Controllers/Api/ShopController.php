@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\User;
 use App\Shop;
 use App\Product;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-
-use GuzzleHttp\Client;
+use App\Http\Resources\ShopResource;
 
 class ShopController extends Controller
 {
@@ -21,7 +21,13 @@ class ShopController extends Controller
             return $this->SendResponse('failed', 'Data not found', null, 500);
         }
 
-        return $this->SendResponse('success', 'Data loaded successfully', $data, 200);
+        $res = new ShopResource($data);
+
+        return response([
+            'status' => 'success',
+            'message' => 'Data loaded successfully',
+            'hasil' => $res
+        ]);
     }
 
     public function store(Request $request, Client $client)
