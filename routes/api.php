@@ -30,9 +30,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/store_shop', 'Api\\ShopController@store');
     Route::put('/update_shop', 'Api\\ShopController@update');
 
-    // Route crud Seller
+    // Route Crud Seller
     Route::post('/store_product', 'Api\\SellerController@store');
-    Route::post('/update_product/{id}', 'Api\\SellerController@update');
+    Route::put('/update_product/{id}', 'Api\\SellerController@update');
     Route::delete('/destroy_product/{id}', 'Api\SellerController@destroy');
 
     //Route order
@@ -46,6 +46,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/history', 'Api\TransactionController@history');
     Route::get('/getHistory/{id}', 'Api\TransactionController@getHistory');
 
-    // Route fitur
+    // Route coba fitur
     Route::get('/coba', 'Api\TransactionController@coba');
 });
