@@ -46,7 +46,7 @@ class PublicController extends Controller
 
     public function search(Request $request)
     {
-        if($request->keyword == null ) {
+        if ($request->keyword == null) {
             return $this->SendResponse('failed', 'There is no input in search box', null, 400);
         };
 
@@ -54,21 +54,21 @@ class PublicController extends Controller
 
         $products = Product::when($request->keyword, function ($query) use ($request) {
             $query->where('product_name', 'like', "%{$request->keyword}%")
-                    ->orWhereHas('category', function($query) use ($request) {
-                        $query->where('category_name', 'like', "%{$request->keyword}%");
-                    });
-                })->join('shops', 'products.shop_id', '=', 'shops.id')
-                ->join('categories', 'products.category_id', '=', 'categories.id')
-                ->select('products.*', 'shops.shop_name', 'categories.category_name')
-        ->get();
-        
-        
+                ->orWhereHas('category', function ($query) use ($request) {
+                    $query->where('category_name', 'like', "%{$request->keyword}%");
+                });
+        })->join('shops', 'products.shop_id', '=', 'shops.id')
+            ->join('categories', 'products.category_id', '=', 'categories.id')
+            ->select('products.*', 'shops.shop_name', 'categories.category_name')
+            ->get();
+
+
         /* On testing */
         /* filters = ['price', 'quantity', 'weight', 'sold', 'order_by'] */
-        dd($products->where('product_name', 'Energen rasa milo'));        
-        
+        dd($products->where('product_name', 'Energen rasa milo'));
 
-        
+
+
 
         /* On testing */
 
@@ -78,14 +78,14 @@ class PublicController extends Controller
     }
 
     public function filterSearch(Request $request)
-    {   
+    {
         // foreach($filters as $key => $value) {
-            //     $filter[] = $filters[$key];
-            // }
+        //     $filter[] = $filters[$key];
+        // }
         $products = Product::query()->when(request('filterBy'), function ($query) use ($request) {
             $filters = $request->filterBy;
-            foreach($filters as $key => $value) {
-                $store[] = $query->where("$filters[$key]", 'like', "%{$request->keyword}%"); 
+            foreach ($filters as $key => $value) {
+                $store[] = $query->where("$filters[$key]", 'like', "%{$request->keyword}%");
             }
             dd($store);
             return $store;
@@ -109,8 +109,8 @@ class PublicController extends Controller
     //             ->join('categories', 'products.category_id', '=', 'categories.id')
     //             ->select('products.*', 'shops.shop_name', 'categories.category_name')
     //     ->get();
-        
-    //     /* On testing */ 
+
+    //     /* On testing */
     //     /* filters = ['price', 'quantity', 'weight', 'sold', 'order_by'] */
     //     $filters = $request->filterBy;
     //     // dd($filters['price']['comparison']);
@@ -132,4 +132,3 @@ class PublicController extends Controller
 
 
 }
-

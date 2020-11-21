@@ -16,6 +16,7 @@ Route::group(['prefix' => 'public'], function () {
 });
 
 Route::get('/get_shop/{id}', 'Api\\ShopController@index');
+// Route::get('')
 
 // Middleware Jwt
 Route::group(['middleware' => ['jwt.verify']], function () {
@@ -47,7 +48,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/checkout', 'Api\TransactionController@checkout');
     Route::get('/history', 'Api\TransactionController@history');
     Route::get('/getHistory/{id}', 'Api\TransactionController@getHistory');
+    Route::get('/soldHistory', 'Api\TransactionController@soldHistory');
 
     // Route coba fitur
-    Route::get('/coba', 'Api\TransactionController@coba');
+    // Route::get('/coba', 'Api\TransactionController@coba');
 });

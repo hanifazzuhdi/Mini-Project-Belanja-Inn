@@ -7,9 +7,9 @@ use App\Cart;
 use App\Product;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\TransactionResource;
 use App\Http\Resources\HistoryResource;
-use Illuminate\Support\Facades\DB;
+use App\Http\Resources\SoldHistoryResource;
+use App\Http\Resources\TransactionResource;
 
 class TransactionController extends Controller
 {
@@ -29,7 +29,9 @@ class TransactionController extends Controller
 
         return response([
             'status' => 'success',
-            'data' => [$order, $hasil],
+            'message' => 'Data transaction loaded',
+            'data' => $order,
+            'products' => $hasil
         ], 200);
     }
 
@@ -39,7 +41,7 @@ class TransactionController extends Controller
         $order = Order::where('user_id', Auth::id())->where('status', 0)->first();
 
         if (empty($order)) {
-            return $this->SendResponse('failed', 'data order not found', null, 404);
+            return $this->SendResponse('failed', 'Data order not found', null, 404);
         }
 
         $order_id = $order->id;
@@ -61,30 +63,22 @@ class TransactionController extends Controller
 
         return response([
             'status' => 'success',
-            'message' => 'Ordered successfully',
+            'message' => 'Order success',
             'data' => $res
         ], 200);
     }
 
-    public function coba()
-    {
-        $data = Cart::whereHas('order', function ($query) {
-            $query->where('status', 1)->where('user_id', Auth::id());
-        })->get()->groupBy('order_id')->all();
-
-        return $data;
-    }
-
     public function history()
     {
-        $order = Order::where('user_id', Auth::id())->where('status', 1)->get()->all();
+        $order = Order::where('user_id', Auth::id())->where('status', 1)->get()->toArray();
 
-        if ($order == false) {
-            return $this->SendResponse('failed', 'data not found', null, 404);
+        if (!$order) {
+            return $this->SendResponse('failed', 'Data order not found', null, 404);
         }
 
         return response([
-            'status' => 'sukses',
+            'status' => 'success',
+            'message' => 'History order user',
             'data' => $order
         ], 200);
     }
@@ -95,16 +89,35 @@ class TransactionController extends Controller
             $query->where('user_id', Auth::id())->where('status', 1);
         })->get()->all();
 
-        if ($orders == false) {
-            return $this->SendResponse('failed', 'data not found', null, 404);
+        if (!$orders) {
+            return $this->SendResponse('failed', "Data order id $id not found", null, 404);
         }
 
         $hasil = HistoryResource::collection($orders);
 
         return response([
-            'status' => 'sukses',
+            'status' => 'success',
             'message' => "Data order id $id",
             'data' => $hasil
         ], 200);
+    }
+
+    public function soldHistory()
+    {
+        $res = Cart::where('shop_id', Auth::id())->whereHas('order', function ($query) {
+            $query->where('status', 1);
+        })->get()->all();
+
+        if (!$res) {
+            return $this->SendResponse('failed', 'Data not found', null, 404);
+        }
+
+        $hasil = SoldHistoryResource::collection($res);
+
+        return response([
+            'status' => 'success',
+            'message' => 'Hisory order',
+            'data' => $hasil
+        ]);
     }
 }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\User;
 use App\Shop;
-use App\Product;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -51,6 +50,7 @@ class ShopController extends Controller
 
         if ($request->avatar) {
             $image = base64_encode(file_get_contents($request->avatar));
+
 
             $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
                 'form_params' => [

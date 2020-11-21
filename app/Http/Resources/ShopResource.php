@@ -22,7 +22,7 @@ class ShopResource extends JsonResource
             'address' => $this->address,
             'description' => $this->description,
             'created_at' => $this->created_at,
-            'products' => $this->product,
+            'products' => $this->product
         ];
     }
 }
