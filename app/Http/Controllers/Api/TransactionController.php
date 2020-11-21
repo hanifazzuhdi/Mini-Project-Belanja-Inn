@@ -120,4 +120,14 @@ class TransactionController extends Controller
             'data' => $hasil
         ]);
     }
+
+    public function coba()
+    {
+        $user = null;
+
+        if (!$user) {
+            return "kosong";
+        }
+        return "sukses";
+    }
 }
