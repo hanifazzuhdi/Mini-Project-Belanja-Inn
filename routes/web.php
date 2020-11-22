@@ -17,6 +17,7 @@ Route::group(['middleware' => 'CekAdmin', 'auth'], function () {
 
     Route::get('/detailUser/{id}', 'HomeController@getDetail')->name('detailUser');                     // <== Detail
     Route::get('/detailProduct/{id}', 'HomeController@getProductDetail')->name('detailProduct');
+    Route::get('/detailHistory/{id}', 'HomeController@getHistory')->name('detailHistory');
 
     Route::put('/updateUser/{id}', 'HomeController@update')->name('update');                            // <== Update
     Route::put('/updateAvatar/{id}', 'HomeController@updateAvatar')->name('updateAvatar');
@@ -25,4 +26,9 @@ Route::group(['middleware' => 'CekAdmin', 'auth'], function () {
 
     // Route Settings
     Route::get('/settings/category', 'SettingController@category')->name('category');
+});
+
+// Route Fallback
+Route::fallback(function () {
+    return view('pages.404');
 });

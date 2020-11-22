@@ -19,8 +19,9 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">List User</h6>
+            <h6 class="m-0 font-weight-bold text-primary">USER</h6>
         </div>
+
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -28,8 +29,8 @@
                         <tr>
                             <th>No</th>
                             <th>Name</th>
-                            <th>Email</th>
                             <th>Username</th>
+                            <th>Email</th>
                             <th>Phone Number</th>
                             <th>Role</th>
                             <th>Created At</th>
@@ -40,8 +41,8 @@
                         <tr>
                             <th>No</th>
                             <th>Name</th>
-                            <th>Email</th>
                             <th>Username</th>
+                            <th>Email</th>
                             <th>Phone Number</th>
                             <th>Role</th>
                             <th>Created At</th>
@@ -55,8 +56,8 @@
                         <tr>
                             <td>{{$i}}</td>
                             <td>{{$data['name']}}</td>
-                            <td>{{$data['email']}}</td>
                             <td>{{$data['username']}}</td>
+                            <td>{{$data['email']}}</td>
                             <td>{{$data['phone_number']}}</td>
 
                             @if ($data['role_id'] == 1)
@@ -68,7 +69,7 @@
                             <td>{{$data['created_at']}}</td>
                             <td class="text-center">
                                 <a href="{{'detailUser/' . $data['id'] }}">
-                                    <i class="fas fa-user text-black-300"></i>
+                                    <i class="fas fa-eye text-black-300"></i>
                                 </a>
                             </td>
                         </tr>

@@ -1,5 +1,18 @@
 /* page dashboard */
 
+/* page detail history */
+div.detail-history {
+    width: 1050px;
+}
+
+.card-product {
+    width: 470px;
+}
+
+a.print {
+    cursor: pointer;
+}
+
 /* page detail user */
 
 .card-detail-user {
@@ -74,4 +87,15 @@
     color: black;
     width: 250px;
     height: 70px;
+}
+
+
+/* 404 */
+
+.page-404 {
+    margin-top: 150px;
+}
+
+.page-404 a:hover {
+    text-decoration: none;
 }

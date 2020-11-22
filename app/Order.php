@@ -3,11 +3,14 @@
 namespace App;
 
 use App\Cart;
+use App\Traits\FormatNumber;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    use FormatNumber;
+
     protected $fillable = ['user_id', 'date', 'status', 'total_price'];
 
     public function user()
@@ -23,5 +26,11 @@ class Order extends Model
     public function transaction()
     {
         return $this->belongsTo(Transaction::class);
+    }
+
+    public function getDateAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['date'])
+            ->format('d-M-Y');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cart;
 use App\Category;
 use App\Order;
 use App\Product;
@@ -13,6 +14,7 @@ use GuzzleHttp\Client;
 
 class HomeController extends Controller
 {
+    // Function Get
     public function index()
     {
         $active = DB::select("SELECT COUNT(id) as active FROM users WHERE role_id != 3");
@@ -38,6 +40,7 @@ class HomeController extends Controller
         return view('pages.daftarProduct', compact('datas'));
     }
 
+    // Function Get Detail
     public function getDetail($id)
     {
         $data = User::find($id);
@@ -52,6 +55,14 @@ class HomeController extends Controller
         return view('pages.detailProduct', compact('data'));
     }
 
+    public function getHistory($id)
+    {
+        $data = Cart::with('order')->with('product')->where('order_id', $id)->get();
+
+        return view('pages.detailHistory', compact('data'));
+    }
+
+    // Function Update
     public function update(Request $request, $id)
     {
         $user = User::find($id);
@@ -94,6 +105,7 @@ class HomeController extends Controller
         return redirect("detailUser/$id")->with('status', 'Avatar has been changed');
     }
 
+    // Function Destroy
     public function destroy($id)
     {
         Product::where('shop_id', $id)->delete();
