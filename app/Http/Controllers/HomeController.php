@@ -17,7 +17,7 @@ class HomeController extends Controller
     {
         $active = DB::select("SELECT COUNT(id) as active FROM users WHERE role_id != 3");
         $shop = DB::select("SELECT COUNT(id) as shop FROM users WHERE role_id = 2 ");
-        $total_transaction = DB::select("SELECT SUM('total_price') as total FROM orders WHERE status = 1");
+        $total_transaction = DB::table('orders')->sum('total_price');
         $transaction = Order::where('status', 1)->get();
 
         return view('pages.dashboard', compact('active', 'shop', 'total_transaction', 'transaction'));
