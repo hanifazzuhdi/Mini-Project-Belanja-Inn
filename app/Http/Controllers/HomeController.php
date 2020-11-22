@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Order;
 use App\Product;
 use App\Shop;
 use App\User;
@@ -12,31 +13,42 @@ use GuzzleHttp\Client;
 
 class HomeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
         $active = DB::select("SELECT COUNT(id) as active FROM users WHERE role_id != 3");
         $shop = DB::select("SELECT COUNT(id) as shop FROM users WHERE role_id = 2 ");
+        $total_transaction = DB::select("SELECT SUM('total_price') as total FROM orders WHERE status = 1");
+        $transaction = Order::where('status', 1)->get();
 
-        return view('pages.dashboard', compact('active', 'shop'));
+        return view('pages.dashboard', compact('active', 'shop', 'total_transaction', 'transaction'));
     }
 
-    public function getUser()
+    public function user()
     {
-        $datas = User::where('role_id', '!=', 3)->orderBy('id')->get()->toArray();
+        $datas = User::where('role_id', '!=', 3)->orderByDesc('id')->get();
 
         return view('pages.daftarUser', compact('datas'));
     }
 
+    public function product()
+    {
+        $datas = Product::with('shop')->orderByDesc('id')->get();
+
+        return view('pages.daftarProduct', compact('datas'));
+    }
+
     public function getDetail($id)
     {
-        $data = User::find($id)->toArray();
+        $data = User::find($id);
 
         return view('pages.detailUser', compact('data'));
+    }
+
+    public function getProductDetail($id)
+    {
+        $data = Product::with('shop')->find($id);
+
+        return view('pages.detailProduct', compact('data'));
     }
 
     public function update(Request $request, $id)
@@ -89,13 +101,13 @@ class HomeController extends Controller
 
         User::destroy($id);
 
-        return redirect(route('getUser'))->with('status', 'Data Deleted Successfully');
+        return redirect(route('user'))->with('status', 'Data Deleted Successfully');
     }
 
-    public function category()
+    public function destroyProduct($id)
     {
-        $categories = Category::all()->toArray();
+        Product::destroy($id);
 
-        return view("pages.category", compact('categories'));
+        return redirect(route('product'))->with('status', 'Data Deleted Successfully');
     }
 }

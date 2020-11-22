@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('activeUser', 'active')
+@section('activeProduct', 'active')
 @section('content')
 
 <div class="container">
@@ -19,7 +19,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">List User</h6>
+            <h6 class="m-0 font-weight-bold text-primary">List Product</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -27,11 +27,11 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Username</th>
-                            <th>Phone Number</th>
-                            <th>Role</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Sold</th>
+                            <th>Seller</th>
                             <th>Created At</th>
                             <th></th>
                         </tr>
@@ -39,11 +39,11 @@
                     <tfoot>
                         <tr>
                             <th>No</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Username</th>
-                            <th>Phone Number</th>
-                            <th>Role</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Sold</th>
+                            <th>Seller</th>
                             <th>Created At</th>
                             <th></th>
                         </tr>
@@ -54,21 +54,15 @@
 
                         <tr>
                             <td>{{$i}}</td>
-                            <td>{{$data['name']}}</td>
-                            <td>{{$data['email']}}</td>
-                            <td>{{$data['username']}}</td>
-                            <td>{{$data['phone_number']}}</td>
-
-                            @if ($data['role_id'] == 1)
-                                <td>User</td>
-                            @else
-                                <td>User + Penjual</td>
-                            @endif
-
+                            <td>{{$data['product_name']}}</td>
+                            <td>{{$data['price']}}</td>
+                            <td>{{$data['quantity']}}</td>
+                            <td>{{$data['sold']}}</td>
+                            <td>{{$data['shop']['shop_name']}}</td>
                             <td>{{$data['created_at']}}</td>
                             <td class="text-center">
-                                <a href="{{'detailUser/' . $data['id'] }}">
-                                    <i class="fas fa-user text-black-300"></i>
+                                <a href="{{'detailProduct/' . $data['id'] }}">
+                                    <i class="fas fa-eye text-black-300"></i>
                                 </a>
                             </td>
                         </tr>
@@ -83,5 +77,4 @@
     </div>
 
 </div>
-  <!-- /.container-fluid -->
 @endsection

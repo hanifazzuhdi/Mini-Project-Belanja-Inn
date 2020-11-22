@@ -54,6 +54,20 @@
     padding-bottom: 25px;
 }
 
+/* Page detail product */
+.danger {
+    position: relative;
+    height: 140px;
+}
+
+.delete {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+
+
 /* page category */
 
 .container .card-category {
