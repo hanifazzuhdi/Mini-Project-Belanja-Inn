@@ -79,13 +79,11 @@ class OrderController extends Controller
             $old_carts->update();
         }
 
-        $update_order = Order::where('user_id', Auth::id())->where('status', 0)->first();
-        $update_price = (int) $product->price * (int) $request->quantity;
-        $update_order->total_price += $update_price;
-        $update_order->update();
-        dd([$update_order, $saved_order]);
+        $saved_price = (int) $product->price * (int) $request->quantity;
+        $saved_order->total_price += $saved_price;
+        $saved_order->update();
 
-        $data = new OrderResource($update_order);
+        $data = new OrderResource($saved_order);
 
         try {
             return $this->SendResponse('succes', 'Data created successfully', $data, 200);

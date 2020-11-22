@@ -96,6 +96,24 @@ class DatabaseSeeder extends Seeder
             'description' => 'ini adalah toko milik fauzil'
         ]);
 
+        Shop::create([
+            'id' => 3,
+            'user_id' => 3,
+            'shop_name' => 'hanif shop',
+            'avatar' => 'https://iili.io/FqzDMX.md.png',
+            'address' => 'DIY indonesia',
+            'description' => 'ini adalah toko milik hanif'
+        ]);
+
+        Shop::create([
+            'id' => 4,
+            'user_id' => 4,
+            'shop_name' => 'usman shop',
+            'avatar' => 'https://iili.io/FqzDMX.md.png',
+            'address' => 'DIY indonesia',
+            'description' => 'ini adalah toko milik usman'
+        ]);
+
         Product::create([
             'product_name' => 'Energen rasa milo',
             'price' => 150000,

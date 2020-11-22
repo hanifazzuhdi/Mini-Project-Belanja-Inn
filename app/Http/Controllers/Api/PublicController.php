@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Shop;
 use App\Product;
 use App\Category;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
@@ -46,90 +47,76 @@ class PublicController extends Controller
 
     public function search(Request $request)
     {
-        if($request->keyword == null ) {
-            return $this->SendResponse('failed', 'There is no input in search box', null, 400);
-        };
+        // if($request->keyword == null ) {
+        //     return $this->SendResponse('failed', 'There is no input in search box', null, 400);
+        // };
 
         $filters = $request->filterBy;
 
-        $products = Product::when($request->keyword, function ($query) use ($request) {
-            $query->where('product_name', 'like', "%{$request->keyword}%")
-                    ->orWhereHas('category', function($query) use ($request) {
-                        $query->where('category_name', 'like', "%{$request->keyword}%");
-                    });
-                })->join('shops', 'products.shop_id', '=', 'shops.id')
-                ->join('categories', 'products.category_id', '=', 'categories.id')
-                ->select('products.*', 'shops.shop_name', 'categories.category_name')
-        ->get();
-        
-        
-        /* On testing */
-        /* filters = ['price', 'quantity', 'weight', 'sold', 'order_by'] */
-        dd($products->where('product_name', 'Energen rasa milo'));        
-        
+        $query = Product::query();
+        $query->when(!empty($filters['sort_by']) && $filters['sort_by'] == 'terbaru', function ($query) {
+            return $query->latest();
+        });
 
-        
+        $products = $query->when($request->keyword, function ($query) use ($request) {
+            return $query->where('product_name', 'like', "%{$request->keyword}%")
+                ->orWhereHas('category', function ($query) use ($request) {
+                   return $query->where('category_name', 'like', "%{$request->keyword}%");
+                });
+        })
+            ->join('shops', 'products.shop_id', '=', 'shops.id')
+            ->join('categories', 'products.category_id', '=', 'categories.id')
+            ->select('products.*', 'shops.shop_name', 'categories.category_name')
+            ->get()
+            ->toArray();
 
-        /* On testing */
 
-        if (count($products) != 0) {
-            return $this->SendResponse('succes', 'Data loaded successfully', $products, 200);
+        /* filters = ['price', 'Ready Stock', 'sort_by'] */
+
+        $products = collect($products);
+        /* price range */
+
+        // costum price range
+        $pr4 = null;
+        if (!empty($filters['price']['range']) && is_array($filters['price']['range'])) {
+            $pr4 = [(int) $filters['price']['range']['top'], (int) $filters['price']['range']['bottom']];
+        }
+
+        $pr = [
+            'pr1' => [0, 75000],
+            'pr2' => [75000, 150000],
+            'pr3' => [150000, 200000],
+            'pr4' => $pr4
+        ];
+
+        $sort_by = [
+            'terlaris' => ['sold', true],
+            'termahal' => ['price', true],
+            'termurah' => ['price', false]
+        ];
+
+        if (!empty($filters['price']['range']) && is_string($filters['price']['range'])) {
+            $products = $products->whereBetween('price', $pr["{$filters['price']['range']}"]);
+        } elseif (!empty($filters['price']['range'])) {
+            $products = $products->whereBetween('price', $pr['pr4']);
+        }
+
+        if (!empty($filters['stock_status']) && $filters['stock_status'] == 'ready') {
+            $products = $products->where('quantity', '>', 0);
+        }
+
+        if (!empty($filters['sort_by']) && $filters['sort_by'] != 'terbaru') {
+            if (Arr::exists($sort_by, $filters['sort_by'])) {
+                $key = $sort_by["{$filters['sort_by']}"][0];
+                $sortmode = $sort_by["{$filters['sort_by']}"][1];
+                $products = $products->sortBy($key, SORT_REGULAR, $sortmode); // parameter ke 3 [true => descending, false => ascending]
+            }
+        }
+
+        $filtered = $products->values()->all();
+
+        if (count($filtered) != 0) {
+            return $this->SendResponse('succes', 'Data loaded successfully', $filtered, 200);
         } else return $this->SendResponse('failed', 'Data failed to load', null, 500);
     }
-
-    public function filterSearch(Request $request)
-    {   
-        // foreach($filters as $key => $value) {
-            //     $filter[] = $filters[$key];
-            // }
-        $products = Product::query()->when(request('filterBy'), function ($query) use ($request) {
-            $filters = $request->filterBy;
-            foreach($filters as $key => $value) {
-                $store[] = $query->where("$filters[$key]", 'like', "%{$request->keyword}%"); 
-            }
-            dd($store);
-            return $store;
-        })->get();
-
-        dd($products);
-    }
-
-    // public function search(Request $request)
-    // {
-    //     if($request->keyword == null ) {
-    //         return $this->SendResponse('failed', 'There is no input in search box', null, 400);
-    //     };
-
-    //     $products = Product::when($request->keyword, function ($query) use ($request) {
-    //         $query->where('product_name', 'like', "%{$request->keyword}%")
-    //                 ->orWhereHas('category', function($query) use ($request) {
-    //                     $query->where('category_name', 'like', "%{$request->keyword}%");
-    //                 });
-    //             })->join('shops', 'products.shop_id', '=', 'shops.id')
-    //             ->join('categories', 'products.category_id', '=', 'categories.id')
-    //             ->select('products.*', 'shops.shop_name', 'categories.category_name')
-    //     ->get();
-        
-    //     /* On testing */ 
-    //     /* filters = ['price', 'quantity', 'weight', 'sold', 'order_by'] */
-    //     $filters = $request->filterBy;
-    //     // dd($filters['price']['comparison']);
-    //     // // $products = json_decode(json_encode($products), true);
-    //     // $products->when($request->filterBy['price'], function($q) use ($filters) {
-    //     //     return $q->where('price', "{$filters['price']['comparison']}", "{$filters['price']['number']}");
-    //     // });
-    //     // dd($filters);
-    //     $products->when($request->filterBy['sold'], function($q) use ($filters) {
-    //         return $q->where('sold', , "{$filters['sold']}");
-    //     });
-
-    //     /* On testing */
-
-    //     if (count($products) != 0) {
-    //         return $this->SendResponse('succes', 'Data loaded successfully', $products, 200);
-    //     } else return $this->SendResponse('failed', 'Data failed to load', null, 500);
-    // }
-
-
 }
-
