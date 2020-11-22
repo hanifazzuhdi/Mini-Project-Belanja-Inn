@@ -81,7 +81,7 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                    total transaction</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">IDR. {{$transaction ? number_format($transaction, '0', ',', '.' ): 0}}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">IDR {{$transaction ? number_format($transaction, '0', ',', '.' ): 0}}</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -113,7 +113,7 @@
             <tr>
                 <th scope="row">{{$i}}</th>
                 <td>{{$history['user']->username}}</td>
-                <td>IDR. {{number_format($history->total_price, '0', ',', '.')}}</td>
+                <td>IDR {{number_format($history->total_price, '0', ',', '.')}}</td>
                 <td>{{ $history->status == 0 ? 'Pending' : 'Success' }}</td>
                 <td>{{$history->date}}</td>
                 <td class="text-center">

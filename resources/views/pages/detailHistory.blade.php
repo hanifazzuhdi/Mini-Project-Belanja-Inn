@@ -68,7 +68,7 @@
                             @endforeach
                             <br>
                             <hr>
-                            <p class="mb-3"> Total Price = IDR. {{number_format($data[0]['order']->total_price,'0', ',', '.')}} </p>
+                            <p class="mb-3"> Total Price = IDR {{number_format($data[0]['order']->total_price,'0', ',', '.')}} </p>
                         </ul>
 
                         <a class="btn btn-outline-primary float-right print" href="#" role="button" onclick="window.print()">Print</a>
