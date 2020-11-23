@@ -10,13 +10,25 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => 'CekAdmin', 'auth'], function () {
-    // main
+    // Route HomeController
     Route::get('/dashboard', 'HomeController@index')->name('home');
-    Route::get('/getUser', 'HomeController@getUser')->name('getUser');
-    Route::get('/detailUser/{id}', 'HomeController@getDetail')->name('detailUser');
-    Route::put('/updateUser/{id}', 'HomeController@update')->name('update');
+    Route::get('/user', 'HomeController@user')->name('user');
+    Route::get('/product', 'HomeController@product')->name('product');
+
+    Route::get('/detailUser/{id}', 'HomeController@getDetail')->name('detailUser');                     // <== Detail
+    Route::get('/detailProduct/{id}', 'HomeController@getProductDetail')->name('detailProduct');
+    Route::get('/detailHistory/{id}', 'HomeController@getHistory')->name('detailHistory');
+
+    Route::put('/updateUser/{id}', 'HomeController@update')->name('update');                            // <== Update
     Route::put('/updateAvatar/{id}', 'HomeController@updateAvatar')->name('updateAvatar');
     Route::delete('/delete/{id}', 'HomeController@destroy');
+    Route::delete('/deleteProduct/{id}', 'HomeController@destroyProduct');
 
-    Route::get('/settings/category', 'HomeController@category')->name('category');
+    // Route Settings
+    Route::get('/settings/category', 'SettingController@category')->name('category');
+});
+
+// Route Fallback
+Route::fallback(function () {
+    return view('pages.404');
 });

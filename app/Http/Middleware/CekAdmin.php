@@ -3,14 +3,15 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class CekAdmin
 {
     public function handle($request, Closure $next)
     {
-        if ($request->user()->role_id != 3) {
-            return redirect('/');
+        if (Auth::user() and Auth::user()->role_id == 3) {
+            return $next($request);
         }
-        return $next($request);
+        return redirect('/');
     }
 }

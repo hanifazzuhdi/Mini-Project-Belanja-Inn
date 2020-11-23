@@ -16,6 +16,7 @@ Route::group(['prefix' => 'public'], function () {
 });
 
 Route::get('/get_shop/{id}', 'Api\\ShopController@index');
+// Route::get('')
 
 // Middleware Jwt
 Route::group(['middleware' => ['jwt.verify']], function () {
@@ -33,21 +34,22 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Route Crud Seller
     Route::post('/store_product', 'Api\\SellerController@store');
-    Route::put('/update_product/{id}', 'Api\\SellerController@update');
+    Route::post('/update_product/{id}', 'Api\\SellerController@update');
     Route::delete('/destroy_product/{id}', 'Api\\SellerController@destroy');
 
     //Route order
-    Route::post('/order_product/{id}', 'Api\\OrderController@order')->name('order_product');
-    Route::get('/carts', 'Api\\OrderController@carts')->name('carts');
-    Route::delete('/delete_cart/{id}', 'Api\\OrderController@delete')->name('delete_cart');
-    Route::put('/update_cart/{id}', 'Api\\OrderController@updateCart')->name('update_cart');
+    Route::get('/carts', 'Api\\OrderController@carts');
+    Route::post('/order_product/{id}', 'Api\\OrderController@order');
+    Route::put('/update_cart/{id}', 'Api\\OrderController@updateCart');
+    Route::delete('/delete_cart/{id}', 'Api\\OrderController@delete');
 
     // Route transaksi
     Route::get('/getCheckout', 'Api\\TransactionController@getCheckout');
     Route::post('/checkout', 'Api\TransactionController@checkout');
     Route::get('/history', 'Api\TransactionController@history');
     Route::get('/getHistory/{id}', 'Api\TransactionController@getHistory');
-
-    // Route coba fitur
-    Route::get('/coba', 'Api\TransactionController@coba');
+    Route::get('/soldHistory', 'Api\TransactionController@soldHistory');
 });
+
+// Route coba fitur
+Route::get('/coba', 'Api\TransactionController@coba');

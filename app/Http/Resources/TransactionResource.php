@@ -16,8 +16,6 @@ class TransactionResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'product_id' => $this->product_id,
-            'order_id'  => $this->order_id,
             'quantity'  => $this->quantity,
             'product'   => $this->product->only('id', 'product_name', 'image'),
             'shop'  => $this->product->shop->only('id', 'shop_name', 'avatar')

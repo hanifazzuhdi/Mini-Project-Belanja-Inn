@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\FormatNumber;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,6 +11,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
+    use FormatNumber;
 
     /**
      * The attributes that are mass assignable.
@@ -28,18 +30,6 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password', 'remember_token'
     ];
-
-    public function getCreatedAtAttribute()
-    {
-        return \Carbon\Carbon::parse($this->attributes['created_at'])
-            ->format('d, M Y H:i');
-    }
-
-    public function getUpdatedAtAttribute()
-    {
-        return \Carbon\Carbon::parse($this->attributes['updated_at'])
-            ->format('d, M Y H:i');
-    }
 
     protected $casts = [
         'email_verified_at' => 'datetime',

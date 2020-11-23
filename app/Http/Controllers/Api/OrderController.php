@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-
     public function order(Request $request, $id)
     {
         $product = Product::where('id', $id)->first();
@@ -21,17 +20,13 @@ class OrderController extends Controller
         $user = Auth::user()->id;
 
         // cek id produk
-        if ($product == false) {
+        if (!$product) {
             return $this->SendResponse('failed', 'Product not found', null, 404);
         }
 
         // Cek pembeli apakah sebagai penjual
-        if ($product['shop_id'] === $user) {
+        if ($product->shop_id == $user) {
             return $this->SendResponse('failed', 'You cant buy your own goods', null, 400);
-        }
-
-        if ($request->quantity == null) {
-            $request->quantity = '0';
         }
 
         //validasi jumlah stock
@@ -79,14 +74,15 @@ class OrderController extends Controller
             $old_carts->update();
         }
 
-        $saved_price = (int) $product->price * (int) $request->quantity;
-        $saved_order->total_price += $saved_price;
+        // $update_order = Order::where('user_id', Auth::id())->where('status', 0)->first();
+        $update_price = (int) $product->price * (int) $request->quantity;
+        $saved_order->total_price += $update_price;
         $saved_order->update();
 
         $data = new OrderResource($saved_order);
 
         try {
-            return $this->SendResponse('succes', 'Data created successfully', $data, 200);
+            return $this->SendResponse('succes', 'Data created successfully', $data, 202);
         } catch (\Throwable $th) {
             return $this->SendResponse('failed', 'Data failed to create', null, 500);
         }
@@ -95,11 +91,11 @@ class OrderController extends Controller
     public function carts()
     {
         $order = Order::where('user_id', Auth::id())->where('status', 0)->first('id');
-        
-        if(empty($order)) {
-            return $this->SendResponse('failed', 'Data not found', null, 404);    
+
+        if (empty($order)) {
+            return $this->SendResponse('failed', 'Data not found', null, 404);
         }
-        
+
         $cart = Cart::where('order_id', $order->id)->get();
         $data = CartResource::collection($cart);
 
@@ -109,10 +105,10 @@ class OrderController extends Controller
     public function updateCart(Request $request, $cart_id)
     {
         // $cart = Cart::where('id', '=',  "{$cart_id}")->get();
-        if(empty($request->checklist)) {
+        if (empty($request->checklist)) {
             return $this->SendResponse('failed', 'Product is not selected', null, 400);
-        } 
-            $cart = Cart::when($request->quantity, function ($query) use ($request, $cart_id) {
+        }
+        $cart = Cart::when($request->quantity, function ($query) use ($request, $cart_id) {
             $query->where('id', '=',  "{$cart_id}");
         })->get();
 
@@ -136,6 +132,5 @@ class OrderController extends Controller
         } catch (\Throwable $th) {
             return $this->SendResponse('failed', 'Data failed to delete', $cart, 500);
         }
-
     }
 }

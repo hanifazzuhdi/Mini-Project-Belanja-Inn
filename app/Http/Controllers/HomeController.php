@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Cart;
 use App\Category;
+use App\Order;
 use App\Product;
 use App\Shop;
 use App\User;
@@ -12,33 +14,55 @@ use GuzzleHttp\Client;
 
 class HomeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
+    // Function Get
     public function index()
     {
         $active = DB::select("SELECT COUNT(id) as active FROM users WHERE role_id != 3");
         $shop = DB::select("SELECT COUNT(id) as shop FROM users WHERE role_id = 2 ");
+        $total_transaction = DB::table('orders')->where('status', 1)->count('id');
+        $transaction = DB::table('orders')->where('status', 1)->sum('total_price');
 
-        return view('pages.dashboard', compact('active', 'shop'));
+        $histories = Order::with('user')->get();
+        return view('pages.dashboard', compact('active', 'shop', 'total_transaction', 'transaction', 'histories'));
     }
 
-    public function getUser()
+    public function user()
     {
-        $datas = User::where('role_id', '!=', 3)->orderBy('id')->get()->toArray();
+        $datas = User::where('role_id', '!=', 3)->orderByDesc('id')->get();
 
         return view('pages.daftarUser', compact('datas'));
     }
 
+    public function product()
+    {
+        $datas = Product::with('shop')->orderByDesc('id')->get();
+
+        return view('pages.daftarProduct', compact('datas'));
+    }
+
+    // Function Get Detail
     public function getDetail($id)
     {
-        $data = User::find($id)->toArray();
+        $data = User::find($id);
 
         return view('pages.detailUser', compact('data'));
     }
 
+    public function getProductDetail($id)
+    {
+        $data = Product::with('shop')->find($id);
+
+        return view('pages.detailProduct', compact('data'));
+    }
+
+    public function getHistory($id)
+    {
+        $data = Cart::with('order')->with('product')->where('order_id', $id)->get();
+
+        return view('pages.detailHistory', compact('data'));
+    }
+
+    // Function Update
     public function update(Request $request, $id)
     {
         $user = User::find($id);
@@ -81,6 +105,7 @@ class HomeController extends Controller
         return redirect("detailUser/$id")->with('status', 'Avatar has been changed');
     }
 
+    // Function Destroy
     public function destroy($id)
     {
         Product::where('shop_id', $id)->delete();
@@ -89,13 +114,13 @@ class HomeController extends Controller
 
         User::destroy($id);
 
-        return redirect(route('getUser'))->with('status', 'Data Deleted Successfully');
+        return redirect(route('user'))->with('status', 'Data Deleted Successfully');
     }
 
-    public function category()
+    public function destroyProduct($id)
     {
-        $categories = Category::all()->toArray();
+        Product::destroy($id);
 
-        return view("pages.category", compact('categories'));
+        return redirect(route('product'))->with('status', 'Data Deleted Successfully');
     }
 }

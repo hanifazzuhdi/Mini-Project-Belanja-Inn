@@ -49,6 +49,11 @@
                     <form class="mt-4 form">
                         <fieldset disabled>
                             <div class="form-group">
+                                <label> User ID : </label>
+                                <input type="text" class="form-control" name="name" value="{{$data['id']}}">
+                            </div>
+
+                            <div class="form-group">
                                 <label> Name : </label>
                                 <input type="text" class="form-control" name="name" value="{{$data['name']}}">
                             </div>
