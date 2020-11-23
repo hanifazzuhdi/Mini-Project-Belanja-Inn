@@ -3,13 +3,13 @@
 namespace App;
 
 use App\Cart;
-use App\Traits\FormatNumber;
 use App\User;
+use App\Traits\FormatNumber;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    use FormatNumber;
+    // use FormatNumber;
 
     protected $fillable = ['user_id', 'date', 'status', 'total_price'];
 

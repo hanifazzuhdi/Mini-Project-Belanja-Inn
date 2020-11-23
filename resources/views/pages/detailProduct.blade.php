@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('activeUser', 'active')
+@section('activeProduct', 'active')
 @section('content')
 
 <div class="container">
