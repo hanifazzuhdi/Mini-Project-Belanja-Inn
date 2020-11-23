@@ -64,7 +64,7 @@ class UserController extends Controller
             'name' => 'required',
             'phone_number' => 'required',
             'address' => 'required',
-            'avatar' => 'file|image'
+            'avatar' => 'required|file|image'
         ]);
 
         if ($request->avatar) {
