@@ -49,11 +49,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/history', 'Api\TransactionController@history');
     Route::get('/getHistory/{id}', 'Api\TransactionController@getHistory');
     Route::get('/soldHistory', 'Api\TransactionController@soldHistory');
-
-    // Route Message
-    Route::get('/getMessage', 'Api\MessageController@index')->name('home');
-    Route::get('/message/{id}', 'Api\MessageController@getMessage')->name('message');
-    Route::post('/message', 'Api\MessageController@sendMessage');
 });
 
 // Route coba fitur
