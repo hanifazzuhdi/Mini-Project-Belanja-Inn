@@ -89,15 +89,12 @@ class UserController extends Controller
             $newAvatar = $data->avatar;
         }
 
-
         $data->update([
             'name' => $request->name ? $request->name : $data->name,
             'phone_number' => $request->phone_number ? $request->phone_number : $data->phone_number,
             'address' => $request->address ? $request->address : $data->address,
             'avatar' => $newAvatar
         ]);
-
-        return $newAvatar;
 
         return response([
             'status' => 'success',
