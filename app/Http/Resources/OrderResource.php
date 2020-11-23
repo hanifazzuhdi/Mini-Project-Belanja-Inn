@@ -2,22 +2,23 @@
 
 namespace App\Http\Resources;
 
-use Carbon\Carbon;
+use App\Traits\FormatNumber;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class OrderResource extends JsonResource
 {
+    use FormatNumber;
 
     public function toArray($request)
-    {
+    {   
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
-            'date' => Carbon::parse($this->date)->translatedFormat('l, d F Y H:i'),
+            'date' => $this->date,
             'status' => $this->status,
-            'total_price' => number_format($this->total_price, 0, ',', '.'),
-            'created_at' => $this->created_at->translatedFormat('l, d F Y H:i'),
-            'updated_at' => $this->updated_at->diffForHumans(),
+            'total_price' => $this->formatPrice($this->total_price),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

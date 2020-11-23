@@ -78,12 +78,12 @@ class OrderController extends Controller
         $update_price = (int) $product->price * (int) $request->quantity;
         $saved_order->total_price += $update_price;
         $saved_order->update();
-
+        
         $data = new OrderResource($saved_order);
 
         try {
             return $this->SendResponse('succes', 'Data created successfully', $data, 202);
-        } catch (\Throwable $th) {
+        } catch(\Throwable $e) {
             return $this->SendResponse('failed', 'Data failed to create', null, 500);
         }
     }
@@ -96,8 +96,18 @@ class OrderController extends Controller
             return $this->SendResponse('failed', 'Data not found', null, 404);
         }
 
-        $cart = Cart::where('order_id', $order->id)->get();
-        $data = CartResource::collection($cart);
+        $cart = Cart::where('order_id', $order->id)
+                      ->with(['product:id,product_name,price,image,weight', 'shop:id,shop_name'])
+                      ->get()
+                      ->toArray();
+                      
+        $data = collect($cart)->map(function ($value, $key) {
+            $value['total_price'] = number_format($value['total_price'], 0, ',', '.');
+            $value['product']['price'] = number_format($value['product']['price'], 0, ',', '.');
+            unset($value['shop_id']);
+            unset($value['product_id']);
+            return $value;
+        });
 
         return $this->SendResponse('succes', 'Data fetched successfully', $data, 200);
     }

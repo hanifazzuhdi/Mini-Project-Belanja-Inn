@@ -149,5 +149,6 @@ class DatabaseSeeder extends Seeder
             'shop_id' => 2,
             'category_id' => 4
         ]);
+
     }
 }

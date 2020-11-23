@@ -19,4 +19,10 @@ trait FormatNumber
     {
         return Carbon::parse($this->attributes['updated_at'])->diffForHumans();
     }
+
+    public function formatPrice($price) 
+    {
+        return number_format($price, 0, ',', '.');
+    }
+
 }
