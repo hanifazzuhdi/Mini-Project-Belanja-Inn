@@ -64,7 +64,7 @@ class UserController extends Controller
             'name' => 'required',
             'phone_number' => 'required',
             'address' => 'required',
-            'avatar' => 'required|file|image'
+            'avatar' => 'file|image'
         ]);
 
         if ($request->avatar) {
@@ -85,14 +85,19 @@ class UserController extends Controller
             $hasil = json_decode($get);
 
             $newAvatar = $hasil->image->display_url;
+        } else {
+            $newAvatar = $data->avatar;
         }
+
 
         $data->update([
             'name' => $request->name ? $request->name : $data->name,
             'phone_number' => $request->phone_number ? $request->phone_number : $data->phone_number,
             'address' => $request->address ? $request->address : $data->address,
-            'avatar' => $request->avatar ? $newAvatar : $data->avatar,
+            'avatar' => $newAvatar
         ]);
+
+        return $newAvatar;
 
         return response([
             'status' => 'success',
