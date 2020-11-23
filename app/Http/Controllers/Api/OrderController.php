@@ -59,6 +59,7 @@ class OrderController extends Controller
             $new_cart->shop_id = $product->shop_id;
             $new_cart->product_id = $product->id;
             $new_cart->order_id = $saved_order->id;
+            $new_cart->status = $saved_order->status;
             $new_cart->quantity = $request->quantity;
             $new_cart->total_price = (int) $request->quantity * (int) $product->price;
             $new_cart->save();

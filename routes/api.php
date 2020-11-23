@@ -43,11 +43,18 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::put('/update_cart/{id}', 'Api\OrderController@updateCart');
     Route::delete('/delete_cart/{id}', 'Api\OrderController@delete');
 
-    // Route transaksi
-    Route::get('/getCheckout', 'Api\TransactionController@getCheckout');
-    Route::post('/checkout', 'Api\TransactionController@checkout');
+    // Route Checkout
+    Route::get('/getCheckout', 'Api\CheckoutController@getCheckout');
+    Route::post('/checkout', 'Api\CheckoutController@checkout');
+
+    // Route Transaction
+    // pembeli
+    Route::get('/waitConfirm', 'Api\TransactionController@waitConfirm');
     Route::get('/history', 'Api\TransactionController@history');
     Route::get('/getHistory/{id}', 'Api\TransactionController@getHistory');
+    // penjual
+    Route::get('/confirmation', 'Api\TransactionController@confirmation');
+    Route::get('/setConfirmation', 'Api\TransactionController@setConfirmation');
     Route::get('/soldHistory', 'Api\TransactionController@soldHistory');
 });
 
