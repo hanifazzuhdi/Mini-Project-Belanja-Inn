@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ConfirmationResource;
 use App\Http\Resources\HistoryResource;
+use App\Http\Resources\ShopConfirmationResource;
 use App\Http\Resources\SoldHistoryResource;
 
 class TransactionController extends Controller
@@ -19,14 +20,14 @@ class TransactionController extends Controller
         })->get();
 
         if (count($datas) == 0) {
-            return $this->SendResponse('success', 'Data Order Null', NULL, 404);
+            return $this->SendResponse('success', 'Data Order not found', NULL, 404);
         }
 
         $res = ConfirmationResource::collection($datas);
 
         return response([
             'status' => 'success',
-            'message' => 'Wait confirmation from seller',
+            'message' => 'Data order loaded',
             'coba' => $res
         ]);
     }
@@ -36,26 +37,48 @@ class TransactionController extends Controller
         $datas = Cart::where('shop_id', Auth::id())->where('status', 1)->get();
 
         if (count($datas) == 0) {
-            return $this->SendResponse('success', 'Data Order Null', NULL, 404);
+            return $this->SendResponse('success', 'Data Order not found', NULL, 404);
         }
 
-        $res = ConfirmationResource::collection($datas);
+        $res = ShopConfirmationResource::collection($datas);
 
-        return $res;
+        return response([
+            'status' => 'success',
+            'message' => 'Data order loaded',
+            'coba' => $res
+        ]);
+    }
+
+    public function setConfirmation()
+    {
+        $carts = Cart::where('shop_id', Auth::id())->where('status', 1)->get();
+
+        if (count($carts) == 0) {
+            return $this->SendResponse('success', 'Data Order not found', NULL, 404);
+        }
+
+        foreach ($carts as $cart) {
+            $cart->status = 2;
+            $cart->update();
+        }
+
+        return "sukses";
     }
 
     public function history()
     {
-        $order = Order::where('user_id', Auth::id())->where('status', 1)->get()->toArray();
+        $orders = Cart::where('status', 2)->whereHas('order', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->get();
 
-        if (!$order) {
-            return $this->SendResponse('failed', 'Data order not found', null, 404);
+        if (count($orders) == 0) {
+            return $this->SendResponse('Success', 'Data order not found', NULL, 404);
         }
 
         return response([
             'status' => 'success',
             'message' => 'History order user',
-            'data' => $order
+            'data' => $orders
         ], 200);
     }
 
