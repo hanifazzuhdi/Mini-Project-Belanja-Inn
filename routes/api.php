@@ -61,6 +61,3 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/soldHistory', 'Api\TransactionController@soldHistory');
     Route::post('/setConfirmation', 'Api\TransactionController@setConfirmation');
 });
-
-// Route coba fitur
-Route::get('/coba', 'Api\TransactionController@coba');
