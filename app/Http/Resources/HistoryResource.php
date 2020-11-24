@@ -16,6 +16,7 @@ class HistoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'status' => $this->status,
             'quantity' => $this->quantity,
             'total_price' => $this->total_price,
             'date' => $this->created_at,

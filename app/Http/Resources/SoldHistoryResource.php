@@ -16,12 +16,11 @@ class SoldHistoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'product_id' => $this->product_id,
-            'order_id' => $this->order_id,
             'quantity' => $this->quantity,
             'total_price' => $this->total_price,
             'date' => $this->created_at,
-            'user_order' => $this->order->user->only('id', 'name', 'username', 'address', 'phone_number', 'avatar')
+            'user' => $this->order->user->only('id', 'name', 'username', 'avatar'),
+            'product' => $this->product->only('id', 'product_name', 'price', 'image')
         ];
     }
 }

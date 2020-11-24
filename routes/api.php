@@ -48,14 +48,18 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/checkout', 'Api\CheckoutController@checkout');
 
     // Route Transaction
+
     // Buyer
     Route::get('/waitConfirm', 'Api\TransactionController@waitConfirm');
+    Route::get('/sending', 'Api\TransactionController@sending');
     Route::get('/history', 'Api\TransactionController@history');
-    // Route::get('/getHistory/{id}', 'Api\TransactionController@getHistory');
+    Route::post('/confirmSent', 'Api\TransactionController@confirmSent');
+
     // Seller
     Route::get('/confirmation', 'Api\TransactionController@confirmation');
-    Route::post('/setConfirmation', 'Api\TransactionController@setConfirmation');
+    Route::get('/shopSending', 'Api\TransactionController@shopSending');
     Route::get('/soldHistory', 'Api\TransactionController@soldHistory');
+    Route::post('/setConfirmation', 'Api\TransactionController@setConfirmation');
 });
 
 // Route coba fitur
