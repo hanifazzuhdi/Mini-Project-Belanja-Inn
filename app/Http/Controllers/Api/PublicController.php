@@ -50,7 +50,7 @@ class PublicController extends Controller
         // if(empty($request->keyword)) {
         //     return $this->SendResponse('failed', 'There is no input in search box', null, 400);
         // };
-        
+
         /* filters = ['price', 'Ready Stock', 'sort_by'] */
         $filters = $request->filterBy;
 
@@ -73,7 +73,7 @@ class PublicController extends Controller
 
         $products = collect($products);
 
-        if(!empty($filters)) {
+        if (!empty($filters)) {
             /* price range */
             // costum price range
             $pr4 = null;
@@ -111,7 +111,7 @@ class PublicController extends Controller
                     $products = $products->sortBy($key, SORT_REGULAR, $sortmode); // parameter ke 3 [true => descending, false => ascending]
                 }
             }
-            
+
             /* filters end */
         }
         $products = $products->map(function ($value, $key) {
@@ -129,7 +129,7 @@ class PublicController extends Controller
 
 
 /* Note: map()
-    map method is used to iterate through the full collection. It accepts a callback as an argument. 
-    value and the key is passed to the callback. Callback can modify the values and return them. 
+    map method is used to iterate through the full collection. It accepts a callback as an argument.
+    value and the key is passed to the callback. Callback can modify the values and return them.
     Finally, a new collection instance of modified items is returned.
 */
