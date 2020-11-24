@@ -42,6 +42,9 @@
 
                                 <label class="mt-3">Status : </label>
                                 <input class="form-control" type="text"
+                                    @if ($dat->status == 0)
+                                        value = "Pending"
+                                    @endif
                                     @if ($dat->status == 1)
                                         value = "Wait Seller Confirmation"
                                     @endif

@@ -50,9 +50,9 @@ class TransactionController extends Controller
         ]);
     }
 
-    public function setConfirmation()
+    public function setConfirmation($id)
     {
-        $carts = Cart::where('shop_id', Auth::id())->where('status', 1)->get();
+        $carts = Cart::where('id', $id)->where('shop_id', Auth::id())->where('status', 1)->get();
 
         if (count($carts) == 0) {
             return $this->SendResponse('success', 'Data Order not found', NULL, 404);
@@ -103,9 +103,9 @@ class TransactionController extends Controller
         ]);
     }
 
-    public function confirmSent()
+    public function confirmSent($id)
     {
-        $datas = Cart::where('status', 2)->whereHas('order', function ($query) {
+        $datas = Cart::where('id', $id)->where('status', 2)->whereHas('order', function ($query) {
             $query->where('user_id', Auth::id());
         })->get();
 

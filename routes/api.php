@@ -53,11 +53,11 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/waitConfirm', 'Api\TransactionController@waitConfirm');
     Route::get('/sending', 'Api\TransactionController@sending');
     Route::get('/history', 'Api\TransactionController@history');
-    Route::post('/confirmSent', 'Api\TransactionController@confirmSent');
+    Route::post('/confirmSent/{id}', 'Api\TransactionController@confirmSent');
 
     // Seller
     Route::get('/confirmation', 'Api\TransactionController@confirmation');
     Route::get('/shopSending', 'Api\TransactionController@shopSending');
     Route::get('/soldHistory', 'Api\TransactionController@soldHistory');
-    Route::post('/setConfirmation', 'Api\TransactionController@setConfirmation');
+    Route::post('/setConfirmation/{id}', 'Api\TransactionController@setConfirmation');
 });

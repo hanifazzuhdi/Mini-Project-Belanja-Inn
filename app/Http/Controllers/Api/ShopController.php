@@ -17,7 +17,7 @@ class ShopController extends Controller
         $data = Shop::find($id);
 
         if ($data == false) {
-            return $this->SendResponse('failed', 'Data not found', null, 500);
+            return $this->SendResponse('failed', 'Data not found', null, 404);
         }
 
         $res = new ShopResource($data);

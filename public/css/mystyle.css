@@ -99,3 +99,18 @@ a.print {
 .page-404 a:hover {
     text-decoration: none;
 }
+
+/*  create account */
+
+div.store_account {
+    width: 850px;
+    background-color: white;
+    box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, .15);
+}
+
+.store_account h2 {
+    color: #4e73df;
+    border-bottom: 2px solid gray;
+    padding-bottom: 20px;
+    font-weight: 800;
+}
