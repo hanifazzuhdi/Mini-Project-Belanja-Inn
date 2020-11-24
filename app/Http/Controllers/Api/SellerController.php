@@ -75,6 +75,7 @@ class SellerController extends Controller
             'price'        => 'required',
             'quantity'     => 'required|integer',
             'description'  => 'required|min:10|max:2000',
+            'image'        => 'image|file'
         ]);
 
         // Validasi image
