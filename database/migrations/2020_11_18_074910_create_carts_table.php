@@ -18,6 +18,7 @@ class CreateCartsTable extends Migration
             $table->unsignedBigInteger('shop_id');
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('order_id');
+            $table->integer('status')->default(0);
             $table->integer('quantity');
             $table->integer('total_price')->nullable();
             $table->timestamps();

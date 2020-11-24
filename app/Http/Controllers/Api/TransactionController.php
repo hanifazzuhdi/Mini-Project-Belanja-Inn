@@ -4,103 +4,105 @@ namespace App\Http\Controllers\Api;
 
 use App\Order;
 use App\Cart;
-use App\Product;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ConfirmationResource;
 use App\Http\Resources\HistoryResource;
+use App\Http\Resources\ShopConfirmationResource;
 use App\Http\Resources\SoldHistoryResource;
-use App\Http\Resources\TransactionResource;
 
 class TransactionController extends Controller
 {
-    public function getCheckout()
+    // wait confirm for buyer
+    public function waitConfirm()
     {
-        // Ambil data order + user
-        $order = Order::with('user:id,name,address,phone_number')->where('user_id', Auth::id())->where('status', 0)->first();
+        $datas = Cart::where('status', 1)->whereHas('order', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->get();
 
-        if (!$order) {
-            return $this->SendResponse('failed', 'Order not found', null, 404);
+        if (count($datas) == 0) {
+            return $this->SendResponse('success', 'Data Order not found', NULL, 404);
         }
 
-        // Ambil data keranjang
-        $carts = Cart::where('order_id', $order->id)->get();
-
-        $hasil = TransactionResource::collection($carts);
+        $res = ConfirmationResource::collection($datas);
 
         return response([
             'status' => 'success',
-            'message' => 'Data transaction loaded',
-            'data' => $order,
-            'products' => $hasil
-        ], 200);
+            'message' => 'Data order loaded',
+            'coba' => $res
+        ]);
     }
 
-    public function checkout()
+    // confirmation seller
+    public function confirmation()
     {
-        // ubah status menjadi 1 (1 = sudah checkout) + transaction_id
-        $order = Order::where('user_id', Auth::id())->where('status', 0)->first();
+        $datas = Cart::where('shop_id', Auth::id())->where('status', 1)->get();
 
-        if (empty($order)) {
-            return $this->SendResponse('failed', 'Data order not found', null, 404);
+        if (count($datas) == 0) {
+            return $this->SendResponse('success', 'Data Order not found', NULL, 404);
         }
 
-        $order_id = $order->id;
-        $order->status = 1;
-        $order->update();
+        $res = ShopConfirmationResource::collection($datas);
 
-        // kurangi stok barang + tambah terjual
-        $carts = Cart::where('order_id', $order_id)->get();
+        return response([
+            'status' => 'success',
+            'message' => 'Data order loaded',
+            'coba' => $res
+        ]);
+    }
+
+    public function setConfirmation()
+    {
+        $carts = Cart::where('shop_id', Auth::id())->where('status', 1)->get();
+
+        if (count($carts) == 0) {
+            return $this->SendResponse('success', 'Data Order not found', NULL, 404);
+        }
 
         foreach ($carts as $cart) {
-            $product = Product::where('id', $cart->product_id)->first();
-
-            $product->quantity -= $cart['quantity'];
-            $product->sold += $cart['quantity'];
-            $product->update();
-
-            $res[] = $product;
+            $cart->status = 2;
+            $cart->update();
         }
 
-        return response([
-            'status' => 'success',
-            'message' => 'Order success',
-            'data' => $res
-        ], 200);
+        return $this->SendResponse('success', 'Order confirmed', $carts, 202);
     }
 
+    // history buyer
     public function history()
     {
-        $order = Order::where('user_id', Auth::id())->where('status', 1)->get()->toArray();
+        $orders = Cart::where('status', 2)->whereHas('order', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->get();
 
-        if (!$order) {
-            return $this->SendResponse('failed', 'Data order not found', null, 404);
+        if (count($orders) == 0) {
+            return $this->SendResponse('Success', 'Data order not found', NULL, 404);
         }
 
         return response([
             'status' => 'success',
             'message' => 'History order user',
-            'data' => $order
+            'data' => $orders
         ], 200);
     }
 
-    public function getHistory($id)
-    {
-        $orders = Cart::where('order_id', $id)->whereHas('order', function ($query) {
-            $query->where('user_id', Auth::id())->where('status', 1);
-        })->get()->all();
+    // public function getHistory($id)
+    // {
+    //     $orders = Cart::where('order_id', $id)->whereHas('order', function ($query) {
+    //         $query->where('user_id', Auth::id())->where('status', 1);
+    //     })->get()->all();
 
-        if (!$orders) {
-            return $this->SendResponse('failed', "Data order id $id not found", null, 404);
-        }
+    //     if (!$orders) {
+    //         return $this->SendResponse('failed', "Data order id $id not found", null, 404);
+    //     }
 
-        $hasil = HistoryResource::collection($orders);
+    //     $hasil = HistoryResource::collection($orders);
 
-        return response([
-            'status' => 'success',
-            'message' => "Data order id $id",
-            'data' => $hasil
-        ], 200);
-    }
+    //     return response([
+    //         'status' => 'success',
+    //         'message' => "Data order id $id",
+    //         'data' => $hasil
+    //     ], 200);
+    // }
 
     public function soldHistory()
     {
@@ -119,15 +121,5 @@ class TransactionController extends Controller
             'message' => 'Hisory order',
             'data' => $hasil
         ]);
-    }
-
-    public function coba()
-    {
-        $user = null;
-
-        if (!$user) {
-            return "kosong";
-        }
-        return "sukses";
     }
 }

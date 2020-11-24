@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class HistoryResource extends JsonResource
+class ConfirmationResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +16,12 @@ class HistoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'status' => $this->status,
             'quantity' => $this->quantity,
             'total_price' => $this->total_price,
             'date' => $this->created_at,
-            'product' => $this->product->only('product_name', 'price', 'image'),
-            'shop' => $this->shop->only('shop_name', 'avatar')
+            'product' => $this->product->only('id', 'product_name', 'price'),
+            'shop' => $this->shop->only('id', 'shop_name', 'avatar')
         ];
     }
 }

@@ -20,7 +20,7 @@ class SoldHistoryResource extends JsonResource
             'order_id' => $this->order_id,
             'quantity' => $this->quantity,
             'total_price' => $this->total_price,
-            'date' => $this->created_at->translatedFormat('l, d F Y H:i'),
+            'date' => $this->created_at,
             'user_order' => $this->order->user->only('id', 'name', 'username', 'address', 'phone_number', 'avatar')
         ];
     }
