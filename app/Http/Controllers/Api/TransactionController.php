@@ -13,6 +13,7 @@ use App\Http\Resources\SoldHistoryResource;
 
 class TransactionController extends Controller
 {
+    // wait confirm for buyer
     public function waitConfirm()
     {
         $datas = Cart::where('status', 1)->whereHas('order', function ($query) {
@@ -32,6 +33,7 @@ class TransactionController extends Controller
         ]);
     }
 
+    // confirmation seller
     public function confirmation()
     {
         $datas = Cart::where('shop_id', Auth::id())->where('status', 1)->get();
@@ -62,9 +64,10 @@ class TransactionController extends Controller
             $cart->update();
         }
 
-        return "sukses";
+        return $this->SendResponse('success', 'Order confirmed', $carts, 202);
     }
 
+    // history buyer
     public function history()
     {
         $orders = Cart::where('status', 2)->whereHas('order', function ($query) {
@@ -82,24 +85,24 @@ class TransactionController extends Controller
         ], 200);
     }
 
-    public function getHistory($id)
-    {
-        $orders = Cart::where('order_id', $id)->whereHas('order', function ($query) {
-            $query->where('user_id', Auth::id())->where('status', 1);
-        })->get()->all();
+    // public function getHistory($id)
+    // {
+    //     $orders = Cart::where('order_id', $id)->whereHas('order', function ($query) {
+    //         $query->where('user_id', Auth::id())->where('status', 1);
+    //     })->get()->all();
 
-        if (!$orders) {
-            return $this->SendResponse('failed', "Data order id $id not found", null, 404);
-        }
+    //     if (!$orders) {
+    //         return $this->SendResponse('failed', "Data order id $id not found", null, 404);
+    //     }
 
-        $hasil = HistoryResource::collection($orders);
+    //     $hasil = HistoryResource::collection($orders);
 
-        return response([
-            'status' => 'success',
-            'message' => "Data order id $id",
-            'data' => $hasil
-        ], 200);
-    }
+    //     return response([
+    //         'status' => 'success',
+    //         'message' => "Data order id $id",
+    //         'data' => $hasil
+    //     ], 200);
+    // }
 
     public function soldHistory()
     {

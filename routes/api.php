@@ -48,13 +48,13 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/checkout', 'Api\CheckoutController@checkout');
 
     // Route Transaction
-    // pembeli
+    // Buyer
     Route::get('/waitConfirm', 'Api\TransactionController@waitConfirm');
     Route::get('/history', 'Api\TransactionController@history');
-    Route::get('/getHistory/{id}', 'Api\TransactionController@getHistory');
-    // penjual
+    // Route::get('/getHistory/{id}', 'Api\TransactionController@getHistory');
+    // Seller
     Route::get('/confirmation', 'Api\TransactionController@confirmation');
-    Route::get('/setConfirmation', 'Api\TransactionController@setConfirmation');
+    Route::post('/setConfirmation', 'Api\TransactionController@setConfirmation');
     Route::get('/soldHistory', 'Api\TransactionController@soldHistory');
 });
 
