@@ -40,6 +40,22 @@
                                 <label class="mt-3">Order Quantity : </label>
                                 <input class="form-control" type="text" value="{{$dat->quantity}}">
 
+                                <label class="mt-3">Status : </label>
+                                <input class="form-control" type="text"
+                                    @if ($dat->status == 0)
+                                        value = "Pending"
+                                    @endif
+                                    @if ($dat->status == 1)
+                                        value = "Wait Seller Confirmation"
+                                    @endif
+                                    @if ($dat->status == 2)
+                                        value = "Sending to Destination"
+                                    @endif
+                                    @if ($dat->status == 3)
+                                        value = "Order Accepted"
+                                    @endif
+                                    >
+
                                 <label class="mt-3">Order At : </label>
                                 <input class="form-control" type="text" value="{{$dat->created_at}}">
 

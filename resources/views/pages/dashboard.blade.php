@@ -102,7 +102,7 @@
                     <th scope="col">NO</th>
                     <th scope="col">Username</th>
                     <th scope="col">Total Transaction</th>
-                    <th scope="col">Status</th>
+                    <th scope="col">Status Checkout</th>
                     <th scope="col">Date</th>
                     <th scope="col"></th>
                 </tr>

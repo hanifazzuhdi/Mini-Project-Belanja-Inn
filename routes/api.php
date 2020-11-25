@@ -16,7 +16,6 @@ Route::group(['prefix' => 'public'], function () {
 });
 
 Route::get('/get_shop/{id}', 'Api\ShopController@index');
-// Route::get('')
 
 // Middleware Jwt
 Route::group(['middleware' => ['jwt.verify']], function () {
@@ -34,7 +33,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Route Crud Seller
     Route::post('/store_product', 'Api\SellerController@store');
-    Route::post('/update_product/{id}', 'Api\SellerController@update');
+    Route::put('/update_product/{id}', 'Api\SellerController@update');
     Route::delete('/destroy_product/{id}', 'Api\SellerController@destroy');
 
     //Route order
@@ -48,15 +47,21 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/checkout', 'Api\CheckoutController@checkout');
 
     // Route Transaction
+
     // Buyer
     Route::get('/waitConfirm', 'Api\TransactionController@waitConfirm');
+    Route::get('/sending', 'Api\TransactionController@sending');
     Route::get('/history', 'Api\TransactionController@history');
-    // Route::get('/getHistory/{id}', 'Api\TransactionController@getHistory');
+    Route::post('/confirmSent/{id}', 'Api\TransactionController@confirmSent');
+
     // Seller
     Route::get('/confirmation', 'Api\TransactionController@confirmation');
-    Route::post('/setConfirmation', 'Api\TransactionController@setConfirmation');
+    Route::get('/shopSending', 'Api\TransactionController@shopSending');
     Route::get('/soldHistory', 'Api\TransactionController@soldHistory');
-});
+    Route::post('/setConfirmation/{id}', 'Api\TransactionController@setConfirmation');
 
-// Route coba fitur
-Route::get('/coba', 'Api\TransactionController@coba');
+    // Route Message
+    Route::get('/message', 'Api\MessageController@index');
+    Route::get('/message/{id}', 'Api\MessageController@getMessage');
+    Route::post('/message', 'Api\MessageController@sendMessage');
+});

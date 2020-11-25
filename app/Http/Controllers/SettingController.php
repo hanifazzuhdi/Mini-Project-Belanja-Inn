@@ -9,8 +9,17 @@ class SettingController extends Controller
 {
     public function category()
     {
-        $categories = Category::all()->toArray();
+        $categories = Category::get();
 
-        return view("pages.category", compact('categories'));
+        return view('pages.settings.category', compact('categories'));
+    }
+
+    public function storeAccount()
+    {
+        return view('pages.settings.storeAccount');
+    }
+
+    public function store(Request $request)
+    {
     }
 }

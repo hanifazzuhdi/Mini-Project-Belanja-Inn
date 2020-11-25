@@ -26,9 +26,25 @@ Route::group(['middleware' => 'CekAdmin', 'auth'], function () {
 
     // Route Settings
     Route::get('/settings/category', 'SettingController@category')->name('category');
+    Route::get('/settings/storeAccount', 'SettingController@storeAccount')->name('storeAccount');
+    Route::get('/settings/category', 'SettingController@category')->name('category');
+    Route::post('/settings/storeAccount', 'SettingController@store')->name('store');
 });
 
 // Route Fallback
 Route::fallback(function () {
-    return view('pages.404');
+    return view('404');
 });
+
+
+/*  Goals
+
+1. Settings :
+    - Category
+    - Create Account role  = 3
+    - Delete Account
+
+2. Notification
+3. Pusat Bantuan
+
+*/
