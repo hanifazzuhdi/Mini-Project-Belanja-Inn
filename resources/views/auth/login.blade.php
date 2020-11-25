@@ -19,7 +19,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-image: linear-gradient(to top, #ffffff, #ddddf6, #b4bdef, #80a0e8, #2686e0);
+            background-image: linear-gradient(180deg,#4e73df 10%,#224abe 100%);
         }
 
         .container {
@@ -96,7 +96,7 @@
             width: 90px;
             height: 32px;
             cursor: pointer;
-            background-color: #2686e0;
+            background-color: #4e73df;
             outline: none;
             border: 1px solid #2686e0;
         }
@@ -151,6 +151,7 @@
             @endif
         </div>
 
+        @include('sweetalert::alert')
     </body>
 
     </html>

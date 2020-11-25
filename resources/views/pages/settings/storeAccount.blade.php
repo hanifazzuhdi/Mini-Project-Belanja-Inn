@@ -3,11 +3,23 @@
 @section('activeSettings', 'active')
 @section('content')
 
+<div class="container">
+    @if (session('status') )
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success !</strong> {{session('status')}} .
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+    @endif
+</div>
+
 <div class="container store_account p-4 mt-5">
     <h2 class="font-weight-bold text-center mb-5"> CREATE ACCOUNT </h2>
 
     <div class="container">
         <form action="{{route('store')}}" method="POST" enctype="multipart/form-data">
+            @csrf
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label>Email</label>

@@ -87,8 +87,8 @@
                         <a class="collapse-item" href="{{route('category')}}">Category</a>
 
                         <h6 class="collapse-header">Account Admin</h6>
-                        <a class="collapse-item" href="{{route('storeAccount')}}">Create Account</a>
-                        <a class="collapse-item" href="">Delete Account</a>
+                        <a class="collapse-item" href="{{route('admins')}}">List Admin</a>
+                        <a class="collapse-item" href="{{route('storeAccount')}}">Create Admin</a>
                     </div>
                 </div>
             </li>

@@ -104,9 +104,17 @@ class HomeController extends Controller
         return redirect("detailUser/$id")->with('status', 'Avatar has been changed');
     }
 
-    // Function Destroy
+    // Function Destroy User
     public function destroy($id)
     {
+        $order = Order::where('user_id', $id)->get();
+
+        if (count($order) == 0) {
+            $order->id = null;
+        }
+
+        Cart::where('order_id', $order->id)->delete();
+
         Product::where('shop_id', $id)->delete();
 
         Shop::destroy($id);
@@ -118,6 +126,8 @@ class HomeController extends Controller
 
     public function destroyProduct($id)
     {
+        Cart::where('product_id', $id)->delete();
+
         Product::destroy($id);
 
         return redirect(route('product'))->with('status', 'Data Deleted Successfully');
