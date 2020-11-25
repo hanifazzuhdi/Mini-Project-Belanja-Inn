@@ -20,6 +20,10 @@
 
     <link href=" {{url ('Admin/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
 
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" sizes="48x48" href="/favicon.ico">
+    <link rel="manifest" href="/site.webmanifest">
+
 </head>
 
 <body id="page-top">
