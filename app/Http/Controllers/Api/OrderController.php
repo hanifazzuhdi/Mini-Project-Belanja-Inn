@@ -48,7 +48,7 @@ class OrderController extends Controller
             $order->save();
         }
 
-        return $old_order;
+        // return $old_order;
 
         //cek order di database yang belum di checkout (status == 0), order lama
         $saved_order = Order::where('user_id', Auth::id())->where('status', 0)->first();
