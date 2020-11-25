@@ -37,7 +37,6 @@ class OrderController extends Controller
         //cek order lama yang belum di check out
         $old_order = Order::where('user_id', Auth::id())->where('status', 0)->first();   // <== cari di tabel order dimana user_id = id user yang login dan yang status nya 0
 
-        return "oke";
 
         //jika tidak ada order lama maka buat order baru
         if (empty($old_order)) {
@@ -48,6 +47,8 @@ class OrderController extends Controller
             $order->total_price = 0;
             $order->save();
         }
+
+        return $old_order;
 
         //cek order di database yang belum di checkout (status == 0), order lama
         $saved_order = Order::where('user_id', Auth::id())->where('status', 0)->first();
