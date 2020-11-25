@@ -25,10 +25,10 @@ class Shop extends Model
         });
     }
 
-    // public function cart()
-    // {
-    //     return $this->hasMany(Cart::class);
-    // }
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
+    }
 
     public function product()
     {
