@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Cart;
 use App\Order;
+use Exception;
 use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CartResource;
-use App\Http\Resources\OrderResource;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\OrderResource;
 
 class OrderController extends Controller
 {
@@ -132,7 +133,7 @@ class OrderController extends Controller
     public function delete($id)
     {
         $cart = Cart::where('id', $id)->first();
-
+        
         $order = Order::where('id', $cart->order_id)->first();
 
         $order->total_price = $order->total_price - $cart->total_price;
@@ -140,11 +141,16 @@ class OrderController extends Controller
 
         $cart->delete();
 
+        $carts = Cart::where('order_id', $order->id)->get();
+        
+        if(count($carts) == 0) {
+            $order->delete();
+        }
+
         try {
-            if (empty($cart))
-                return $this->SendResponse('succes', 'Data deleted successfully', null, 200);
+            return $this->SendResponse('succes', 'Data deleted successfully', $cart, 200);
         } catch (\Throwable $th) {
-            return $this->SendResponse('failed', 'Data failed to delete', $cart, 500);
+            return $this->SendResponse('failed', 'Data not found or has been deleted', null, 500);
         }
     }
 }
