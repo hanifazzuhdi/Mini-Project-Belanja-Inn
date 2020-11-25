@@ -31,9 +31,10 @@ class SettingController extends Controller
     public function store(Request $request, Client $client)
     {
         $request->validate([
-            'email' => 'required|email',
-            'username' => 'required',
+            'email' => 'required|email|unique:users',
+            'username' => 'required|unique:users',
             'password' => 'required',
+            'name'      => 'required',
             'phone_number' => 'required',
             'address' => 'required',
             'avatar' => 'file|image'
@@ -61,12 +62,13 @@ class SettingController extends Controller
             'email' => $request->email,
             'username' => $request->username,
             'password' => bcrypt($request->password),
+            'name' => $request->name,
             'phone_number' => $request->phone_number,
             'role_id' => 3,
             'address' => $request->address,
-            'avatar' => $request->avatar ? $hasil->image->display_url : null
+            'avatar' => $request->avatar ? $hasil->image->display_url : 'https://iili.io/FqzDMX.md.png'
         ]);
 
-        return redirect(route('storeAccount'))->with('status', 'Data Created Successfully');
+        return redirect(route('admins'))->withSuccess('Data Created Successfully');
     }
 }

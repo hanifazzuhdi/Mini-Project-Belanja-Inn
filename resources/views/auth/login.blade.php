@@ -151,7 +151,6 @@
             @endif
         </div>
 
-        @include('sweetalert::alert')
     </body>
 
     </html>

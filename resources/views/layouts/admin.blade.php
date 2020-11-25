@@ -88,7 +88,7 @@
 
                         <h6 class="collapse-header">Account Admin</h6>
                         <a class="collapse-item" href="{{route('admins')}}">List Admin</a>
-                        <a class="collapse-item" href="{{route('storeAccount')}}">Create Admin</a>
+                        {{-- <a class="collapse-item" href="{{route('storeAccount')}}">Create Admin</a> --}}
                     </div>
                 </div>
             </li>
@@ -340,6 +340,9 @@
             </div>
         </div>
     </div>
+
+@include('sweetalert::alert')
+
 
     <!-- Bootstrap core JavaScript-->
     <script src=" {{url('Admin/vendor/jquery/jquery.min.js')}}"></script>

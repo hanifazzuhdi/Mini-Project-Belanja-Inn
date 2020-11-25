@@ -73,7 +73,7 @@ class HomeController extends Controller
             'phone_number' => $request->phone_number
         ]);
 
-        return redirect("detailUser/$id")->with('status', 'Data Updated Successfully');
+        return redirect(route('home'))->withSuccess('Data Updated Successfully');
     }
 
     public function updateAvatar($id, Request $request, Client $client)
@@ -101,7 +101,7 @@ class HomeController extends Controller
 
         DB::update("UPDATE users SET avatar = '$newAvatar' WHERE id = $id");
 
-        return redirect("detailUser/$id")->with('status', 'Avatar has been changed');
+        return redirect("detailUser/$id")->withSuccess('Avatar has been changed');
     }
 
     // Function Destroy User
@@ -121,7 +121,7 @@ class HomeController extends Controller
 
         User::destroy($id);
 
-        return redirect(route('user'))->with('status', 'Data Deleted Successfully');
+        return redirect(route('home'))->withSuccess('Data Deleted Successfully');
     }
 
     public function destroyProduct($id)
@@ -130,6 +130,6 @@ class HomeController extends Controller
 
         Product::destroy($id);
 
-        return redirect(route('product'))->with('status', 'Data Deleted Successfully');
+        return redirect(route('product'))->withSuccess('Data Deleted Successfully');
     }
 }

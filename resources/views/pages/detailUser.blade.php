@@ -3,17 +3,6 @@
 @section('activeUser', 'active')
 @section('content')
 
-<div class="container">
-    @if (session('status') )
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Success !</strong> {{session('status')}} .
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        </div>
-    @endif
-</div>
-
 <div class="container detail-user my-4">
     <div class="card card-detail-user p-4">
 
@@ -73,6 +62,9 @@
                                 <label> Role : </label>
                                 @if ($data['role_id'] == 1)
                                     <input type="text" class="form-control" name="role_id" value="User">
+                                @endif
+                                @if ($data['role_id'] == 3)
+                                    <input type="text" class="form-control" name="role_id" value="Admin">
                                 @else
                                     <input type="text" class="form-control" name="role_id" value="User + Penjual">
                                 @endif
