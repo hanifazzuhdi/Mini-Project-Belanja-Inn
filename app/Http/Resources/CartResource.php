@@ -13,7 +13,7 @@ class CartResource extends JsonResource
             "order_id" => $this->order_id,
             "quantity" => $this->quantity,
             "total_price" => $this->total_price,
-            "created_at" => $this->created_at->translatedFormat('l, d F Y H:i'),
+            "created_at" => $this->created_at,
             "product" => $this->product->only('id', 'product_name', 'price', 'image', 'weight'),
             "shop" => $this->product->shop->only('id', 'shop_name'),
         ];

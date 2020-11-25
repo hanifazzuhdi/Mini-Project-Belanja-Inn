@@ -16,7 +16,6 @@ Route::group(['prefix' => 'public'], function () {
 });
 
 Route::get('/get_shop/{id}', 'Api\ShopController@index');
-// Route::get('')
 
 // Middleware Jwt
 Route::group(['middleware' => ['jwt.verify']], function () {
@@ -60,4 +59,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/shopSending', 'Api\TransactionController@shopSending');
     Route::get('/soldHistory', 'Api\TransactionController@soldHistory');
     Route::post('/setConfirmation/{id}', 'Api\TransactionController@setConfirmation');
+
+    // Route Message
+    Route::get('/message', 'Api\MessageController@index');
+    Route::get('/message/{id}', 'Api\MessageController@getMessage');
+    Route::post('/message', 'Api\MessageController@sendMessage');
 });
