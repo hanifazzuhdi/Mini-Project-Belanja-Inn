@@ -38,6 +38,7 @@ class OrderController extends Controller
         //cek order lama yang belum di check out
         $old_order = Order::where('user_id', Auth::id())->where('status', 0)->first();   // <== cari di tabel order dimana user_id = id user yang login dan yang status nya 0
 
+
         //jika tidak ada order lama maka buat order baru
         if (empty($old_order)) {
             $order = new Order;
@@ -47,6 +48,8 @@ class OrderController extends Controller
             $order->total_price = 0;
             $order->save();
         }
+
+        // return $old_order;
 
         //cek order di database yang belum di checkout (status == 0), order lama
         $saved_order = Order::where('user_id', Auth::id())->where('status', 0)->first();
@@ -80,12 +83,12 @@ class OrderController extends Controller
         $update_price = (int) $product->price * (int) $request->quantity;
         $saved_order->total_price += $update_price;
         $saved_order->update();
-        
+
         $data = new OrderResource($saved_order);
 
         try {
             return $this->SendResponse('succes', 'Data created successfully', $data, 202);
-        } catch(\Throwable $e) {
+        } catch (\Throwable $e) {
             return $this->SendResponse('failed', 'Data failed to create', null, 500);
         }
     }
@@ -99,10 +102,10 @@ class OrderController extends Controller
         }
 
         $cart = Cart::where('order_id', $order->id)
-                      ->with(['product:id,product_name,price,image,weight', 'shop:id,shop_name'])
-                      ->get()
-                      ->toArray();
-                      
+            ->with(['product:id,product_name,price,image,weight', 'shop:id,shop_name'])
+            ->get()
+            ->toArray();
+
         $data = collect($cart)->map(function ($value, $key) {
             $value['total_price'] = number_format($value['total_price'], 0, ',', '.');
             $value['product']['price'] = number_format($value['product']['price'], 0, ',', '.');

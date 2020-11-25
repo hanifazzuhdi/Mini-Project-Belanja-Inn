@@ -20,7 +20,7 @@ class TransactionController extends Controller
         })->get();
 
         if (count($datas) == 0) {
-            return $this->SendResponse('success', 'Data Order not found', NULL, 404);
+            return $this->SendResponse('failed', 'Data Order not found', NULL, 404);
         }
 
         $res = ConfirmationResource::collection($datas);
@@ -38,7 +38,7 @@ class TransactionController extends Controller
         $datas = Cart::where('shop_id', Auth::id())->where('status', 1)->get();
 
         if (count($datas) == 0) {
-            return $this->SendResponse('success', 'Data Order not found', NULL, 404);
+            return $this->SendResponse('failed', 'Data Order not found', NULL, 404);
         }
 
         $res = ShopConfirmationResource::collection($datas);
@@ -55,7 +55,7 @@ class TransactionController extends Controller
         $carts = Cart::where('id', $id)->where('shop_id', Auth::id())->where('status', 1)->get();
 
         if (count($carts) == 0) {
-            return $this->SendResponse('success', 'Data Order not found', NULL, 404);
+            return $this->SendResponse('failed', 'Data Order not found', NULL, 404);
         }
 
         foreach ($carts as $cart) {
@@ -74,7 +74,7 @@ class TransactionController extends Controller
         })->get();
 
         if (count($orders) == 0) {
-            return $this->SendResponse('Success', 'Data order not found', NULL, 404);               // <== Buyer
+            return $this->SendResponse('failed', 'Data order not found', NULL, 404);               // <== Buyer
         }
 
         $res = HistoryResource::collection($orders);
@@ -91,7 +91,7 @@ class TransactionController extends Controller
         $res = Cart::where('status', 2)->where('shop_id', Auth::id())->get();
 
         if (count($res) == 0) {
-            return $this->SendResponse('success', 'Data order not found', null, 404);           // <== Seller
+            return $this->SendResponse('failed', 'Data order not found', null, 404);           // <== Seller
         }
 
         $hasil = SoldHistoryResource::collection($res);
@@ -109,6 +109,9 @@ class TransactionController extends Controller
             $query->where('user_id', Auth::id());
         })->get();
 
+        if (count($datas) == 0) {
+            return $this->SendResponse('failed', 'Data order not found', null, 404);           // <== Seller
+        }
         foreach ($datas as $data) {
             $data->status = 3;
             $data->update();
@@ -122,10 +125,10 @@ class TransactionController extends Controller
     {
         $orders = Cart::where('status', 3)->whereHas('order', function ($query) {
             $query->where('user_id', Auth::id());
-        })->get();
+        })->orderByDesc('id')->get();
 
         if (count($orders) == 0) {
-            return $this->SendResponse('Success', 'Data order not found', NULL, 404);
+            return $this->SendResponse('failed', 'Data order not found', NULL, 404);
         }
 
         $res = HistoryResource::collection($orders);
@@ -140,10 +143,10 @@ class TransactionController extends Controller
     // history seller
     public function soldHistory()
     {
-        $res = Cart::where('status', 3)->where('shop_id', Auth::id())->get();
+        $res = Cart::where('status', 3)->where('shop_id', Auth::id())->orderByDesc('id')->get();
 
         if (count($res) == 0) {
-            return $this->SendResponse('success', 'Data order not found', null, 404);
+            return $this->SendResponse('failed', 'Data order not found', null, 404);
         }
 
         $hasil = SoldHistoryResource::collection($res);
