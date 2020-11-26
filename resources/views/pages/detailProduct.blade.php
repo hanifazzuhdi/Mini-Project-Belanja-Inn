@@ -80,7 +80,7 @@
                         </fieldset>
                     </form>
 
-                    <div class="danger">
+                    <div class="danger-product">
                         <p class="text-left" >Danger Zone</p>
 
                             <div class="btn btn-danger delete" type="button" data-toggle="modal" data-target="#delete">
