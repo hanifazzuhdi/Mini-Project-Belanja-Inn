@@ -3,13 +3,13 @@
 @section('activeSettings', 'active')
 @section('content')
 
-<div class="container-fluid">
+<div class="container-fluid mt-5">
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="font-weight-bold text-primary">CATEGORIES</h6>
 
-            <div class="btn btn-primary float-right" type="button" data-toggle="modal" data-target="#store">
+            <div class="btn btn-primary btn-sm float-right" type="button" data-toggle="modal" data-target="#store">
                 <i class="fas fa-plus text-black"></i>
             </div>
         </div>
@@ -22,7 +22,7 @@
                             <th>No</th>
                             <th>Category Name</th>
                             <th>Created At</th>
-                            <th>Action</th>
+                            <th style="width: 70px">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,14 +33,16 @@
                             <td>{{$category['created_at']}}</td>
 
                             <td class="d-flex justify-content-center">
-                                <div class="btn btn-warning float-left mr-2" data-toggle="modal" data-target="#update">
+                                <div class="btn btn-warning btn-sm float-left mr-2" data-toggle="modal" data-target="#update">
                                     <i class="fas fa-edit text-black-300"></i>
                                 </div>
 
-                                <form action="{{'/category/'}}">
-                                    <div class="btn btn-danger">
+                                <form action="{{'/deleteCategory/' . $category['id']}}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('yakin ?')">
                                         <i class="fas fa-trash text-black-300"></i>
-                                    </div>
+                                    </button>
                                 </form>
                             </td>
                         </tr>
@@ -119,6 +121,7 @@
                     </div>
                 </div>
             </div>
+
             {{-- end model --}}
         </div>
     </div>

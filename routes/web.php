@@ -29,7 +29,7 @@ Route::group(['middleware' => 'CekAdmin', 'auth'], function () {
     Route::get('/settings/category', 'SettingController@category')->name('category');
     Route::get('/settings/admins', 'SettingController@admins')->name('admins');
     Route::post('/settings/storeAccount', 'SettingController@store')->name('store');
-    Route::delete('/category/{id}', 'SetttingController@destroy');
+    Route::delete('/deleteCategory/{id}', 'SettingController@destroy');
 });
 
 // Route Fallback

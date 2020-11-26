@@ -82,7 +82,12 @@ class MessageController extends Controller
             '1111413',
             $options
         );
-        $data = ["user_id" => $from, "to" => $to];
+
+        $data = ["user_id" => $from, "to" => $to, "message" => $message];
         $pusher->trigger('my-channel', 'my-event', $data);
+
+        return response([
+            'data' => $data
+        ]);
     }
 }

@@ -9,7 +9,7 @@
         <div class="card-header py-3">
             <h6 class="font-weight-bold text-primary">LIST ADMIN</h6>
 
-            <div class="btn btn-primary float-right" type="button" data-toggle="modal" data-target="#store">
+            <div class="btn btn-primary btn-sm float-right" type="button" data-toggle="modal" data-target="#store">
                 <i class="fas fa-plus text-black"></i>
             </div>
         </div>

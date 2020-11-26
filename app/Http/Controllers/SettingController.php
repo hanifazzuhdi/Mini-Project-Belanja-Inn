@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Category;
+use App\Product;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
@@ -69,6 +70,13 @@ class SettingController extends Controller
 
     public function destroy($id)
     {
+        // Hapus produk category terkait
+        $products = Product::where('category_id', $id)->get();
+
+        foreach ($products as $product) {
+            $product->delete();
+        }
+
         Category::destroy($id);
 
         return redirect(route('category'))->withSuccess('Data Deleted Successfully');
