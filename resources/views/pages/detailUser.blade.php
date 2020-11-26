@@ -38,7 +38,7 @@
 
                         @if ($data['role_id'] == 2)
                         <form class="mt-4">
-                            <div class="btn btn-primary" style="cursor: pointer" title="Show Shop">
+                            <div class="btn btn-primary" style="cursor: pointer" title="Show Shop" data-toggle="modal" data-target="#shop">
                                 <i class="fas fa-store text-black-300"></i>
                             </div>
                         </form>
@@ -214,6 +214,54 @@
                             </div>
                         </div>
                     </div>
+
+                    {{-- Modal Shop Shop --}}
+                    <div class="modal fade" id="shop" tabindex="-1" role="dialog" aria-labelledby="shop" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="shop">Detail Shop</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="p-3">
+                                        <fieldset disabled>
+                                            <div class="image text-center mb-4">
+                                                <img class="img " width="200px" height="200px" src="{{$shop['avatar']}}" alt="Avatar">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Shop Name : </label>
+                                                <input class="form-control" type="text" name="name" value="{{$shop['shop_name']}}">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Address : </label>
+                                                <br>
+                                                <textarea class="form-control" name="address" cols="49" rows="3">{{$shop['address']}}</textarea>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Description : </label>
+                                                <input class="form-control" type="text" name="phone_number" value="{{$shop['description']}}">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Creted At : </label>
+                                                <input class="form-control" type="text" name="phone_number" value="{{$shop['created_at']}}">
+                                            </div>
+
+                                        </fieldset>
+
+                                        <button class="btn btn-primary float-right mt-4 mb-4" type="button" data-dismiss="modal">Close</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- End Modal --}}
 
                 </div>
             </div>

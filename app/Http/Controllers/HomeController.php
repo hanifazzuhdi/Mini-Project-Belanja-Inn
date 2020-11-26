@@ -45,11 +45,13 @@ class HomeController extends Controller
     {
         $data = User::find($id);
 
+        $shop = Shop::find($id);
+
         if (!$data) {
             return view('404');
         }
 
-        return view('pages.detailUser', compact('data'));
+        return view('pages.detailUser', compact('data', 'shop'));
     }
 
     public function getProductDetail($id)
