@@ -14,7 +14,7 @@ class ShopConfirmationResource extends JsonResource
             'quantity' => $this->quantity,
             'total_price' => $this->total_price,
             'date' => $this->created_at,
-            'product' => $this->product->only('id', 'product_name', 'price'),
+            'product' => $this->product->only('id', 'product_name', 'price', 'image'),
             'user' => $this->order->user->only('id', 'username', 'avatar')
         ];
     }

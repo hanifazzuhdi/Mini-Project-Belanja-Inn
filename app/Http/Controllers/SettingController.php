@@ -66,4 +66,11 @@ class SettingController extends Controller
 
         return redirect(route('admins'))->withSuccess('Data Created Successfully');
     }
+
+    public function destroy($id)
+    {
+        Category::destroy($id);
+
+        return redirect(route('category'))->withSuccess('Data Deleted Successfully');
+    }
 }

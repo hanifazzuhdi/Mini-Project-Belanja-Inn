@@ -6,7 +6,7 @@
 <div class="container detail-user my-4">
     <div class="card card-detail-user p-4">
 
-        <h4 class="modal-title text-center" id="store"> DETAIL USER </h4>
+        <h4 class="modal-title text-center"> DETAIL USER </h4>
 
         <div class="container">
             <div class="row">

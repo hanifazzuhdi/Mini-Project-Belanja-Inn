@@ -3,9 +3,8 @@
 @section('activeSettings', 'active')
 @section('content')
 
- <!-- Begin Page Content -->
  <div class="container-fluid">
-    <!-- DataTales Example -->
+
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="font-weight-bold text-primary">LIST ADMIN</h6>
