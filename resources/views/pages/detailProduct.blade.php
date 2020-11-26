@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@section('activeProduct', 'active')
+@section('activeProduct','active')
 @section('content')
 
 <div class="container detail-user my-4">
     <div class="card card-detail-user p-4">
 
-        <h4 class="card-title text-center my-4">Detail Product</h4>
+        <h4 class="modal-title text-center" id="store"> DETAIL PRODUCT </h4>
 
         <div class="container">
             <div class="row">

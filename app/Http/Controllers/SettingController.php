@@ -23,11 +23,6 @@ class SettingController extends Controller
         return view('pages.settings.admins', compact('datas'));
     }
 
-    public function storeAccount()
-    {
-        return view('pages.settings.storeAccount');
-    }
-
     public function store(Request $request, Client $client)
     {
         $request->validate([

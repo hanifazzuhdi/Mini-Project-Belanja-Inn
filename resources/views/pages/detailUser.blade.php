@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@section('activeUser', 'active')
+@section('activeUser','active')
 @section('content')
 
 <div class="container detail-user my-4">
     <div class="card card-detail-user p-4">
 
-        <h4 class="card-title text-center my-4">Detail User</h4>
+        <h4 class="modal-title text-center" id="store"> DETAIL USER </h4>
 
         <div class="container">
             <div class="row">
@@ -15,22 +15,34 @@
 
                         <div class="image">
                             <img class="img " width="200px" height="200px" src="{{$data['avatar']}}" alt="Avatar">
-                                <div class="upload" type="button" data-toggle="modal" data-target="#avatar">
-                                    <i class="fas fa-camera text-black-300"></i>
-                                </div>
+
+                           @if ($data['role_id'] == 3)
+                            <div class="upload" type="button" data-toggle="modal" data-target="#avatar">
+                               <i class="fas fa-camera text-black-300"></i>
+                            </div>
+                            @endif
+
                         </div>
 
                         <fieldset disabled>
-                            <div class=" mt-5 form-group" >
+                            <div class="mt-5 form-group" >
                                 <span>Email : </span>
-                                <input class="form-control" type="text" name="email" value="{{$data['email']}}">
+                                <input class="form-control mt-2" type="text" name="email" value="{{$data['email']}}">
                             </div>
 
-                            <div class=" mt-1 form-group" >
+                            <div class="mt-1 form-group" >
                                 <span>Username : </span>
-                                <input class="form-control" type="text" name="username" value="{{$data['username']}}">
+                                <input class="form-control mt-2" type="text" name="username" value="{{$data['username']}}">
                             </div>
                         </fieldset>
+
+                        @if ($data['role_id'] == 2)
+                        <form class="mt-4">
+                            <div class="btn btn-primary" style="cursor: pointer" title="Show Shop">
+                                <i class="fas fa-store text-black-300"></i>
+                            </div>
+                        </form>
+                        @endif
                     </div>
                 </div>
 
@@ -62,8 +74,7 @@
                                 <label> Role : </label>
                                 @if ($data['role_id'] == 1)
                                     <input type="text" class="form-control" name="role_id" value="User">
-                                @endif
-                                @if ($data['role_id'] == 3)
+                                @elseif ($data['role_id'] == 3)
                                     <input type="text" class="form-control" name="role_id" value="Admin">
                                 @else
                                     <input type="text" class="form-control" name="role_id" value="User + Penjual">
@@ -91,11 +102,13 @@
                         <p class="text-left" >Danger Zone</p>
 
                         <form class="text-right">
-                            <div class="btn btn-warning" type="button" data-toggle="modal" data-target="#update">
-                                <i class="fas fa-edit  text-black-300"></i>
-                            </div>
+                            @if ($data['role_id'] == 3)
+                                <div class="btn btn-warning" type="button" data-toggle="modal" data-target="#update" title="Update">
+                                    <i class="fas fa-edit  text-black-300"></i>
+                                </div>
+                            @endif
 
-                            <div class="btn btn-danger" type="button" data-toggle="modal" data-target="#delete">
+                            <div class="btn btn-danger" type="button" data-toggle="modal" data-target="#delete" title="Delete">
                                 <i class="fas fa-trash  text-black-300"></i>
                             </div>
                         </form>
