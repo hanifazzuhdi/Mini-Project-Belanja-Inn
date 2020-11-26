@@ -78,7 +78,7 @@
                         <a class="collapse-item" href="{{route('category')}}">Category</a>
 
                         <h6 class="collapse-header">Account Admin</h6>
-                        <a class="collapse-item" href="{{route('admins')}}">List Admin</a>
+                        <a class="collapse-item" href="{{route('admins')}}">Super Admin</a>
                     </div>
                 </div>
             </li>
@@ -248,13 +248,9 @@
 
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{'/detailUser/' . Auth::id()}}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
                                 </a>
                                 <div class="dropdown-divider"></div>
 

@@ -10,6 +10,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -44,12 +45,20 @@ class HomeController extends Controller
     {
         $data = User::find($id);
 
+        if (!$data) {
+            return view('404');
+        }
+
         return view('pages.detailUser', compact('data'));
     }
 
     public function getProductDetail($id)
     {
         $data = Product::with('shop')->find($id);
+
+        if (!$data) {
+            return view('404');
+        }
 
         return view('pages.detailProduct', compact('data'));
     }
@@ -58,12 +67,20 @@ class HomeController extends Controller
     {
         $data = Cart::with('order')->with('product')->where('order_id', $id)->get();
 
+        if (count($data) == 0) {
+            return view('404');
+        }
+
         return view('pages.detailHistory', compact('data'));
     }
 
     // Function Update
     public function update(Request $request, $id)
     {
+        if (Auth::user()->role_id != 3) {
+            return view('404');
+        }
+
         $user = User::find($id);
 
         $user->update([
@@ -78,6 +95,10 @@ class HomeController extends Controller
 
     public function updateAvatar($id, Request $request, Client $client)
     {
+        if (Auth::user()->role_id != 3) {
+            return view('404');
+        }
+
         $request->validate([
             'avatar' => 'required|file|image|max:2000'
         ]);
@@ -107,6 +128,18 @@ class HomeController extends Controller
     // Function Destroy User
     public function destroy($id)
     {
+        if (Auth::user()->role_id != 3) {
+            return view('404');
+        }
+
+        // Cek admin
+        $admin = User::find($id);
+
+        if ($admin->username == 'hanif') {
+            return redirect(route('admins'))->withWarning("Sorry This Account Can't Delete");
+        }
+
+        // cek tabel order
         $order = Order::where('user_id', $id)->get();
 
         if (count($order) == 0) {
@@ -126,6 +159,10 @@ class HomeController extends Controller
 
     public function destroyProduct($id)
     {
+        if (Auth::user()->role_id != 3) {
+            return view('404');
+        }
+
         Cart::where('product_id', $id)->delete();
 
         Product::destroy($id);
