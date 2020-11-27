@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\User;
 use App\Message;
 use Pusher\Pusher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
