@@ -8,18 +8,26 @@ use Pusher\Pusher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
 {
     public function index()
     {
-        $users = User::where('id', '!=', Auth::id())->whereHas('message', function ($query) {
-            $query->where('to', Auth::id())->orWhere('user_id', Auth::id());
-        })->get();
+        $messages = Message::where('user_id', Auth::id())->orWhere('to', Auth::id())->get();
 
-        if (count($users) == 0) {
-            return $this->SendResponse('failed', 'Message not found', NULL, 404);
+        foreach ($messages as $message) {
+            # code...
+            $users = User::where('id', '!=', Auth::id())->get();
         }
+
+        // $users = User::where('id', '!=', Auth::id())->whereHas('message', function ($query) {
+        //     $query->orWhere('to', Auth::id())->orWhere('user_id', Auth::id());
+        // })->get();
+
+        // if (count($users) == 0) {
+        //     return $this->SendResponse('failed', 'Message not found', NULL, 404);
+        // }
 
         return response([
             'status'    => 'success',
