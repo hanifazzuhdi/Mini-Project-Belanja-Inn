@@ -14,7 +14,9 @@ class PublicController extends Controller
 {
     public function index()
     {
-        $products = ProductResource::collection(Product::all());
+        $product = Product::where('quantity', '!=', 0)->get();
+
+        $products = ProductResource::collection($product);
         $srtproducts = $products->sortByDesc('id');
         $products = $srtproducts->values()->all();
 
