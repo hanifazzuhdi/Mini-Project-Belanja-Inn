@@ -113,7 +113,7 @@
             color: #2686e0;
             font-size: 13px;
             text-decoration: none;
-            transition: 0.5s;
+            transition: 0.5s;User
         }
 
         .container a:hover {
