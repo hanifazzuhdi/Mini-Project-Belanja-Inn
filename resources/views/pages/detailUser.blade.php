@@ -16,7 +16,7 @@
                         <div class="image">
                             <img class="img " width="200px" height="200px" src="{{$data['avatar']}}" alt="Avatar">
 
-                           @if ($data['role_id'] == 3)
+                            @if ($data['role_id'] == 3)
                             <div class="upload" type="button" data-toggle="modal" data-target="#avatar">
                                <i class="fas fa-camera text-black-300"></i>
                             </div>
@@ -43,6 +43,7 @@
                             </div>
                         </form>
                         @endif
+
                     </div>
                 </div>
 
@@ -215,7 +216,8 @@
                         </div>
                     </div>
 
-                    {{-- Modal Shop Shop --}}
+                    @if ($data['role_id'] == 2)
+                    {{-- Modal Shop --}}
                     <div class="modal fade" id="shop" tabindex="-1" role="dialog" aria-labelledby="shop" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -261,6 +263,8 @@
                             </div>
                         </div>
                     </div>
+                    @endif
+
                     {{-- End Modal --}}
 
                 </div>
