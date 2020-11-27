@@ -2,69 +2,52 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\User;
 use App\Message;
 use Pusher\Pusher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
     public function index()
     {
-        $messages = Message::all();
-
-        $user = User::where('id', '!=', Auth::id())->get();
-
-        // foreach ($messages as $message) {
-        //     # code...
-        //     $users = User::where('id', $message->to)->get();
-        // }
-
-        // foreach ($users as $user) {
-        //     # code...
-        // }
-
-        // $users = User::where('id', '!=', Auth::id())->whereHas('message', function ($query) {
-        //     $query->where('to', Auth::id())->orWhere('user_id', Auth::id());
-        // })->get();
-
-        // if (count($users) == 0) {
-        //     return $this->SendResponse('failed', 'Message not found', NULL, 404);
-        // }
+        // hitung berapa banyak pesan yang belum dibaca oleh user
+        $users = DB::select("SELECT users.id, users.name, users.username, users.avatar, count(is_read) as unread
+            FROM users LEFT JOIN messages ON users.id = messages.from AND is_read = 0 and messages.to =" . Auth::id() . "
+            WHERE users.id != " . Auth::id()  . "
+            GROUP BY users.id, users.name, users.avatar, users.email
+            ");
 
         return response([
-            'status'    => 'success',
-            'message'   => 'Data loaded',
-            'data'      => $user
+            'status' => 'success',
+            'message' => 'Data loaded',
+            'data' => $users
         ]);
     }
 
-    public function getMessage($id)
+    public function getMessage($user_id)
     {
         $my_id = Auth::id();
 
-        $user = User::select('id', 'username', 'avatar')->where('id', $id)->get();
+        $user = User::where('id', $user_id)->first();
 
         // when click to see message selected message will be read, update
-        Message::where(['user_id' => $id, 'to' => $my_id])->update(['is_read' => 1]);
+        Message::where(['from' => $user_id, 'to' => $my_id])->update(['is_read' => 1]);
 
-        $messages = Message::where(function ($query) use ($id, $my_id) {
-            $query->where('user_id', $my_id)->Where('to', $id);
-        })->orWhere(function ($query) use ($id, $my_id) {
-            $query->where('user_id', $id)->Where('to', $my_id);
+        $messages = Message::where(function ($query) use ($user_id, $my_id) {
+            $query->where('from', $my_id)->Where('to', $user_id);
+        })->orWhere(function ($query) use ($user_id, $my_id) {
+            $query->where('from', $user_id)->Where('to', $my_id);
         })->get();
 
-        if (count($user) == 0) {
-            return $this->SendResponse('failed', 'User not found', NULL, 404);
-        }
-
         return response([
-            'status'    => 'success',
-            'message'   => 'Chat loaded successfully',
-            'user'      => $user,
-            'data'      => $messages
+            'status' => 'success',
+            'message' => 'Message loaded',
+            'profil' => $user,
+            'data' => $messages
         ]);
     }
 
@@ -75,7 +58,7 @@ class MessageController extends Controller
         $message = $request->message;
 
         $data = new Message();
-        $data->user_id = $from;
+        $data->from = $from;
         $data->to = $to;
         $data->message = $message;
         $data->is_read = 0;
@@ -93,7 +76,7 @@ class MessageController extends Controller
             $options
         );
 
-        $data = ["user_id" => $from, "to" => $to, "message" => $message];
+        $data = ["from" => $from, "to" => $to, "message" => $message];
         $pusher->trigger('my-channel', 'my-event', $data);
 
         return response([
