@@ -119,15 +119,33 @@ class OrderController extends Controller
 
     public function updateCart(Request $request, $cart_id)
     {
-        // $cart = Cart::where('id', '=',  "{$cart_id}")->get();
-        if (empty($request->checklist)) {
-            return $this->SendResponse('failed', 'Product is not selected', null, 400);
-        }
-        $cart = Cart::when($request->quantity, function ($query) use ($request, $cart_id) {
-            $query->where('id', '=',  "{$cart_id}");
-        })->get();
+        $cart = Cart::where('id', "{$cart_id}")->first();
+        $product = Product::where('id', "{$cart->product_id}")->first();
 
-        return $this->SendResponse('succes', 'Data fetched successfully', $cart, 200);
+        if($request->quantity != $cart->quantity && $request->quantity != 0) {
+            $query = Cart::query();
+            $total_price = (int) $query->where('order_id', "{$cart->order_id}")->sum('total_price');
+    
+            $order = Order::where('id', "{$cart->order_id}")->first();
+            $update = $query->when( function($request) use($product) {
+                if($request->quantity <= $product->quantity) {
+                    return true;
+                } else $this->SendResponse('succes', 'Product quantity is no sufficient', null, 404);
+            } , function ($query) use ($request, $cart, $product, $order, $total_price) {
+                $query->where('id', "{$cart->id}")->with('order:id,total_price')->update([
+                    'quantity' => $request->quantity,
+                    'total_price' => $request->quantity*$product->price,
+                ]);
+
+                $order->update(['total_price' => ($request->quantity*$product->price) + $total_price ]) ;
+                return $query;
+            })->get();
+            return $this->SendResponse('succes', 'Data updated successfully', $update, 200);
+        } elseif($request->quantity == 0) {
+            $this->delete($cart_id);
+        } else {
+            return $this->SendResponse('failed', 'No change have been made', null, 200);
+        }
     }
 
     public function delete($id)
