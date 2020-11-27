@@ -8,21 +8,26 @@ use Pusher\Pusher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
 {
     public function index()
     {
-        $messages = Message::where('user_id', Auth::id())->orWhere('to', Auth::id())->get();
+        $messages = Message::all();
 
-        foreach ($messages as $message) {
-            # code...
-            $users = User::where('id', '!=', Auth::id())->get();
-        }
+        $user = User::where('id', '!=', Auth::id())->get();
+
+        // foreach ($messages as $message) {
+        //     # code...
+        //     $users = User::where('id', $message->to)->get();
+        // }
+
+        // foreach ($users as $user) {
+        //     # code...
+        // }
 
         // $users = User::where('id', '!=', Auth::id())->whereHas('message', function ($query) {
-        //     $query->orWhere('to', Auth::id())->orWhere('user_id', Auth::id());
+        //     $query->where('to', Auth::id())->orWhere('user_id', Auth::id());
         // })->get();
 
         // if (count($users) == 0) {
@@ -32,7 +37,7 @@ class MessageController extends Controller
         return response([
             'status'    => 'success',
             'message'   => 'Data loaded',
-            'data'      => $users
+            'data'      => $user
         ]);
     }
 
