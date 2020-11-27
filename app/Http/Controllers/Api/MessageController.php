@@ -6,9 +6,7 @@ use App\User;
 use App\Message;
 use Pusher\Pusher;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ChatResource;
 use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
@@ -19,9 +17,8 @@ class MessageController extends Controller
             $query->where('to', Auth::id())->orWhere('user_id', Auth::id());
         })->get();
 
-
         if (count($users) == 0) {
-            return $this->SendResponse('success', 'Message not found', NULL, 404);
+            return $this->SendResponse('failed', 'Message not found', NULL, 404);
         }
 
         return response([
@@ -47,7 +44,7 @@ class MessageController extends Controller
         })->get();
 
         if (count($messages) == 0) {
-            return $this->SendResponse('success', 'Message not found', NULL, 404);
+            return $this->SendResponse('failed', 'Message not found', NULL, 404);
         }
 
         return response([
@@ -61,7 +58,7 @@ class MessageController extends Controller
     public function sendMessage(Request $request)
     {
         $from = Auth::id();
-        $to = $request->receiver_id;
+        $to = $request->to;
         $message = $request->message;
 
         $data = new Message();
@@ -82,7 +79,14 @@ class MessageController extends Controller
             '1111413',
             $options
         );
-        $data = ["user_id" => $from, "to" => $to];
+
+        $data = ["user_id" => $from, "to" => $to, "message" => $message];
         $pusher->trigger('my-channel', 'my-event', $data);
+
+        return response([
+            'status' => 'success',
+            'message' => 'Message sent',
+            'data' => $data
+        ]);
     }
 }

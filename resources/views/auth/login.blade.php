@@ -7,6 +7,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+        <link rel="icon" sizes="48x48" href="/favicon.ico">
+        <link rel="icon" type="image/png" sizes="32x32" href="/apple-touch-icon.png">
+        <link rel="manifest" href="/site.webmanifest">
+
         <style>
         * {
             margin: 0;
@@ -109,7 +113,7 @@
             color: #2686e0;
             font-size: 13px;
             text-decoration: none;
-            transition: 0.5s;
+            transition: 0.5s;User
         }
 
         .container a:hover {
@@ -150,6 +154,8 @@
                 </a>
             @endif
         </div>
+
+    @include('sweetalert::alert')
 
     </body>
 

@@ -20,21 +20,18 @@
 
     <link href=" {{url ('Admin/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
 
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" sizes="48x48" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
 
 </head>
 
 <body id="page-top">
 
-    <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
@@ -42,17 +39,14 @@
                 <div class="sidebar-brand-text mx-3">Welcome {{Auth::user()->name}}</div>
             </a>
 
-            <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
             <li class="nav-item @yield('activeDashboard')">
                 <a class="nav-link" href="{{route('home')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
 
-            <!-- Nav Item - Tables -->
             <li class="nav-item @yield('activeUser')">
                 <a class="nav-link" href="{{ route('user') }}">
                     <i class="fas fa-fw fa-table"></i>
@@ -65,15 +59,12 @@
                     <span>Products</span></a>
             </li>
 
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
             <div class="sidebar-heading">
                 Make to awesome
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item @yield('activeSettings')">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
@@ -87,68 +78,57 @@
                         <a class="collapse-item" href="{{route('category')}}">Category</a>
 
                         <h6 class="collapse-header">Account Admin</h6>
-                        <a class="collapse-item" href="{{route('admins')}}">List Admin</a>
-                        {{-- <a class="collapse-item" href="{{route('storeAccount')}}">Create Admin</a> --}}
+                        <a class="collapse-item" href="{{route('admins')}}">Super Admin</a>
                     </div>
                 </div>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>About Us</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                        <h6 class="collapse-header">Mobile Dev</h6>
+                        <a class="collapse-item" href="https://github.com/Sanmu3" target="_blank">Mujahid</a>
+                        <h6 class="collapse-header">Back-end Dev</h6>
+                        <a class="collapse-item" href="https://github.com/Fauzil14" target="_blank">Fauzil</a>
+                        <a class="collapse-item" href="https://github.com/hanifazzuhdi" target="_blank">Hanif</a>
                     </div>
                 </div>
             </li>
 
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
 
         </ul>
-        <!-- End of Sidebar -->
 
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
             <div id="content">
 
-                <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                    <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
+
                                 <span class="badge badge-danger badge-counter">3+</span>
                             </a>
-                            <!-- Dropdown - Alerts -->
+
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
@@ -191,15 +171,14 @@
                             </div>
                         </li>
 
-                        <!-- Nav Item - Messages -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-envelope fa-fw"></i>
-                                <!-- Counter - Messages -->
+
                                 <span class="badge badge-danger badge-counter">7</span>
                             </a>
-                            <!-- Dropdown - Messages -->
+
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="messagesDropdown">
                                 <h6 class="dropdown-header">
@@ -259,7 +238,6 @@
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
-                        <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -267,16 +245,12 @@
                                 <img class="img-profile rounded-circle"
                                     src="{{Auth::user()->avatar}}">
                             </a>
-                            <!-- Dropdown - User Information -->
+
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{'/detailUser/' . Auth::id()}}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
                                 </a>
                                 <div class="dropdown-divider"></div>
 
@@ -284,20 +258,16 @@
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Logout
                                     </button>
-                                {{-- </form> --}}
                             </div>
                         </li>
                     </ul>
 
                 </nav>
-                <!-- End of Topbar -->
 
                 @yield('content')
 
             </div>
-            <!-- End of Main Content -->
 
-            <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
@@ -305,20 +275,15 @@
                     </div>
                 </div>
             </footer>
-            <!-- End of Footer -->
 
         </div>
-        <!-- End of Content Wrapper -->
 
     </div>
-    <!-- End of Page Wrapper -->
 
-    <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -341,28 +306,21 @@
         </div>
     </div>
 
-@include('sweetalert::alert')
+    @include('sweetalert::alert')
 
-
-    <!-- Bootstrap core JavaScript-->
     <script src=" {{url('Admin/vendor/jquery/jquery.min.js')}}"></script>
     <script src=" {{url('Admin/vendor/bootstrap/js/bootstrap.bundle.min.js')}} "></script>
 
-    <!-- Core plugin JavaScript-->
     <script src=" {{url('Admin/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
-    <!-- Custom scripts for all pages-->
     <script src=" {{url('Admin/js/sb-admin-2.min.js')}}"></script>
 
-    <!-- Page level plugins -->
     <script src=" {{url('Admin/vendor/chart.js/Chart.min.js')}}"></script>
 
-    <!-- Page level plugins for table -->
     <script src=" {{url('Admin/vendor/datatables/jquery.dataTables.min.js')}} "></script>
     <script src=" {{url('Admin/vendor/datatables/dataTables.bootstrap4.min.js')}} "></script>
     <script src=" {{url('Admin/js/demo/datatables-demo.js')}} "></script>
 
-    <!-- Page level custom scripts -->
     <script src=" {{url('Admin/js/demo/chart-area-demo.js')}} "></script>
     <script src=" {{url('Admin/js/demo/chart-pie-demo.js')}} "></script>
 

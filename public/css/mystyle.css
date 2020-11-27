@@ -1,5 +1,11 @@
 /* page dashboard */
 
+.paginate {
+    position: relative;
+    bottom: -20px;
+    left: 30px;
+}
+
 /* page detail history */
 div.detail-history {
     width: 1050px;
@@ -22,9 +28,9 @@ a.print {
 }
 
 .detail-user h4 {
-    color: black;
+    color: #4e73df;
     font-weight: 800;
-    border-bottom: 2px solid rgba(65, 61, 61, 0.5);
+    border-bottom: 1px solid rgba(65, 61, 61, 0.5);
     padding-bottom: 20px;
 }
 
@@ -57,7 +63,7 @@ a.print {
 .detail-user .danger {
     padding: 10px;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     border: 1px solid black;
     border-radius: 5px;
 }
@@ -70,7 +76,12 @@ a.print {
 }
 
 /* Page detail product */
-.danger {
+.danger-product {
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    border: 1px solid black;
+    border-radius: 5px;
     position: relative;
     height: 140px;
 }

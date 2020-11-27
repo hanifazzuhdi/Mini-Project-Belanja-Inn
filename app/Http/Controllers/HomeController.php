@@ -10,6 +10,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -21,7 +22,7 @@ class HomeController extends Controller
         $total_transaction = DB::table('orders')->where('status', 1)->count('id');
         $transaction = DB::table('orders')->where('status', 1)->sum('total_price');
 
-        $histories = Order::with('user')->get();
+        $histories = Order::with('user')->paginate(10);
         return view('pages.dashboard', compact('active', 'shop', 'total_transaction', 'transaction', 'histories'));
     }
 
@@ -44,12 +45,22 @@ class HomeController extends Controller
     {
         $data = User::find($id);
 
-        return view('pages.detailUser', compact('data'));
+        $shop = Shop::find($id);
+
+        if (!$data) {
+            return view('404');
+        }
+
+        return view('pages.detailUser', compact('data', 'shop'));
     }
 
     public function getProductDetail($id)
     {
-        $data = Product::with('shop')->find($id);
+        $data = Product::with('shop')->with('category')->find($id);
+
+        if (!$data) {
+            return view('404');
+        }
 
         return view('pages.detailProduct', compact('data'));
     }
@@ -58,12 +69,20 @@ class HomeController extends Controller
     {
         $data = Cart::with('order')->with('product')->where('order_id', $id)->get();
 
+        if (count($data) == 0) {
+            return view('404');
+        }
+
         return view('pages.detailHistory', compact('data'));
     }
 
     // Function Update
     public function update(Request $request, $id)
     {
+        if (Auth::user()->role_id != 3) {
+            return view('404');
+        }
+
         $user = User::find($id);
 
         $user->update([
@@ -78,6 +97,10 @@ class HomeController extends Controller
 
     public function updateAvatar($id, Request $request, Client $client)
     {
+        if (Auth::user()->role_id != 3) {
+            return view('404');
+        }
+
         $request->validate([
             'avatar' => 'required|file|image|max:2000'
         ]);
@@ -107,13 +130,25 @@ class HomeController extends Controller
     // Function Destroy User
     public function destroy($id)
     {
-        $order = Order::where('user_id', $id)->get();
+        // Cek admin
+        $admin = User::find($id);
 
-        if (count($order) == 0) {
-            $order->id = null;
+        if ($admin->username == 'hanif') {
+            return redirect(route('admins'))->withWarning("Sorry This Account Can't Delete");
         }
 
-        Cart::where('order_id', $order->id)->delete();
+        $orders = Order::where('user_id', $id)->get();
+
+        foreach ($orders as $order) {
+            # code...
+            if (count($orders) == 0) {
+                $order->id = 0;
+            }
+
+            Cart::where('order_id', $order->id)->delete();
+
+            $order->delete();
+        }
 
         Product::where('shop_id', $id)->delete();
 

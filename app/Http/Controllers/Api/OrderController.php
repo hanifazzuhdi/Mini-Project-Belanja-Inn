@@ -18,6 +18,10 @@ class OrderController extends Controller
     {
         $product = Product::where('id', $id)->first();
 
+        if (!Auth::user()) {
+            return $this->sendResponse('failed', 'This Account has deleted by Admin', null, 404);
+        }
+
         $user = Auth::user()->id;
 
         // cek id produk
@@ -151,7 +155,7 @@ class OrderController extends Controller
     public function delete($id)
     {
         $cart = Cart::where('id', $id)->first();
-        
+
         $order = Order::where('id', $cart->order_id)->first();
 
         $order->total_price = $order->total_price - $cart->total_price;
@@ -160,8 +164,8 @@ class OrderController extends Controller
         $cart->delete();
 
         $carts = Cart::where('order_id', $order->id)->get();
-        
-        if(count($carts) == 0) {
+
+        if (count($carts) == 0) {
             $order->delete();
         }
 

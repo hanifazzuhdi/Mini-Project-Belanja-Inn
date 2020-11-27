@@ -2,10 +2,13 @@
 
 namespace App;
 
+use App\Traits\FormatNumber;
 use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
+    // use FormatNumber;
+
     protected $fillable = [
         'user_id', 'to', 'message', 'is_read'
     ];
@@ -13,5 +16,11 @@ class Message extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getCreatedAtAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['created_at'])
+            ->format('d-M-y H.i');
     }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Cart;
 use App\User;
 use App\Category;
+use App\Product;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
@@ -21,11 +23,6 @@ class SettingController extends Controller
         $datas = User::where('role_id', 3)->get();
 
         return view('pages.settings.admins', compact('datas'));
-    }
-
-    public function storeAccount()
-    {
-        return view('pages.settings.storeAccount');
     }
 
     public function store(Request $request, Client $client)
@@ -70,5 +67,27 @@ class SettingController extends Controller
         ]);
 
         return redirect(route('admins'))->withSuccess('Data Created Successfully');
+    }
+
+    public function destroy($id)
+    {
+        // Hapus produk id category terkait
+        $products = Product::where('category_id', $id)->get();
+
+        foreach ($products as $product) {
+            // Hapus keranjang id category terkait
+            $carts = Cart::where('product_id', $product->id)->get();
+
+            foreach ($carts as $cart) {
+                # code...
+                $cart->delete();
+            }
+
+            $product->delete();
+        }
+
+        Category::destroy($id);
+
+        return redirect(route('category'))->withSuccess('Data Deleted Successfully');
     }
 }
