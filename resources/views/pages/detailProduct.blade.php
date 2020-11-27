@@ -19,9 +19,20 @@
 
                         <fieldset disabled>
                             <div class=" mt-5 form-group" >
-                                <span>Shop Name : </span>
+                                <label>Shop Name : </label>
                                 <input class="form-control" type="text" name="username" value="{{$data['shop']->shop_name}}">
                             </div>
+
+                            <div class="form-group  ">
+                                <label> Created At : </label>
+                                <input type="text" class="form-control" name="created_at" value="{{$data['created_at']}}">
+                            </div>
+
+                            <div class="form-group  ">
+                                <label> Updated At : </label>
+                                <input type="text" class="form-control" name="updated_at" value="{{$data['updated_at']}}">
+                            </div>
+
                         </fieldset>
                     </div>
                 </div>
@@ -40,10 +51,14 @@
                             </div>
 
                             <div class="form-group" >
+                                <span>Category : </span>
+                                <input class="form-control" type="text" name="email" value="{{$data['category']['category_name']}}">
+                            </div>
+
+                            <div class="form-group" >
                                 <span>Price : </span>
                                 <input class="form-control" type="text" name="email" value="{{$data['price']}}">
                             </div>
-
 
                             <div class="form-group" >
                                 <span>Quantity : </span>
@@ -63,20 +78,11 @@
 
 
                             <div class="form-group">
-                                <label> Address : </label>
+                                <label> Description : </label>
                                 <br>
                                 <textarea class="form-control" name="address" id="address" cols="53" rows="3">{{$data['description']}}</textarea>
                             </div>
 
-                            <div class="form-group  ">
-                                <label> Created At : </label>
-                                <input type="text" class="form-control" name="created_at" value="{{$data['created_at']}}">
-                            </div>
-
-                            <div class="form-group  ">
-                                <label> Updated At : </label>
-                                <input type="text" class="form-control" name="updated_at" value="{{$data['updated_at']}}">
-                            </div>
                         </fieldset>
                     </form>
 

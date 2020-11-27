@@ -3,7 +3,7 @@
 @section('activeSettings', 'active')
 @section('content')
 
-<div class="container-fluid mt-5">
+<div class="container-fluid">
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -40,7 +40,7 @@
                                 <form action="{{'/deleteCategory/' . $category['id']}}" method="POST">
                                     @csrf
                                     @method('delete')
-                                    <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('yakin ?')">
+                                    <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Yakin')">
                                         <i class="fas fa-trash text-black-300"></i>
                                     </button>
                                 </form>

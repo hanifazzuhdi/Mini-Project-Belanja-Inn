@@ -56,7 +56,7 @@ class HomeController extends Controller
 
     public function getProductDetail($id)
     {
-        $data = Product::with('shop')->find($id);
+        $data = Product::with('shop')->with('category')->find($id);
 
         if (!$data) {
             return view('404');
@@ -130,10 +130,6 @@ class HomeController extends Controller
     // Function Destroy User
     public function destroy($id)
     {
-        if (Auth::user()->role_id != 3) {
-            return view('404');
-        }
-
         // Cek admin
         $admin = User::find($id);
 
@@ -141,14 +137,18 @@ class HomeController extends Controller
             return redirect(route('admins'))->withWarning("Sorry This Account Can't Delete");
         }
 
-        // cek tabel order
-        $order = Order::where('user_id', $id)->get();
+        $orders = Order::where('user_id', $id)->get();
 
-        if (count($order) == 0) {
-            $order->id = null;
+        foreach ($orders as $order) {
+            # code...
+            if (count($orders) == 0) {
+                $order->id = 0;
+            }
+
+            Cart::where('order_id', $order->id)->delete();
+
+            $order->delete();
         }
-
-        Cart::where('order_id', $order->id)->delete();
 
         Product::where('shop_id', $id)->delete();
 
@@ -161,10 +161,6 @@ class HomeController extends Controller
 
     public function destroyProduct($id)
     {
-        if (Auth::user()->role_id != 3) {
-            return view('404');
-        }
-
         Cart::where('product_id', $id)->delete();
 
         Product::destroy($id);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cart;
 use App\User;
 use App\Category;
 use App\Product;
@@ -70,10 +71,18 @@ class SettingController extends Controller
 
     public function destroy($id)
     {
-        // Hapus produk category terkait
+        // Hapus produk id category terkait
         $products = Product::where('category_id', $id)->get();
 
         foreach ($products as $product) {
+            // Hapus keranjang id category terkait
+            $carts = Cart::where('product_id', $product->id)->get();
+
+            foreach ($carts as $cart) {
+                # code...
+                $cart->delete();
+            }
+
             $product->delete();
         }
 
