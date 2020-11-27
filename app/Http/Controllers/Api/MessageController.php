@@ -43,8 +43,8 @@ class MessageController extends Controller
             $query->where('user_id', $id)->Where('to', $my_id);
         })->get();
 
-        if (count($messages) == 0) {
-            return $this->SendResponse('failed', 'Message not found', NULL, 404);
+        if (count($user) == 0) {
+            return $this->SendResponse('failed', 'User not found', NULL, 404);
         }
 
         return response([
