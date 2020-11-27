@@ -86,17 +86,17 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>About Us</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                        <h6 class="collapse-header">Mobile Dev</h6>
+                        <a class="collapse-item" href="https://github.com/Sanmu3" target="_blank">Mujahid</a>
+                        <h6 class="collapse-header">Back-end Dev</h6>
+                        <a class="collapse-item" href="https://github.com/Fauzil14" target="_blank">Fauzil</a>
+                        <a class="collapse-item" href="https://github.com/hanifazzuhdi" target="_blank">Hanif</a>
                     </div>
                 </div>
             </li>
@@ -306,8 +306,7 @@
         </div>
     </div>
 
-@include('sweetalert::alert')
-
+    @include('sweetalert::alert')
 
     <script src=" {{url('Admin/vendor/jquery/jquery.min.js')}}"></script>
     <script src=" {{url('Admin/vendor/bootstrap/js/bootstrap.bundle.min.js')}} "></script>
