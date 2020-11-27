@@ -40,7 +40,7 @@ class PublicController extends Controller
 
     public function showCategory(Product $product, $category_id)
     {
-        $products = ProductResource::collection($product->where('category_id', $category_id)->get());
+        $products = ProductResource::collection($product->where('category_id', $category_id)->where('quantity', '!=', 0)->get());
 
         if (count($products) != 0) {
             return $this->SendResponse('succes', 'Data loaded successfully', $products, 200);
