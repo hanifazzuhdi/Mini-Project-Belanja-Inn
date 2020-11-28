@@ -14,7 +14,9 @@ class PublicController extends Controller
 {
     public function index()
     {
-        $products = ProductResource::collection(Product::all());
+        $product = Product::where('quantity', '!=', 0)->get();
+
+        $products = ProductResource::collection($product);
         $srtproducts = $products->sortByDesc('id');
         $products = $srtproducts->values()->all();
 
@@ -38,7 +40,7 @@ class PublicController extends Controller
 
     public function showCategory(Product $product, $category_id)
     {
-        $products = ProductResource::collection($product->where('category_id', $category_id)->get());
+        $products = ProductResource::collection($product->where('category_id', $category_id)->where('quantity', '!=', 0)->get());
 
         if (count($products) != 0) {
             return $this->SendResponse('succes', 'Data loaded successfully', $products, 200);

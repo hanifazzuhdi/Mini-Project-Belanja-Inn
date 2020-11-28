@@ -21,6 +21,6 @@ class Message extends Model
     public function getCreatedAtAttribute()
     {
         return \Carbon\Carbon::parse($this->attributes['created_at'])
-            ->format('d-M-y H.i');
+            ->format('d-M-y, H.i');
     }
 }
