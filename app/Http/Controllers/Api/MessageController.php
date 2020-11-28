@@ -13,9 +13,22 @@ class MessageController extends Controller
 {
     public function index()
     {
-        $users = User::where('id', '!=', Auth::id())->whereHas('message', function ($query) {
-            $query->where('to', Auth::id())->orWhere('user_id', Auth::id());
-        })->get();
+        $users = User::where('id', '!=', Auth::id())->get();
+
+        $messages = Message::select(\DB::raw('user_id, count(`user_id`) as messages_count'))
+                    ->where('to', Auth::id())
+                    ->groupBy('user_id')
+                    ->get();
+                    
+        return response($messages);
+
+        $users = $users->map(function($user) use ($messages) {
+            $userUnread = $messages->where('user_id', $user->id)->first();
+
+            $user->unread = $userUnread ? $userUnread->messages_count : 0;
+
+            return $user;
+        });
 
         if (count($users) == 0) {
             return $this->SendResponse('failed', 'Message not found', NULL, 404);

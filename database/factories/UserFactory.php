@@ -2,6 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Message;
 use App\Shop;
 use App\User;
 use Faker\Generator as Faker;
@@ -43,5 +44,19 @@ $factory->define(Shop::class, function (Faker $faker) {
         'avatar' => 'https://via.placeholder.com/150',
         'address' => $faker->address,
         'description' => $faker->sentence
+    ];
+});
+
+$factory->define(Message::class, function (Faker $faker) {
+    do {
+        $user_id = rand(1, 4);
+        $to = rand(1, 4);
+    } while($user_id === $to);
+
+    return [
+        'user_id' => $user_id,
+        'to' => $to,
+        'message' => $faker->sentence,
+        'is_read' => $faker->numberBetween(0, 1)
     ];
 });
