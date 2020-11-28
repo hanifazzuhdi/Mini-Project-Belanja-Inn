@@ -13,14 +13,15 @@ class Message extends Model
         'user_id', 'to', 'message', 'is_read'
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
     public function getCreatedAtAttribute()
     {
         return \Carbon\Carbon::parse($this->attributes['created_at'])
             ->format('d-M-y, H.i');
+    }
+
+    // relation
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'from');
     }
 }
