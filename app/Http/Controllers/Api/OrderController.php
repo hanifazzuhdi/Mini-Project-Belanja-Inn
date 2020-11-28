@@ -108,13 +108,13 @@ class OrderController extends Controller
 
         $carts = new Cart;
         $carts->where('order_id', $order->id)
-                       ->whereHas('product', function($query) {
-                            $query->where('quantity' ,0);
-                        })->delete();
+            ->whereHas('product', function ($query) {
+                $query->where('quantity', 0);
+            })->delete();
         $carts->refresh();
         $carts = $carts->where('order_id', $order->id)
-                       ->with(['product:id,product_name,price,image,weight,quantity', 'shop:id,shop_name'])
-                       ->get();
+            ->with(['product:id,product_name,price,image,weight,quantity', 'shop:id,shop_name'])
+            ->get();
         $new_total_price = $carts->sum('total_price');
         $order->update(['total_price' => $new_total_price]);
         $carts = $carts->toArray();
@@ -135,29 +135,29 @@ class OrderController extends Controller
         $cart = Cart::where('id', "{$cart_id}")->first();
         $product = Product::where('id', "{$cart->product_id}")->first();
 
-        if($request->quantity != $cart->quantity && $request->quantity != 0) {
+        if ($request->quantity != $cart->quantity && $request->quantity != 0) {
             $order = Order::where('id', "{$cart->order_id}")->first();
-            
+
             $query = Cart::query();
-            
+
             $total_price = (int) $query->where('order_id', "{$cart->order_id}")->sum('total_price');
 
-            $update = $query->when( function($request) use ($product) {
-                    if($request->quantity <= $product->quantity) {
-                        return true;
-                    } else $this->SendResponse('succes', 'The product quantity is not sufficient', null, 404);
-                } , function ($query) use ($request, $cart, $product, $order, $total_price) {
+            $update = $query->when(function ($request) use ($product) {
+                if ($request->quantity <= $product->quantity) {
+                    return true;
+                } else $this->SendResponse('succes', 'The product quantity is not sufficient', null, 404);
+            }, function ($query) use ($request, $cart, $product, $order, $total_price) {
                 $query->where('id', "{$cart->id}")->with('order:id,total_price')->update([
                     'quantity' => $request->quantity,
-                    'total_price' => $request->quantity*$product->price,
+                    'total_price' => $request->quantity * $product->price,
                 ]);
 
-                $order->update(['total_price' => ($request->quantity*$product->price) + $total_price ]) ;
+                $order->update(['total_price' => ($request->quantity * $product->price) + $total_price]);
                 return $query->where('oder_id', "{$order->id}")
-                             ->with(['product:id,product_name,price,image,weight,quantity', 'shop:id,shop_name']);
+                    ->with(['product:id,product_name,price,image,weight,quantity', 'shop:id,shop_name']);
             })->get();
             return $this->SendResponse('succes', 'Data updated successfully', $update, 200);
-        } elseif($request->quantity == 0) {
+        } elseif ($request->quantity == 0) {
             $this->delete($cart_id);
         } else {
             return $this->SendResponse('failed', 'No change have been made', null, 200);
