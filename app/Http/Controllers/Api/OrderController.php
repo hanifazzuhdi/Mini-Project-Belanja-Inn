@@ -7,6 +7,7 @@ use App\Order;
 use Exception;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CartResource;
 use Illuminate\Support\Facades\Auth;
@@ -105,12 +106,20 @@ class OrderController extends Controller
             return $this->SendResponse('failed', 'Data not found', null, 404);
         }
 
-        $cart = Cart::where('order_id', $order->id)
-            ->with(['product:id,product_name,price,image,weight', 'shop:id,shop_name'])
-            ->get()
-            ->toArray();
+        $carts = new Cart;
+        $carts->where('order_id', $order->id)
+                       ->whereHas('product', function($query) {
+                            $query->where('quantity' ,0);
+                        })->delete();
+        $carts->refresh();
+        $carts = $carts->where('order_id', $order->id)
+                       ->with(['product:id,product_name,price,image,weight,quantity', 'shop:id,shop_name'])
+                       ->get();
+        $new_total_price = $carts->sum('total_price');
+        $order->update(['total_price' => $new_total_price]);
+        $carts = $carts->toArray();
 
-        $data = collect($cart)->map(function ($value, $key) {
+        $data = collect($carts)->map(function ($value, $key) {
             $value['total_price'] = number_format($value['total_price'], 0, ',', '.');
             $value['product']['price'] = number_format($value['product']['price'], 0, ',', '.');
             unset($value['shop_id']);
@@ -123,15 +132,36 @@ class OrderController extends Controller
 
     public function updateCart(Request $request, $cart_id)
     {
-        // $cart = Cart::where('id', '=',  "{$cart_id}")->get();
-        if (empty($request->checklist)) {
-            return $this->SendResponse('failed', 'Product is not selected', null, 400);
-        }
-        $cart = Cart::when($request->quantity, function ($query) use ($request, $cart_id) {
-            $query->where('id', '=',  "{$cart_id}");
-        })->get();
+        $cart = Cart::where('id', "{$cart_id}")->first();
+        $product = Product::where('id', "{$cart->product_id}")->first();
 
-        return $this->SendResponse('succes', 'Data fetched successfully', $cart, 200);
+        if($request->quantity != $cart->quantity && $request->quantity != 0) {
+            $order = Order::where('id', "{$cart->order_id}")->first();
+            
+            $query = Cart::query();
+            
+            $total_price = (int) $query->where('order_id', "{$cart->order_id}")->sum('total_price');
+
+            $update = $query->when( function($request) use ($product) {
+                    if($request->quantity <= $product->quantity) {
+                        return true;
+                    } else $this->SendResponse('succes', 'The product quantity is not sufficient', null, 404);
+                } , function ($query) use ($request, $cart, $product, $order, $total_price) {
+                $query->where('id', "{$cart->id}")->with('order:id,total_price')->update([
+                    'quantity' => $request->quantity,
+                    'total_price' => $request->quantity*$product->price,
+                ]);
+
+                $order->update(['total_price' => ($request->quantity*$product->price) + $total_price ]) ;
+                return $query->where('oder_id', "{$order->id}")
+                             ->with(['product:id,product_name,price,image,weight,quantity', 'shop:id,shop_name']);
+            })->get();
+            return $this->SendResponse('succes', 'Data updated successfully', $update, 200);
+        } elseif($request->quantity == 0) {
+            $this->delete($cart_id);
+        } else {
+            return $this->SendResponse('failed', 'No change have been made', null, 200);
+        }
     }
 
     public function delete($id)
