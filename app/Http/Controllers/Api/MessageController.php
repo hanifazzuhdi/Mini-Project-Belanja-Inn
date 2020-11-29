@@ -51,7 +51,7 @@ class MessageController extends Controller
             $query->where('from', $my_id)->Where('to', $user_id);
         })->orWhere(function ($query) use ($user_id, $my_id) {
             $query->where('from', $user_id)->Where('to', $my_id);
-        })->get();
+        })->orderBy('created_at', 'asc')->get();
 
         return response([
             'status' => 'success',
