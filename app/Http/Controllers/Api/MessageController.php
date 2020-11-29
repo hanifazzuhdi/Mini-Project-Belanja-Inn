@@ -14,17 +14,24 @@ class MessageController extends Controller
 {
     public function index()
     {
-        // hitung berapa banyak pesan yang belum dibaca oleh user
-        $users = DB::select("SELECT users.id, users.name, users.avatar, users.username, count(is_read) as unread
-            FROM users LEFT JOIN messages ON users.id = messages.from AND is_read = 0 and messages.to = " . Auth::id() . "
-            WHERE users.id != " . Auth::id()  . " and users.role_id != 3
-            GROUP BY users.id, users.name, users.avatar, users.email
-            ");
+        $my_id = Auth::id();
+
+        $to = DB::select("SELECT DISTINCT users.id, users.username, users.avatar FROM users
+                            JOIN messages ON users.id = messages.from
+                            WHERE users.id != $my_id AND users.role_id != 3 AND messages.to = $my_id
+                          ");
+
+        $from = DB::select("SELECT DISTINCT users.id, users.username, users.avatar FROM users
+                            JOIN messages ON users.id = messages.to
+                            WHERE users.id != $my_id AND users.role_id != 3 AND messages.from = $my_id AND messages.to != $my_id
+                        ");
+
+        $data = array_merge($to, $from);
 
         return response([
             'status' => 'success',
             'message' => 'Data loaded',
-            'data' => $users
+            'data' => $data
         ]);
     }
 
@@ -32,7 +39,10 @@ class MessageController extends Controller
     {
         $my_id = Auth::id();
 
-        $user = User::find($user_id);
+        $user = DB::table('users')
+            ->where('id', $user_id)
+            ->select('users.id', 'users.username', 'users.avatar')
+            ->get();
 
         // when click to see message selected message will be read, update
         Message::where(['from' => $user_id, 'to' => $my_id])->update(['is_read' => 1]);
