@@ -12,57 +12,6 @@ use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
-    // public function index()
-    // {
-    //     // $data = DB::table('users')
-    //     //     ->join('messages', function ($join) {
-    //     //         $join->on('users.id', '=', 'messages.from')->orOn('users.id', '=', 'messages.to')
-    //     //             ->where('messages.from', Auth::id());
-    //     //     })
-    //     //     ->where('users.id', '!=', Auth::id())
-    //     //     ->where('users.role_id', '!=', 3)
-    //     //     ->whereExists(function ($query) {
-    //     //         $query->select(DB::raw(1))
-    //     //             ->from('messages')
-    //     //             ->where('from', Auth::id())
-    //     //             ->Where('to', Auth::id());
-    //     //     })
-    //     //     ->select('users.id', 'users.username', 'users.avatar')
-    //     //     ->distinct()->get();
-
-    //     // $data = DB::table('users')
-    //     //     ->where('users.id', '!=', Auth::id())
-    //     //     ->join('messages', function ($join) {
-    //     //         $join->on('users.id', '=', 'messages.from')->orOn('users.id', '=', 'messages.to')
-    //     //             ->where('messages.from', Auth::id());
-    //     //     })
-    //     //     ->select('users.username', 'messages.to', 'messages.message')
-    //     //     ->distinct()->get()->toArray();
-
-    //     // AMBIL USER YANG PERNAH CHAT DENGAN KITA ATAU KITA CHAT KE DIA
-    //     // $datas = Message::whereHas('user', function ($query) {
-    //     //     $query->where('messages.from', Auth::id())->orWhere('to', Auth::id());
-    //     // })->get();
-
-    //     // foreach ($datas as $data) {
-    //     //     # code...
-    //     //     $users[] = User::where('id', '!=', $data->from)->orWhere('id', '!=', $data->to)->get();
-    //     // }
-
-    //     // select * from users where id != from and to != from
-    //     $datas = User::where('id', '!=', Auth::id())->where('role_id', '!=', 3)->get();
-
-    //     if ($datas == null) {
-    //         return response([
-    //             'status' => "gagal"
-    //         ]);
-    //     }
-
-    //     return response([
-    //         'users' => $datas
-    //     ]);
-    // }
-
     public function index()
     {
         // hitung berapa banyak pesan yang belum dibaca oleh user
