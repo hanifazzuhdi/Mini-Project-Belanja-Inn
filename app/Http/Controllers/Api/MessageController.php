@@ -28,6 +28,18 @@ class MessageController extends Controller
 
         $data = array_merge($to, $from);
 
+        // $a = ['1' => 'halo', '2' => 'hi', '3' => 'oke'];
+        // jika didalam array ada object yang sama maka tampilkan 1 saja
+        // foreach ($data as $dat) {
+        //     # code...
+        //     if (isset($dat->id)) {
+        //         continue;
+        //     }
+        // }
+
+        // dump($data);
+
+
         return response([
             'status' => 'success',
             'message' => 'Data loaded',
