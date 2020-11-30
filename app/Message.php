@@ -10,12 +10,21 @@ class Message extends Model
     // use FormatNumber;
 
     protected $fillable = [
-        'user_id', 'to', 'message', 'is_read'
+        'from', 'to', 'message', 'is_read'
     ];
 
-    public function user()
+    public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(User::class);
+    }
+    
+    public function fromContact()
+    {
+        return $this->hasOne(User::class, 'id', 'from');
+    }
+    public function toContact()
+    {
+        return $this->hasOne(User::class, 'id', 'to');
     }
 
     public function getCreatedAtAttribute()

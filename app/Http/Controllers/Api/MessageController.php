@@ -15,11 +15,43 @@ class MessageController extends Controller
     public function index()
     {
         // hitung berapa banyak pesan yang belum dibaca oleh user
-        $users = DB::select("SELECT users.id, users.name, users.username, users.avatar, count(is_read) as unread
-            FROM users LEFT JOIN messages ON users.id = messages.from AND is_read = 0 and messages.to =" . Auth::id() . "
-            WHERE users.id != " . Auth::id()  . "
-            GROUP BY users.id, users.name, users.avatar, users.email
-            ");
+        
+        // $users = DB::select("SELECT users.id, users.name, users.username, users.avatar, count(is_read) as unread
+        //     FROM users LEFT JOIN messages ON users.id = messages.user_id AND is_read = 0 and messages.to =" . Auth::id() . "
+        //     WHERE users.id != " . Auth::id()  . "
+        //     GROUP BY users.id, users.name, users.avatar, users.email
+        //     ");
+        // $users = collect($users);
+        // $users = $users->where('user_id', Auth::id());
+        $query = User::query();
+        // $users = $query->where('id', '!=', Auth::id())
+        $users = $query
+            // ->with('message')
+            ->with(['messageFrom', 'messageTo'])
+            // ->join('messages', 'users.id', 'messages.from')
+            // ->where('from', Auth::id())
+            // ->orWhere('to', Auth::id())
+            ->get();
+
+        return response($users);
+
+        $messages = Message::select(\DB::raw('user_id, count(`user_id`) as messages_count'))
+            ->where('user_id', Auth::id())
+            ->orWhere('to', Auth::id())
+            ->where('is_read', 0)
+            ->groupBy('user_id')
+            ->get();
+
+        // return response($messages);
+
+        $users = $users->map(function ($user) use ($messages) {
+            $userUnread = $messages->where('user_id', $user->id)->first();
+
+            $user->unread = $userUnread ? $userUnread->messages_count : 0;
+
+            return $user;
+        });
+
 
         return response([
             'status' => 'success',
