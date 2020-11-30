@@ -47,7 +47,26 @@ class PublicController extends Controller
         } else return $this->SendResponse('failed', 'Data failed to load', null, 500);
     }
 
-    public function search(Request $request)
+    public function search($keyword)
+    {
+        if ($keyword == null) {
+            $keyword = 'a';
+        }
+
+        $products = Product::where('product_name', 'LIKE', "%$keyword%")->get()->toArray();
+
+        if (!$products) {
+            return $this->SendResponse('failed', 'data not found', null, 500);
+        }
+
+        return response([
+            'status' => 'success',
+            'message' => 'Product Loaded',
+            'data' => $products
+        ]);
+    }
+
+    public function filterSearch(Request $request)
     {
         // if(empty($request->keyword)) {
         //     return $this->SendResponse('failed', 'There is no input in search box', null, 400);

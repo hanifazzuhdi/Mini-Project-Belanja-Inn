@@ -14,31 +14,25 @@ class MessageController extends Controller
 {
     public function index()
     {
-        $my_id = Auth::id();
+        $to = DB::table('users')
+            ->where('users.id', '!=', Auth::id())
+            ->where('users.role_id', '!=', 3)
+            ->where('messages.to', Auth::id())
+            ->join('messages', 'messages.from', '=', 'users.id')
+            // ->join('messages', 'messages.from', '=', 'users.id')
+            ->select('users.id', 'users.username', 'users.avatar')
+            ->distinct()->get()->toArray();
 
-        $to = DB::select("SELECT DISTINCT users.id, users.username, users.avatar FROM users
-                            JOIN messages ON users.id = messages.from
-                            WHERE users.id != $my_id AND users.role_id != 3 AND messages.to = $my_id
-                          ");
-
-        $from = DB::select("SELECT DISTINCT users.id, users.username, users.avatar FROM users
-                            JOIN messages ON users.id = messages.to
-                            WHERE users.id != $my_id AND users.role_id != 3 AND messages.from = $my_id AND messages.to != $my_id
-                        ");
+        $from = DB::table('users')
+            ->where('users.id', '!=', Auth::id())
+            ->where('users.role_id', '!=', 3)
+            ->where('messages.to', '!=', Auth::id())
+            ->where('messages.from', Auth::id())
+            ->join('messages', 'messages.to', '=', 'users.id')
+            ->select('users.id', 'users.username', 'users.avatar')
+            ->distinct()->get()->toArray();
 
         $data = array_merge($to, $from);
-
-        // $a = ['1' => 'halo', '2' => 'hi', '3' => 'oke'];
-        // jika didalam array ada object yang sama maka tampilkan 1 saja
-        // foreach ($data as $dat) {
-        //     # code...
-        //     if (isset($dat->id)) {
-        //         continue;
-        //     }
-        // }
-
-        // dump($data);
-
 
         return response([
             'status' => 'success',
