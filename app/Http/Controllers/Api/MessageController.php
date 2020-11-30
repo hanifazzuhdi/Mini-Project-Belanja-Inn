@@ -47,7 +47,7 @@ class MessageController extends Controller
         return response([
             'status' => 'success',
             'message' => 'Data loaded',
-            'data' => $hasil
+            'data' => $data
         ]);
     }
 
