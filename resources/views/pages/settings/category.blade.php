@@ -37,13 +37,9 @@
                                     <i class="fas fa-edit text-black-300"></i>
                                 </div>
 
-                                <form action="{{'/deleteCategory/' . $category['id']}}" method="POST">
-                                    @csrf
-                                    @method('delete')
-                                    <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Yakin')">
-                                        <i class="fas fa-trash text-black-300"></i>
-                                    </button>
-                                </form>
+                                <button class="btn btn-danger btn-sm" type="button" data-toggle="modal" >
+                                    <i class="fas fa-trash text-black-300"></i>
+                                </button>
                             </td>
                         </tr>
                         @endforeach
@@ -51,7 +47,7 @@
                 </table>
             </div>
 
-            {{--Update--}}
+            {{--modal update--}}
             <div class="modal fade" id="update" tabindex="-1" role="dialog" aria-labelledby="update" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -62,9 +58,8 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form action="" method="post" enctype="multipart/form-data">
+                            <form action="#" method="post" enctype="multipart/form-data">
                                 @csrf
-                                @method('put')
 
                                 <div class="form-group">
                                     <label>Category Name : </label>
@@ -86,7 +81,7 @@
                 </div>
             </div>
 
-            {{-- tambah akun admin --}}
+            {{-- tambah category baru --}}
             <div class="modal fade" id="store" tabindex="-1" role="dialog" aria-labelledby="store" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -98,11 +93,11 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form action="{{route('store')}}" method="POST" enctype="multipart/form-data">
+                            <form action="{{route('storeCategory')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                     <div class="form-group">
                                         <label>Category Name :</label>
-                                        <input type="email" class="form-control" name="category_name" placeholder="Category Name">
+                                        <input type="text" class="form-control" name="category_name" placeholder="Category Name">
                                     </div>
 
                                     <div class="form-group">
@@ -117,6 +112,28 @@
                                     </div>
                             </form>
 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- modal delete --}}
+            <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Delete Category</h4>
+                        </div>
+                        <div class="modal-body text-left">
+                            Are you sure <strong> delete </strong> Category ?
+                        </div>
+                        <div class="modal-footer">
+                            <form action="{{'/deleteCategory/'}}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
                         </div>
                     </div>
                 </div>

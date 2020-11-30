@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('phone_number')->nullable()->default('Not Exist');
             $table->string('address')->nullable()->default('Not Exist');
-            $table->string('avatar')->nullable()->default('https://iili.io/FqzDMX.md.png');
+            $table->string('avatar')->nullable()->default('https://via.placeholder.com/150');
             $table->unsignedBigInteger('role_id')->default(1);
             $table->rememberToken();
             $table->timestamps();

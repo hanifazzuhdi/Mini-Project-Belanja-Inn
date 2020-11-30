@@ -62,7 +62,7 @@
             <hr class="sidebar-divider">
 
             <div class="sidebar-heading">
-                Make to awesome
+                Advanced
             </div>
 
             <li class="nav-item @yield('activeSettings')">
@@ -75,6 +75,7 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Application</h6>
+                        <a class="collapse-item" href="#">Event</a>
                         <a class="collapse-item" href="{{route('category')}}">Category</a>
 
                         <h6 class="collapse-header">Account Admin</h6>

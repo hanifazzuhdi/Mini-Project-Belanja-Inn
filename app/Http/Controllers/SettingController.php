@@ -13,7 +13,7 @@ class SettingController extends Controller
 {
     public function category()
     {
-        $categories = Category::get();
+        $categories = Category::all();
 
         return view('pages.settings.category', compact('categories'));
     }
@@ -63,11 +63,42 @@ class SettingController extends Controller
             'phone_number' => $request->phone_number,
             'role_id' => 3,
             'address' => $request->address,
-            'avatar' => $request->avatar ? $hasil->image->display_url : 'https://iili.io/FqzDMX.md.png'
+            'avatar' => $request->avatar ? $hasil->image->display_url : 'https://via.placeholder.com/150'
         ]);
 
         return redirect(route('admins'))->withSuccess('Data Created Successfully');
     }
+
+    // public function storeCategory(Request $request, Client $client)
+    // {
+    //     $request->validate([
+    //         'category_name' => 'required',
+    //         'image'         => 'required|image|file'
+    //     ]);
+
+    //     if ($request->image) {
+    //         $image = base64_encode(file_get_contents($request->image));
+    //         $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+    //             'form_params' => [
+    //                 'key' => '6d207e02198a847aa98d0a2a901485a5',
+    //                 'action' => 'upload',
+    //                 'source' => $image,
+    //                 'format' => 'json'
+    //             ]
+    //         ]);
+
+    //         $get = $res->getBody()->getContents();
+
+    //         $hasil = json_decode($get);
+    //     }
+
+    //     Category::create([
+    //         'category_name' => $request->category_name,
+    //         'image' => $hasil->image->display_url
+    //     ]);
+
+    //     return redirect(route('admins'))->withSuccess('Data Created Successfully');
+    // }
 
     public function destroy($id)
     {

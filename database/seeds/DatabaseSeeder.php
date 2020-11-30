@@ -82,7 +82,7 @@ class DatabaseSeeder extends Seeder
             'id' => 1,
             'user_id' => 1,
             'shop_name' => 'mujahid shop',
-            'avatar' => 'https://iili.io/FqzDMX.md.png',
+            'avatar' => 'https://via.placeholder.com/150',
             'address' => 'jakarta indonesia',
             'description' => 'ini adalah toko milik mujahid'
         ]);
@@ -91,7 +91,7 @@ class DatabaseSeeder extends Seeder
             'id' => 2,
             'user_id' => 2,
             'shop_name' => 'fauzil shop',
-            'avatar' => 'https://iili.io/FqzDMX.md.png',
+            'avatar' => 'https://via.placeholder.com/150',
             'address' => 'palembang indonesia',
             'description' => 'ini adalah toko milik fauzil'
         ]);
@@ -100,7 +100,7 @@ class DatabaseSeeder extends Seeder
             'id' => 3,
             'user_id' => 3,
             'shop_name' => 'hanif shop',
-            'avatar' => 'https://iili.io/FqzDMX.md.png',
+            'avatar' => 'https://via.placeholder.com/150',
             'address' => 'DIY indonesia',
             'description' => 'ini adalah toko milik hanif'
         ]);
@@ -109,7 +109,7 @@ class DatabaseSeeder extends Seeder
             'id' => 4,
             'user_id' => 4,
             'shop_name' => 'usman shop',
-            'avatar' => 'https://iili.io/FqzDMX.md.png',
+            'avatar' => 'https://via.placeholder.com/150',
             'address' => 'DIY indonesia',
             'description' => 'ini adalah toko milik usman'
         ]);
@@ -119,7 +119,7 @@ class DatabaseSeeder extends Seeder
             'price' => 150000,
             'quantity' => 10,
             'description' => 'ini adalah energen rasa milo',
-            'image' => 'https://iili.io/FqzDMX.md.png',
+            'image' => 'https://via.placeholder.com/150',
             'weight' => '1kg',
             'sold' => 0,
             'shop_id' => 2,
@@ -131,7 +131,7 @@ class DatabaseSeeder extends Seeder
             'price' => 19000,
             'quantity' => 10,
             'description' => 'ini adalah energen rasa pisang',
-            'image' => 'https://iili.io/FqzDMX.md.png',
+            'image' => 'https://via.placeholder.com/150',
             'weight' => '10kg',
             'sold' => 0,
             'shop_id' => 1,
@@ -143,12 +143,11 @@ class DatabaseSeeder extends Seeder
             'price' => 20000,
             'quantity' => 10,
             'description' => 'ini adalah energen rasa Kopi',
-            'image' => 'https://iili.io/FqzDMX.md.png',
+            'image' => 'https://via.placeholder.com/150',
             'weight' => '10kg',
             'sold' => 0,
             'shop_id' => 2,
             'category_id' => 4
         ]);
-
     }
 }

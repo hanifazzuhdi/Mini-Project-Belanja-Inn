@@ -49,7 +49,7 @@ class PublicController extends Controller
 
     public function search(Request $request)
     {
-   
+
         /* filters = ['price', 'Ready Stock', 'sort_by'] */
         $filters = $request->filterBy;
 

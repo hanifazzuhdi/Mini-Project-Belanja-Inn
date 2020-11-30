@@ -25,9 +25,14 @@ Route::group(['middleware' => 'CekAdmin', 'auth'], function () {
     Route::delete('/deleteProduct/{id}', 'HomeController@destroyProduct');
 
     // Route Settings
-    Route::get('/settings/category', 'SettingController@category')->name('category');
+    // admin
     Route::get('/settings/admins', 'SettingController@admins')->name('admins');
     Route::post('/settings/storeAccount', 'SettingController@store')->name('store');
+
+    // category
+    Route::get('/settings/category', 'SettingController@category')->name('category');
+    Route::post('/settings/category', 'SettingController@storeCategory')->name('storeCategory');
+    // Route::post('/settings/category/{id}', 'SettingController@updateCategory')->name('updateCategory');
     Route::delete('/deleteCategory/{id}', 'SettingController@destroy');
 });
 
