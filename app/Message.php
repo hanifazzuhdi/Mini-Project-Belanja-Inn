@@ -10,7 +10,7 @@ class Message extends Model
     // use FormatNumber;
 
     protected $fillable = [
-        'user_id', 'to', 'message', 'is_read'
+        'from', 'to', 'message', 'is_read'
     ];
 
     public function getCreatedAtAttribute()

@@ -49,12 +49,12 @@ $factory->define(Shop::class, function (Faker $faker) {
 
 $factory->define(Message::class, function (Faker $faker) {
     do {
-        $user_id = rand(1, 4);
-        $to = rand(1, 4);
-    } while($user_id === $to);
+        $from = rand(1, 14);
+        $to = rand(1, 14);
+    } while($from === $to);
 
     return [
-        'user_id' => $user_id,
+        'from' => $from,
         'to' => $to,
         'message' => $faker->sentence,
         'is_read' => $faker->numberBetween(0, 1)
