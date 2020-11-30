@@ -28,26 +28,23 @@ class MessageController extends Controller
 
         $data = array_merge($to, $from);
 
-        foreach ($data as $res) {
-            # code...
-            $hasil[] = (array) $res;
+        $_data = array();
+
+        foreach ($data as $v) {
+            if (isset($_data[$v->id])) {
+                // found duplicate
+                continue;
+            }
+            // remember unique item
+            $_data[$v->id] = $v;
         }
-
-        dump($hasil);
-
-        // foreach ($data as $v) {
-        //     if (isset($_data[$v['id']])) {
-        //         // found duplicate
-        //         continue;
-        //     }
-        //     // remember unique item
-        //     $_data[$v['id']] = $v;
-        // }
+        // if you need a zero-based array, otheriwse work with $_data
+        $res = array_values($_data);
 
         return response([
             'status' => 'success',
             'message' => 'Data loaded',
-            'data' => $data
+            'data' => $res
         ]);
     }
 
