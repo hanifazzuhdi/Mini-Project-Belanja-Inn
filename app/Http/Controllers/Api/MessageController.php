@@ -14,49 +14,40 @@ class MessageController extends Controller
 {
     public function index()
     {
-        // hitung berapa banyak pesan yang belum dibaca oleh user
-        
-        // $users = DB::select("SELECT users.id, users.name, users.username, users.avatar, count(is_read) as unread
-        //     FROM users LEFT JOIN messages ON users.id = messages.user_id AND is_read = 0 and messages.to =" . Auth::id() . "
-        //     WHERE users.id != " . Auth::id()  . "
-        //     GROUP BY users.id, users.name, users.avatar, users.email
-        //     ");
-        // $users = collect($users);
-        // $users = $users->where('user_id', Auth::id());
-        $query = User::query();
-        // $users = $query->where('id', '!=', Auth::id())
-        $users = $query
-            // ->with('message')
-            ->with(['messageFrom', 'messageTo'])
-            // ->join('messages', 'users.id', 'messages.from')
-            // ->where('from', Auth::id())
-            // ->orWhere('to', Auth::id())
-            ->get();
+        $my_id = Auth::id();
 
-        return response($users);
+        $to   = DB::select("SELECT users.id, users.username, users.avatar FROM users
+                            JOIN messages ON users.id = messages.from
+                            WHERE users.id != $my_id AND messages.to = $my_id
+                            ");
 
-        $messages = Message::select(\DB::raw('user_id, count(`user_id`) as messages_count'))
-            ->where('user_id', Auth::id())
-            ->orWhere('to', Auth::id())
-            ->where('is_read', 0)
-            ->groupBy('user_id')
-            ->get();
+        $from = DB::select("SELECT DISTINCT users.id, users.username, users.avatar FROM users
+                            JOIN messages ON users.id = messages.to
+                            WHERE users.id != $my_id AND messages.from = $my_id
+                            ");
 
-        // return response($messages);
+        $data = array_merge($to, $from);
 
-        $users = $users->map(function ($user) use ($messages) {
-            $userUnread = $messages->where('user_id', $user->id)->first();
+        foreach ($data as $res) {
+            # code...
+            $hasil[] = (array) $res;
+        }
 
-            $user->unread = $userUnread ? $userUnread->messages_count : 0;
+        dump($hasil);
 
-            return $user;
-        });
-
+        // foreach ($data as $v) {
+        //     if (isset($_data[$v['id']])) {
+        //         // found duplicate
+        //         continue;
+        //     }
+        //     // remember unique item
+        //     $_data[$v['id']] = $v;
+        // }
 
         return response([
             'status' => 'success',
             'message' => 'Data loaded',
-            'data' => $users
+            'data' => $data
         ]);
     }
 
@@ -64,7 +55,10 @@ class MessageController extends Controller
     {
         $my_id = Auth::id();
 
-        $user = User::where('id', $user_id)->first();
+        $user = DB::table('users')
+            ->where('id', $user_id)
+            ->select('users.id', 'users.username', 'users.avatar')
+            ->get();
 
         // when click to see message selected message will be read, update
         Message::where(['from' => $user_id, 'to' => $my_id])->update(['is_read' => 1]);
@@ -73,7 +67,7 @@ class MessageController extends Controller
             $query->where('from', $my_id)->Where('to', $user_id);
         })->orWhere(function ($query) use ($user_id, $my_id) {
             $query->where('from', $user_id)->Where('to', $my_id);
-        })->get();
+        })->orderBy('created_at', 'asc')->get();
 
         return response([
             'status' => 'success',
@@ -85,6 +79,11 @@ class MessageController extends Controller
 
     public function sendMessage(Request $request)
     {
+        // Tidak boleh kirim pesan ke diri sendiri
+        if ($request->to == Auth::id()) {
+            return $this->SendResponse('failed', 'Tidak boleh kirim pesan ke diri sendiri', null, 404);
+        }
+
         $from = Auth::id();
         $to = $request->to;
         $message = $request->message;

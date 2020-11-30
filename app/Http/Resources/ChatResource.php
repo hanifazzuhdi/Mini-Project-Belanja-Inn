@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class ChatResource extends JsonResource
 {
@@ -14,13 +15,11 @@ class ChatResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'id' => $this->id,
-            'message' => $this->message,
-            'is_read' => $this->is_read,
-            'created_at' => $this->created_at,
-            'from' => $this->user,
-            'to' => $this->user
-        ];
+
+        if ($this->from == Auth::id())
+
+            return [
+                'id' => $this->id,
+            ];
     }
 }

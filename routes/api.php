@@ -11,7 +11,7 @@ Route::group(['prefix' => 'public'], function () {
     Route::get('/', 'Api\PublicController@index');
     Route::get('/{id}', 'Api\PublicController@show');
     Route::get('/category/{category_id}', 'Api\PublicController@showCategory');
-    Route::post('/search', 'Api\PublicController@search');
+    Route::post('/search/{keyword}', 'Api\PublicController@search');
     Route::post('/filter_search', 'Api\PublicController@filterSearch');
 });
 

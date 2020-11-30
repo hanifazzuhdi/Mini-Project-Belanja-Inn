@@ -35,6 +35,17 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
+    // relation
     public function shop()
     {
         return $this->hasOne(Shop::class);
@@ -45,22 +56,8 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Order::class);
     }
 
-    public function messageFrom()
+    public function message()
     {
-        return $this->hasMany(Message::class, 'from', 'id');
-    }
-    public function messageTo()
-    {
-        return $this->hasMany(Message::class, 'to', 'id');
-    }
-
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [];
+        return $this->hasMany(Message::class, 'from');
     }
 }
