@@ -14,30 +14,40 @@ class MessageController extends Controller
 {
     public function index()
     {
-        $to = DB::table('users')
-            ->where('users.id', '!=', Auth::id())
-            ->where('users.role_id', '!=', 3)
-            ->where('messages.to', Auth::id())
-            ->join('messages', 'messages.from', '=', 'users.id')
-            // ->join('messages', 'messages.from', '=', 'users.id')
-            ->select('users.id', 'users.username', 'users.avatar')
-            ->distinct()->get()->toArray();
+        $my_id = Auth::id();
 
-        $from = DB::table('users')
-            ->where('users.id', '!=', Auth::id())
-            ->where('users.role_id', '!=', 3)
-            ->where('messages.to', '!=', Auth::id())
-            ->where('messages.from', Auth::id())
-            ->join('messages', 'messages.to', '=', 'users.id')
-            ->select('users.id', 'users.username', 'users.avatar')
-            ->distinct()->get()->toArray();
+        $to   = DB::select("SELECT users.id, users.username, users.avatar FROM users
+                            JOIN messages ON users.id = messages.from
+                            WHERE users.id != $my_id AND messages.to = $my_id
+                            ");
+
+        $from = DB::select("SELECT DISTINCT users.id, users.username, users.avatar FROM users
+                            JOIN messages ON users.id = messages.to
+                            WHERE users.id != $my_id AND messages.from = $my_id
+                            ");
 
         $data = array_merge($to, $from);
+
+        foreach ($data as $res) {
+            # code...
+            $hasil[] = (array) $res;
+        }
+
+        dump($hasil);
+
+        // foreach ($data as $v) {
+        //     if (isset($_data[$v['id']])) {
+        //         // found duplicate
+        //         continue;
+        //     }
+        //     // remember unique item
+        //     $_data[$v['id']] = $v;
+        // }
 
         return response([
             'status' => 'success',
             'message' => 'Data loaded',
-            'data' => $data
+            'data' => $hasil
         ]);
     }
 
