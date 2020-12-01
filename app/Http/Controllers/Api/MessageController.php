@@ -15,12 +15,12 @@ class MessageController extends Controller
     {
         $my_id = Auth::id();
 
-        $to   = DB::select("SELECT DISTINCT users.id, users.username, users.avatar FROM users
+        $to   = DB::select("SELECT users.id, users.username, users.avatar FROM users
                             JOIN messages ON users.id = messages.from
                             WHERE users.id != $my_id AND users.role_id != 3 AND messages.to = $my_id
                             ");
 
-        $from = DB::select("SELECT DISTINCT users.id, users.username, users.avatar FROM users
+        $from = DB::select("SELECT users.id, users.username, users.avatar FROM users
                             JOIN messages ON users.id = messages.to
                             WHERE users.id != $my_id AND users.role_id != 3 AND messages.from = $my_id
                             ");
