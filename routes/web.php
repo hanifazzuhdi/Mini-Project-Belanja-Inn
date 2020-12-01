@@ -34,6 +34,11 @@ Route::group(['middleware' => 'CekAdmin', 'auth'], function () {
     Route::post('/settings/category', 'SettingController@storeCategory')->name('storeCategory');
     // Route::post('/settings/category/{id}', 'SettingController@updateCategory')->name('updateCategory');
     Route::delete('/deleteCategory/{id}', 'SettingController@destroy');
+
+    // Route events
+    Route::get('/settings/event', 'SettingController@event')->name('event');
+    Route::post('/settings/storeEvent', 'SettingController@storeEvent')->name('storeEvent');
+    Route::delete('/settings/destroyEvent/{id}', 'SettingController@destroyEvent');
 });
 
 // Route Fallback

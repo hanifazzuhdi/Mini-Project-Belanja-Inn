@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cart;
 use App\User;
 use App\Category;
+use App\Event;
 use App\Product;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -69,36 +70,36 @@ class SettingController extends Controller
         return redirect(route('admins'))->withSuccess('Data Created Successfully');
     }
 
-    // public function storeCategory(Request $request, Client $client)
-    // {
-    //     $request->validate([
-    //         'category_name' => 'required',
-    //         'image'         => 'required|image|file'
-    //     ]);
+    public function storeCategory(Request $request, Client $client)
+    {
+        $request->validate([
+            'category_name' => 'required',
+            'image'         => 'required|image|file'
+        ]);
 
-    //     if ($request->image) {
-    //         $image = base64_encode(file_get_contents($request->image));
-    //         $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
-    //             'form_params' => [
-    //                 'key' => '6d207e02198a847aa98d0a2a901485a5',
-    //                 'action' => 'upload',
-    //                 'source' => $image,
-    //                 'format' => 'json'
-    //             ]
-    //         ]);
+        if ($request->image) {
+            $image = base64_encode(file_get_contents($request->image));
+            $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+                'form_params' => [
+                    'key' => '6d207e02198a847aa98d0a2a901485a5',
+                    'action' => 'upload',
+                    'source' => $image,
+                    'format' => 'json'
+                ]
+            ]);
 
-    //         $get = $res->getBody()->getContents();
+            $get = $res->getBody()->getContents();
 
-    //         $hasil = json_decode($get);
-    //     }
+            $hasil = json_decode($get);
+        }
 
-    //     Category::create([
-    //         'category_name' => $request->category_name,
-    //         'image' => $hasil->image->display_url
-    //     ]);
+        Category::create([
+            'category_name' => $request->category_name,
+            'image' => $hasil->image->display_url
+        ]);
 
-    //     return redirect(route('admins'))->withSuccess('Data Created Successfully');
-    // }
+        return redirect(route('admins'))->withSuccess('Data Created Successfully');
+    }
 
     public function destroy($id)
     {
@@ -120,5 +121,55 @@ class SettingController extends Controller
         Category::destroy($id);
 
         return redirect(route('category'))->withSuccess('Data Deleted Successfully');
+    }
+
+
+    // CONTROLLER EVENT
+    public function event()
+    {
+        $events = Event::all();
+
+        return view('pages.settings.event', compact('events'));
+    }
+
+    public function storeEvent(Request $request, Client $client)
+    {
+        $request->validate([
+            'event_name' => 'required',
+            'image'      => 'required|file|image',
+            'end_event'   => 'required|date'
+        ]);
+
+        if ($request->image) {
+            $image = base64_encode(file_get_contents($request->image));
+            $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+                'form_params' => [
+                    'key' => '6d207e02198a847aa98d0a2a901485a5',
+                    'action' => 'upload',
+                    'source' => $image,
+                    'format' => 'json'
+                ]
+            ]);
+
+            $get = $res->getBody()->getContents();
+
+            $hasil = json_decode($get);
+        }
+
+        Event::create([
+            'event_name' => $request->event_name,
+            'image'      => $hasil->image->display_url,
+            'end_event'   => $request->end_event
+        ]);
+
+        return redirect(route('event'))->withSuccess('Data Created Successfully');
+    }
+
+    public function destroyEvent($id)
+    {
+        $data = Event::destroy($id);
+
+        if ($data)
+            return redirect(route('event'))->withSuccess('Data Deleted Successfully');
     }
 }

@@ -75,7 +75,7 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Application</h6>
-                        <a class="collapse-item" href="#">Event</a>
+                        <a class="collapse-item" href="{{route('event')}}">Event</a>
                         <a class="collapse-item" href="{{route('category')}}">Category</a>
 
                         <h6 class="collapse-header">Account Admin</h6>
@@ -272,7 +272,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; D-Shopee <?= date('Y') ?></span>
+                        <span>Copyright &copy; Belanja Inn <?= date('Y') ?></span>
                     </div>
                 </div>
             </footer>
@@ -316,14 +316,14 @@
 
     <script src=" {{url('Admin/js/sb-admin-2.min.js')}}"></script>
 
-    <script src=" {{url('Admin/vendor/chart.js/Chart.min.js')}}"></script>
+    {{-- <script src=" {{url('Admin/vendor/chart.js/Chart.min.js')}}"></script> --}}
 
     <script src=" {{url('Admin/vendor/datatables/jquery.dataTables.min.js')}} "></script>
     <script src=" {{url('Admin/vendor/datatables/dataTables.bootstrap4.min.js')}} "></script>
     <script src=" {{url('Admin/js/demo/datatables-demo.js')}} "></script>
 
-    <script src=" {{url('Admin/js/demo/chart-area-demo.js')}} "></script>
-    <script src=" {{url('Admin/js/demo/chart-pie-demo.js')}} "></script>
+    {{-- <script src=" {{url('Admin/js/demo/chart-area-demo.js')}} "></script> --}}
+    {{-- <script src=" {{url('Admin/js/demo/chart-pie-demo.js')}} "></script> --}}
 
 </body>
 

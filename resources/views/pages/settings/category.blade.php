@@ -37,8 +37,13 @@
                                     <i class="fas fa-edit text-black-300"></i>
                                 </div>
 
-                                <button class="btn btn-danger btn-sm" type="button" data-toggle="modal" >
-                                    <i class="fas fa-trash text-black-300"></i>
+                                <form action="{{'/deleteCategory/' . $category['id']}}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="btn btn-danger btn-sm btn-delete" type="submit" onclick="return confirm('Yakin hapus data ?')">
+                                        <i class="fas fa-trash text-black-300"></i>
+                                    </button>
+                                </form>
                                 </button>
                             </td>
                         </tr>
@@ -118,7 +123,7 @@
             </div>
 
             {{-- modal delete --}}
-            <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
+            {{-- <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -137,7 +142,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             {{-- end model --}}
         </div>

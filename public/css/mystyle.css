@@ -117,3 +117,27 @@ a.print {
     color: #4e73df;
     font-weight: 600;
 }
+
+
+/* card-event */
+.card-event {
+    width: 450px;
+    color: black;
+    position: relative;
+}
+
+.card-event .status {
+    font-size: 12px;
+    color: #4e73df;
+    position: absolute;
+    right: 10px;
+    bottom: 133px;
+}
+
+.card-event .date p {
+    font-size: 12px;
+}
+
+.card-event h4 {
+    border-bottom: 1px solid lightgray;
+}
