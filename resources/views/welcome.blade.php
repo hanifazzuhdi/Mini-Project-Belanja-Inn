@@ -94,7 +94,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Mini Project - <a class="d" href="{{route('login')}}"> D </a>
+                    Belanja In<a class="d" href="{{route('login')}}">n</a>
                 </div>
 
                 <div class="links">

@@ -9,6 +9,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
+use Illuminate\Support\Facades\DB;
 
 class PublicController extends Controller
 {
@@ -49,7 +50,6 @@ class PublicController extends Controller
 
     public function search(Request $request)
     {
-
         /* filters = ['price', 'Ready Stock', 'sort_by'] */
         $filters = $request->filterBy;
 
@@ -59,9 +59,9 @@ class PublicController extends Controller
         });
 
         $products = $query->when($request->keyword, function ($query) use ($request) {
-            return $query->where('product_name', 'like', "%{$request->keyword}%")
+            return $query->where(DB::raw("lower('product_name')"), 'like', "%" . strtolower($request->keyword) . "%")
                 ->orWhereHas('category', function ($query) use ($request) {
-                    return $query->where('category_name', 'like', "%{$request->keyword}%");
+                    return $query->where(DB::raw("lower('category_name')"), 'like', "%" . strtolower($request->keyword) . "%");
                 });
         })
             ->join('shops', 'products.shop_id', '=', 'shops.id')
