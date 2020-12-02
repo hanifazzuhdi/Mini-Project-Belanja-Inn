@@ -9,6 +9,7 @@ use App\Event;
 use App\Product;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SettingController extends Controller
 {
@@ -127,6 +128,9 @@ class SettingController extends Controller
     // CONTROLLER EVENT
     public function event()
     {
+        // Query hapus otomatis event
+        DB::delete('DELETE FROM events WHERE DATEDIFF(CURDATE(), end_event) >= 1');
+
         $events = Event::all();
 
         return view('pages.settings.event', compact('events'));

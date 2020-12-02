@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
+use App\Event;
 use App\Order;
 use App\Product;
 use App\Shop;
@@ -17,6 +18,10 @@ class HomeController extends Controller
     // Function Get
     public function index()
     {
+        // Query hapus otomatis event
+        DB::delete('DELETE FROM events WHERE DATEDIFF(CURDATE(), end_event) >= 1');
+
+        // Query dashboard
         $active = DB::select("SELECT COUNT(id) as active FROM users WHERE role_id != 3");
         $shop = DB::select("SELECT COUNT(id) as shop FROM users WHERE role_id = 2 ");
         $total_transaction = DB::table('orders')->where('status', 1)->count('id');

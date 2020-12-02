@@ -26,18 +26,18 @@
 
                     <span class="status">
                         <strong>
-                            @if ($event->end_event >= now())
+                            @if ($event->end_event <= date('d-m-Y H:i'))
                                 Status : End
-                                @else
-                                {{$event->end_event}}
+                            @else
                                 Status : Active
                             @endif
                         </strong>
                     </span>
 
-                    <div class="date pl-2 pt-4 pb-1">
+                    <div class="date pl-2 pt-4 pb-2">
                         <p> Event Start : {{$event->created_at}} </p>
                         <p> Event End &nbsp;&nbsp;: {{$event->end_event}} </p>
+                        <br>
                     </div>
 
                     <form class="p-2" action="{{'/settings/destroyEvent/' . $event->id}}" method="POST">
@@ -79,7 +79,7 @@
 
                         <div class="form-group">
                             <label>End Event :</label>
-                            <input type="date" class="form-control" name="end_event">
+                            <input type="date" min="{{ date('Y-m-d', time() + (60 * 60 * 24)) }}" class="form-control" name="end_event">
                         </div>
 
                         <div class="form-group">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Shop;
 use App\Product;
 use App\Category;
+use App\Event;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -20,8 +21,16 @@ class PublicController extends Controller
         $srtproducts = $products->sortByDesc('id');
         $products = $srtproducts->values()->all();
 
+        $event = Event::all();
+
         try {
-            return $this->SendResponse('succes', 'Data loaded successfully', $products, 200);
+            // return $this->SendResponse('succes', 'Data loaded successfully', $products, 200);
+            return response([
+                'status'    => 'success',
+                'message'   => 'Data loaded successfully',
+                'event'     => $event,
+                'data'      => $product
+            ]);
         } catch (\Throwable $th) {
             return $this->SendResponse('failed', 'Data failed to load', null, 500);
         }
