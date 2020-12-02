@@ -17,6 +17,6 @@ class Event extends Model
     public function getEndEventAttribute()
     {
         return \Carbon\Carbon::parse($this->attributes['end_event'])
-            ->format('Y-m-d');
+            ->format('d-m-Y H:i');
     }
 }
