@@ -21,14 +21,14 @@ class PublicController extends Controller
         $srtproducts = $products->sortByDesc('id');
         $products = $srtproducts->values()->all();
 
-        $event = Event::all();
+        // $event = Event::all();
 
         try {
             // return $this->SendResponse('succes', 'Data loaded successfully', $products, 200);
             return response([
                 'status'    => 'success',
                 'message'   => 'Data loaded successfully',
-                'event'     => $event,
+                // 'event'     => $event,
                 'data'      => $product
             ]);
         } catch (\Throwable $th) {
