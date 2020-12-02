@@ -10,25 +10,31 @@ use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
+use Illuminate\Support\Facades\DB;
 
 class PublicController extends Controller
 {
     public function index()
     {
+        // Query hapus otomatis event
+        DB::table('events')
+            ->whereRaw("end_event <= now()")
+            ->delete();
+
         $product = Product::where('quantity', '!=', 0)->get();
 
         $products = ProductResource::collection($product);
         $srtproducts = $products->sortByDesc('id');
         $products = $srtproducts->values()->all();
 
-        // $event = Event::all();
+        $event = Event::all();
 
         try {
             // return $this->SendResponse('succes', 'Data loaded successfully', $products, 200);
             return response([
                 'status'    => 'success',
                 'message'   => 'Data loaded successfully',
-                // 'event'     => $event,
+                'event'     => $event,
                 'data'      => $product
             ]);
         } catch (\Throwable $th) {

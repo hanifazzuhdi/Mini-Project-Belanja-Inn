@@ -129,7 +129,9 @@ class SettingController extends Controller
     public function event()
     {
         // Query hapus otomatis event
-        // DB::delete('DELETE FROM events WHERE DATEDIFF(CURDATE(), end_event) >= 1');
+        DB::table('events')
+            ->whereRaw("end_event <= now()")
+            ->delete();
 
         $events = Event::all();
 
