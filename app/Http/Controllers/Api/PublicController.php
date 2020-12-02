@@ -8,6 +8,7 @@ use App\Category;
 use App\Event;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 
@@ -15,20 +16,24 @@ class PublicController extends Controller
 {
     public function index()
     {
+        // Query hapus otomatis event
+        DB::delete('DELETE FROM events WHERE DATEDIFF(CURDATE(), end_event) >= 1');
+
+        // Queries
         $product = Product::where('quantity', '!=', 0)->get();
 
         $products = ProductResource::collection($product);
         $srtproducts = $products->sortByDesc('id');
         $products = $srtproducts->values()->all();
 
-        // $event = Event::all();
+        $event = Event::all();
 
         try {
             // return $this->SendResponse('succes', 'Data loaded successfully', $products, 200);
             return response([
                 'status'    => 'success',
                 'message'   => 'Data loaded successfully',
-                // 'event'     => $event,
+                'event'     => $event,
                 'data'      => $product
             ]);
         } catch (\Throwable $th) {

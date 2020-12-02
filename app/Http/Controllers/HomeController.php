@@ -19,7 +19,7 @@ class HomeController extends Controller
     public function index()
     {
         // Query hapus otomatis event
-        // DB::delete('DELETE FROM events WHERE DATEDIFF(CURDATE(), end_event) >= 1');
+        DB::delete('DELETE FROM events WHERE DATEDIFF(CURDATE(), end_event) >= 1');
 
         // Query dashboard
         $active = DB::select("SELECT COUNT(id) as active FROM users WHERE role_id != 3");
