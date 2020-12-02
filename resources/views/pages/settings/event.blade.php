@@ -34,10 +34,9 @@
                         </strong>
                     </span>
 
-                    <div class="date pl-2 pt-4 pb-2">
+                    <div class="date pl-2 pt-4 pb-1">
                         <p> Event Start : {{$event->created_at}} </p>
                         <p> Event End &nbsp;&nbsp;: {{$event->end_event}} </p>
-                        <br>
                     </div>
 
                     <form class="p-2" action="{{'/settings/destroyEvent/' . $event->id}}" method="POST">

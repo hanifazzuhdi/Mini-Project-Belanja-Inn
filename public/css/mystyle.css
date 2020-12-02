@@ -124,6 +124,7 @@ a.print {
     width: 450px;
     color: black;
     position: relative;
+    box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, .15) !important;
 }
 
 .card-event .status {
@@ -131,7 +132,7 @@ a.print {
     color: #4e73df;
     position: absolute;
     right: 10px;
-    bottom: 158px;
+    bottom: 135px;
 }
 
 .card-event .date p {
