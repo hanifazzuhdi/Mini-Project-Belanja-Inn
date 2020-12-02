@@ -17,7 +17,7 @@ class PublicController extends Controller
     public function index()
     {
         // Query hapus otomatis event
-        DB::delete('DELETE FROM events WHERE DATEDIFF(CURDATE(), end_event) >= 1');
+        DB::delete('DELETE FROM events WHERE DATEDIFF(CURRENT_DATE, end_event) >= 1');
 
         // Queries
         $product = Product::where('quantity', '!=', 0)->get();
