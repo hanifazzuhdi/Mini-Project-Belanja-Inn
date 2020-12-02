@@ -11,12 +11,12 @@ class Event extends Model
     public function getCreatedAtAttribute()
     {
         return \Carbon\Carbon::parse($this->attributes['created_at'])
-            ->format('d-m-Y H:i');
+            ->format('d-M-Y H:i');
     }
 
-    public function getEndEventAttribute()
-    {
-        return \Carbon\Carbon::parse($this->attributes['end_event'])
-            ->format('d-m-Y H:i');
-    }
+    // public function getEndEventAttribute()
+    // {
+    //     return \Carbon\Carbon::parse($this->attributes['end_event'])
+    //         ->format('d-m-Y H:i');
+    // }
 }

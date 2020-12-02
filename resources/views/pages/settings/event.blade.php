@@ -26,10 +26,10 @@
 
                     <span class="status">
                         <strong>
-                            @if ($event->end_event <= date('d-m-Y H:i'))
-                                Status : End
+                            @if ($event->end_event <= now())
+                            Status : End
                             @else
-                                Status : Active
+                            Status : Active
                             @endif
                         </strong>
                     </span>
@@ -78,10 +78,8 @@
 
                         <div class="form-group">
                             <label>End Event :</label>
-                            <input type="date" class="form-control" name="end_event">
+                            <input type="date" min="{{ date('Y-m-d', time() + (60 * 60 * 24)) }}" class="form-control" name="end_event">
                         </div>
-
-                        {{-- min="{{ date('Y-m-d', time() + (60 * 60 * 24)) }}" --}}
 
                         <div class="form-group">
                             <label>Image :</label>
