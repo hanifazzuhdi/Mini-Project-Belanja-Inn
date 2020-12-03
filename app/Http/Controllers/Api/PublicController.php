@@ -35,7 +35,7 @@ class PublicController extends Controller
                 'status'    => 'success',
                 'message'   => 'Data loaded successfully',
                 'event'     => $event,
-                'data'      => $product
+                'data'      => $products
             ]);
         } catch (\Throwable $th) {
             return $this->SendResponse('failed', 'Data failed to load', null, 500);
