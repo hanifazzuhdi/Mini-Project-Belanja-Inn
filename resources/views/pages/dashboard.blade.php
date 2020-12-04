@@ -89,11 +89,9 @@
      <div class="container history mt-4">
 
          <form action="" method="post">
-            {{-- <label for="">Cari</label> --}}
-            <input class="form-group" type="text">
-
+            <input class="form-control search" placeholder="Search" type="text">
             <button class="btn btn-primary" type="submit">
-                cari
+                Search
             </button>
         </form>
 
