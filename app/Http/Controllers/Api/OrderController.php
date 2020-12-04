@@ -69,14 +69,15 @@ class OrderController extends Controller
             $new_cart->quantity = $request->quantity;
             $new_cart->total_price = (int) $request->quantity * (int) $product->price;
             $new_cart->save();
-        } elseif ($old_carts->quantity >= $product->quantity) {
-            # code...
-            return $this->SendResponse('failed', 'The amount of stock is not sufficient for the demand', null, 400);
         } else {
             //jika keranjang lama masih ada update order lama
 
             //tambahkan jumlah order
-            $old_carts->quantity += (int) $request->quantity;
+            $qty = $old_carts->quantity += (int) $request->quantity;
+
+            if ($qty > $product->quantity) {
+                return $this->SendResponse('failed', 'The amount of stock is not sufficient for the demand', null, 400);
+            }
 
             //harga sekarang
             $new_price = (int) $product->price * (int) $request->quantity;
