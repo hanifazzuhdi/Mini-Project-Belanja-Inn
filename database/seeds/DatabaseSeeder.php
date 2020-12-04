@@ -114,40 +114,40 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        // Product::create([
-        //     'product_name' => 'Energen rasa milo',
-        //     'price' => 150000,
-        //     'quantity' => 10,
-        //     'description' => 'ini adalah energen rasa milo',
-        //     'image' => 'https://via.placeholder.com/150',
-        //     'weight' => '1kg',
-        //     'sold' => 0,
-        //     'shop_id' => 2,
-        //     'category_id' => 1
-        // ]);
+        Product::create([
+            'product_name' => 'Energen rasa milo',
+            'price' => 150000,
+            'quantity' => 10,
+            'description' => 'ini adalah energen rasa milo',
+            'image' => 'https://via.placeholder.com/150',
+            'weight' => '1kg',
+            'sold' => 0,
+            'shop_id' => 2,
+            'category_id' => 1
+        ]);
 
-        // Product::create([
-        //     'product_name' => 'Energen rasa Pisang',
-        //     'price' => 19000,
-        //     'quantity' => 10,
-        //     'description' => 'ini adalah energen rasa pisang',
-        //     'image' => 'https://via.placeholder.com/150',
-        //     'weight' => '10kg',
-        //     'sold' => 0,
-        //     'shop_id' => 1,
-        //     'category_id' => 4
-        // ]);
+        Product::create([
+            'product_name' => 'Energen rasa Pisang',
+            'price' => 19000,
+            'quantity' => 10,
+            'description' => 'ini adalah energen rasa pisang',
+            'image' => 'https://via.placeholder.com/150',
+            'weight' => '10kg',
+            'sold' => 0,
+            'shop_id' => 1,
+            'category_id' => 4
+        ]);
 
-        // Product::create([
-        //     'product_name' => 'Energen rasa Kopi Hitam',
-        //     'price' => 20000,
-        //     'quantity' => 10,
-        //     'description' => 'ini adalah energen rasa Kopi',
-        //     'image' => 'https://via.placeholder.com/150',
-        //     'weight' => '10kg',
-        //     'sold' => 0,
-        //     'shop_id' => 2,
-        //     'category_id' => 4
-        // ]);
+        Product::create([
+            'product_name' => 'Energen rasa Kopi Hitam',
+            'price' => 20000,
+            'quantity' => 10,
+            'description' => 'ini adalah energen rasa Kopi',
+            'image' => 'https://via.placeholder.com/150',
+            'weight' => '10kg',
+            'sold' => 0,
+            'shop_id' => 2,
+            'category_id' => 4
+        ]);
     }
 }

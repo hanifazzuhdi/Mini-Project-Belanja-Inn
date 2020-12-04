@@ -87,6 +87,16 @@
     </div>
 
      <div class="container history mt-4">
+
+         <form action="" method="post">
+            {{-- <label for="">Cari</label> --}}
+            <input class="form-group" type="text">
+
+            <button class="btn btn-primary" type="submit">
+                cari
+            </button>
+        </form>
+
         <h6 class="list-group-item active">History Transaction</h6>
 
         <table class="table">

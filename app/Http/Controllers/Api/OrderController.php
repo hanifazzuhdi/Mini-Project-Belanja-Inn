@@ -37,6 +37,20 @@ class OrderController extends Controller
             return $this->SendResponse('failed', 'The amount of stock is not sufficient for the demand', null, 400);
         }
 
+        // tidak boleh order produk berulang kali melebihi quantity
+        $order = Order::where('user_id', Auth::id())->where('status', 0)->first('id');
+
+        if ($order) {
+            $carts = Cart::where('order_id', $order->id)->get();
+
+            foreach ($carts as $cart) {
+                # code...
+                if ($cart->quantity >= $product->quantity) {
+                    return $this->SendResponse('failed', 'The amount of stock is not sufficient for the demand', null, 400);
+                }
+            }
+        }
+
         //cek order lama yang belum di check out
         $old_order = Order::where('user_id', Auth::id())->where('status', 0)->first();   // <== cari di tabel order dimana user_id = id user yang login dan yang status nya 0
 
