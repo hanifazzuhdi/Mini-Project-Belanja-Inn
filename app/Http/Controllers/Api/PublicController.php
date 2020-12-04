@@ -27,7 +27,7 @@ class PublicController extends Controller
         $srtproducts = $products->sortByDesc('id');
         $products = $srtproducts->values()->all();
 
-        $event = Event::all();
+        $event = Event::all(['id', 'image']);
 
         try {
             // return $this->SendResponse('succes', 'Data loaded successfully', $products, 200);
