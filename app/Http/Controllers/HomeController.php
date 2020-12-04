@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
-use App\Event;
 use App\Order;
 use App\Product;
 use App\Shop;
@@ -29,7 +28,7 @@ class HomeController extends Controller
         $total_transaction = DB::table('orders')->where('status', 1)->count('id');
         $transaction = DB::table('orders')->where('status', 1)->sum('total_price');
 
-        $histories = Order::with('user')->orderByDesc('status')->paginate(10);
+        $histories = Order::with('user')->orderBy('status', 'asc')->paginate(10);
         return view('pages.dashboard', compact('active', 'shop', 'total_transaction', 'transaction', 'histories'));
     }
 
