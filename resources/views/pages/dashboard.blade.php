@@ -86,49 +86,55 @@
         </div>
     </div>
 
-     <div class="container history mt-4">
+    <div class="container">
+        <div class="card shadow mb-4 mt-2">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">History Transaction</h6>
+            </div>
 
-         <form action="" method="post">
-            <input class="form-control search" placeholder="Search" type="text">
-            <button class="btn btn-primary" type="submit">
-                Search
-            </button>
-        </form>
-
-        <h6 class="list-group-item active">History Transaction</h6>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Total Transaction</th>
-                    <th scope="col">Status Checkout</th>
-                    <th scope="col">Date</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach ($histories as $history)
-            <tr>
-                <th scope="row">{{$history['id']}}</th>
-                <td>{{$history['user']->username}}</td>
-                <td>IDR {{number_format($history->total_price, '0', ',', '.')}}</td>
-                <td>{{ $history->status == 0 ? 'Pending' : 'Success' }}</td>
-                <td>{{$history->date}}</td>
-                <td class="text-center">
-                    <a href="{{'detailHistory/' . $history['id'] }}">
-                        <i class="fas fa-eye text-black-300"></i>
-                    </a>
-                </td>
-            </tr>
-            @endforeach
-            </tbody>
-        </table>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Total Transaction</th>
+                                <th scope="col">Status Checkout</th>
+                                <th scope="col">Date</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Total Transaction</th>
+                                <th scope="col">Status Checkout</th>
+                                <th scope="col">Date</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @foreach ($histories as $history)
+                            <tr>
+                                <th scope="row">{{$history['id']}}</th>
+                                <td>{{$history['user']->username}}</td>
+                                <td>IDR {{number_format($history->total_price, '0', ',', '.')}}</td>
+                                <td>{{ $history->status == 0 ? 'Pending' : 'Success' }}</td>
+                                <td>{{$history->date}}</td>
+                                <td class="text-center">
+                                    <a href="{{'detailHistory/' . $history['id'] }}">
+                                        <i class="fas fa-eye text-black-300"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <span class="paginate">
-        {{$histories->links()}}
-    </span>
 
 @endsection
