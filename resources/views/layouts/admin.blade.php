@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin D-Shopee</title>
+    <title>Admin Belanja Inn</title>
 
     <link rel="stylesheet" href="{{url('css/mystyle.css')}}">
 
