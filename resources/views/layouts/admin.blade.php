@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin Belanja Inn</title>
+    <title>Dashboard - Admin Belanja Inn</title>
 
     <link rel="stylesheet" href="{{url('css/mystyle.css')}}">
 
