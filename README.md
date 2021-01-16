@@ -1,30 +1,10 @@
-## Usage
+Belanja Inn adalah aplikasi E-commerce berbasis mobile.
 
-1. sesuaikan konfigurasi pada file .env nya :
-```bash
-    - dbname = mini_project
-    - dbhost = (sesuaikan)
-    - dbpass = (sesuaikan)
-```
-2. Migrasi table yang sudah dibuat dengan 
-```bash
-php artisan migrate
-```
-3. jalankan seeder yang dibuat untuk Category dan Role dengan perintah 
-```bash
-php artisan db:seed
-```
-(Perintah ini dilakukan untuk membuat data dummy pada project).
+Aplikasi ini dibangun dengan menggunakan Framework React Native untuk Mobile App dan Laravel untuk Server Side.
 
-```bash
-Diagram Database Link:
-https://drawsql.app/pondok-it/diagrams/mini-project
-```
+Dengan fitur dan tampilan yang menarik, aplikasi ini dirancang agar memudahkan pengguna dalam bertransaksi online.
 
-Status pada tabel order dan carts  :
-```bash
- - 0 = ditambahkan ke keranjang belum dicheckout
- - 1 = sudah dicheckout
- - 2 = sudah dikonfirmasi oleh penjual untuk dikirim
- - 3 = sudah diterima pembeli
-```
+Aplikasi ini merupakan karya Santri Pondok Programmer dalan ujian project mini yang terdiri dari
+1. Muhammad Mujahid Muslim - Mobile Dev
+2. Hanif Az-Zuhdi - Backend Dev
+3. Fauzil azim - Backend Dev

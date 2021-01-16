@@ -14,7 +14,9 @@
     <link rel="stylesheet" href="{{url('css/mystyle.css')}}">
 
     <link href=" {{url('Admin/vendor/fontawesome-free/css/all.min.css')}} " rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
     <link href=" {{url('Admin/css/sb-admin-2.min.css')}} " rel="stylesheet">
 
@@ -187,8 +189,7 @@
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="http://via.placeholder.com/60"
-                                            alt="">
+                                        <img class="rounded-circle" src="http://via.placeholder.com/60" alt="">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
@@ -199,8 +200,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="http://via.placeholder.com/60"
-                                            alt="">
+                                        <img class="rounded-circle" src="http://via.placeholder.com/60" alt="">
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div>
@@ -211,8 +211,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="http://via.placeholder.com/60"
-                                            alt="">
+                                        <img class="rounded-circle" src="http://via.placeholder.com/60" alt="">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
                                     <div>
@@ -242,9 +241,9 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"> {{Auth::user()->name}} </span>
-                                <img class="img-profile rounded-circle"
-                                    src="{{Auth::user()->avatar}}">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"> {{Auth::user()->name}}
+                                </span>
+                                <img class="img-profile rounded-circle" src="{{Auth::user()->avatar}}">
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -255,10 +254,10 @@
                                 </a>
                                 <div class="dropdown-divider"></div>
 
-                                    <button class="dropdown-item" data-toggle="modal" data-target="#logoutModal">
-                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Logout
-                                    </button>
+                                <button class="dropdown-item" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </button>
                             </div>
                         </li>
                     </ul>
