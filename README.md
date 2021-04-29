@@ -8,3 +8,6 @@ Aplikasi ini merupakan karya Santri Pondok Programmer dalan ujian project mini y
 1. Muhammad Mujahid Muslim - Mobile Dev
 2. Hanif Az-Zuhdi - Backend Dev
 3. Fauzil azim - Backend Dev
+
+Dashboard  : https://mini-project-d.herokuapp.com/ 
+Mobile App : https://play.google.com/store/apps/details?id=com.projectmini
